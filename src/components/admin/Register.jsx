@@ -14,7 +14,10 @@ export default function Register() {
       .required("password is required")
       .min(8, "password has to be at least 8 characters long")
       .max(128, "password too long, 128 characters is the max")
-      .matches(/^(?=.*\d).{8,}$/, "password must contain at least one number")
+      .matches(/^(?=.*\d).{8,}$/, "password must contain at least one number"),
+    passwordConfirm: Yup.string()
+      .required("Password confirmation is required")
+      .oneOf([Yup.ref("password")], "Passwords must match")
   });
   if (!message.success) {
     return (
@@ -69,6 +72,24 @@ export default function Register() {
               <ErrorMessage
                 component="div"
                 name="password"
+                className="invalidPassword"
+              />
+              <Field
+                type="password"
+                name="passwordConfirm"
+                placeholder="*********"
+                className={
+                  touched.passwordConfirm && errors.passwordConfirm
+                    ? "error"
+                    : null
+                }
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.passwordConfirm || ""}
+              />
+              <ErrorMessage
+                component="div"
+                name="passwordConfirm"
                 className="invalidPassword"
               />
 
