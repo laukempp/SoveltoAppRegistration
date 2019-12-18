@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import './reg.scss';
 import * as Yup from "yup";
 import { registerUser } from "../../serviceRequest";
 
@@ -21,7 +22,8 @@ export default function Register() {
   });
   if (!message.success) {
     return (
-      <div>
+      <div className="user">
+        <h1 className="user__title">Sovelto Quiz sign-up</h1>
         <Formik
           initialValues={{ login: "", password: "" }}
           validationSchema={userSchema}
@@ -43,32 +45,36 @@ export default function Register() {
             handleBlur,
             handleSubmit
           }) => (
-            <Form onSubmit={handleSubmit}>
+            <Form className="form" onSubmit={handleSubmit}>
+              <div className="form__group">
               <Field
                 type="email"
                 name="login"
-                placeholder="email@example.com"
+                placeholder="email@sovelto.com"
+                id="emailfield"
                 className={touched.login && errors.login ? "error" : null}
                 onChange={handleChange}
                 autoComplete="off"
                 onBlur={handleBlur}
                 value={values.login || ""}
-              />
+              /></div>
               <ErrorMessage
                 component="div"
                 name="login"
                 className="invalidEmail"
               />
-
+              <div className="form__group">
+                <div className="form__input">
               <Field
                 type="password"
                 name="password"
                 placeholder="*********"
+                id="passfield"
                 className={touched.password && errors.password ? "error" : null}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password || ""}
-              />
+              /></div></div>
               <ErrorMessage
                 component="div"
                 name="password"
@@ -78,6 +84,7 @@ export default function Register() {
                 type="password"
                 name="passwordConfirm"
                 placeholder="*********"
+                id="passfieldConfirm"
                 className={
                   touched.passwordConfirm && errors.passwordConfirm
                     ? "error"
@@ -93,8 +100,8 @@ export default function Register() {
                 className="invalidPassword"
               />
 
-              <button type="submit" disabled={isSubmitting}>
-                Submit
+              <button className="btn" type="submit" disabled={isSubmitting}>
+                Register
               </button>
             </Form>
           )}
@@ -103,6 +110,6 @@ export default function Register() {
       </div>
     );
   } else if (message.success) {
-    return <div>Toimii</div>;
+    return <div className="user__title">User created, you are able to log in now</div>;
   }
 }
