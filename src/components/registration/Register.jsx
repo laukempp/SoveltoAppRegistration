@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import './reg.scss';
 import * as Yup from "yup";
-import { registerUser } from "../../serviceRequest";
+import { registerUser } from "../../service/registerUser";
 
 export default function Register() {
   const [message, setMessage] = useState({ message: "", success: false });

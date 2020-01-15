@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+#sovelto-red {
+  color: red !important;
+  text-align: center;
+}

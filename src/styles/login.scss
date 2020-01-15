@@ -1,0 +1,227 @@
+$font-family:   "Roboto";
+$font-size:     14px;
+
+$color-primary: rgb(182, 87, 60);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family;
+    font-size: $font-size;
+    background-size:  200% 100% !important;
+    animation: move 10s ease infinite;
+    transform: translate3d(0, 0, 0);
+    background: linear-gradient(45deg, rgba(226, 0, 38, 0.89) 10%, #E20026 90%);
+    height: 100vh
+}
+
+.user {
+    width: 90%;
+    max-width: 340px;
+    margin: 10vh auto;
+}
+
+.user__header {
+    text-align: center;
+    opacity: 0;
+    transform: translate3d(0, 500px, 0);
+    animation: arrive 500ms ease-in-out 0.4s forwards;
+}
+
+.user__title {
+    font-size: 25px;
+    margin-bottom: -5px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+}
+
+.form {
+    margin-top: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translate3d(0, 500px, 0);
+    animation: arrive 400ms ease-in-out 0.7s forwards;
+}
+
+.form--no {
+    animation: NO 1s ease-in-out;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+#passfield, #emailfield, #kysynimi, #kysynum, #topic_id, .wrongAns, #correct_answer, #question, #topics_id, #quiztopic {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    font-family: $font-family;
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    transition: 0.3s;
+    
+    &:focus {
+        background: darken(#fff, 3%);
+    }
+}
+
+.btnLogin {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    font-family: $font-family;
+    -webkit-appearance: none;
+    outline: 0;
+    border: 0;
+    color: white;
+    background: darken($color-primary, 5%);
+    transition: 0.3s;
+    
+    &:hover {
+        background: darken($color-primary, 10%);
+    }
+}
+
+@keyframes NO {
+  from, to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes arrive {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 50px, 0);
+    }
+    
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move {
+    0% {
+        background-position: 0 0
+    }
+
+    50% {
+        background-position: 100% 0
+    }
+
+    100% {
+        background-position: 0 0
+    }
+}
+.em {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
+.detail_span {
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.267);
+    border-radius: 5px;
+}
+.detail_header {
+    color: whitesmoke;  
+    border-radius: 5px;
+}
+
+.mQuestion {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.mContainer {
+    margin-bottom: 10px;
+    background: rgb(245, 236, 236);
+    border-radius: 10px;
+    padding: 6px;
+
+}
+
+input[type=radio] {
+    margin-right: 5px;
+}
+ 
+.sendQ {
+    background: rgb(206, 89, 69) !important;
+    border: rgb(182, 87, 60) !important;
+}
+.text-white {
+    color: ghostwhite;
+}
+.qFormContainer {
+    background-color: rgba(39, 37, 30, 0.404);
+    max-width: 640px;
+    min-width: 200px;
+    width: 50%;
+    margin: auto;
+    margin-top: 2%;
+    border-radius: 20px;
+    padding: 1%;
+    transform: translate3d(0, 1000px, 0);
+    animation: arrive 400ms ease-in 0.3s forwards;
+}
+#correct_answer {
+    margin: 10px 0px;
+}
+.qFormRemoveBtn {
+    display: block;
+    width: 50%;
+    padding: 15px 10px;
+    margin-top: 35px;
+    margin-left: 60.7%;
+    font-family: $font-family;
+    -webkit-appearance: none;
+    outline: 0;
+    border: 0;
+    color: white;
+    background: darken(rgb(235, 1, 1), 5%);
+    transition: 0.3s;
+    
+    &:hover {
+        background: darken(rgb(235, 1, 1), 10%);
+    }
+}
+#wrongAns {
+    display: inline-block;
+    width: 150%;
+    padding: 20px 30px;
+    margin-left: -15px;
+    font-family: $font-family;
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    transition: 0.3s;
+}
+.wrongAnsLabel {
+    margin-left: 15%;
+}
+.formTitle {
+    display: block;
+    font-size: 30px;
+    margin-bottom: -30px;
+}
+.quizTitle {
+    display: block;
+    font-size: 30px;
+    margin-bottom: 30px;
+    margin-top: -15px;
+}

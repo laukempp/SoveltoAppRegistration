@@ -1,11 +1,16 @@
 import React from "react";
 import "./App.css";
-import Register from "./components/admin/Register";
+import Register from "./components/registration/Register";
+import Routes from "./layout/Routes";
+import { BrowserRouter as Router } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
+    <Router>
     <div className="App">
-      <Register />
-    </div>
+      
+      <Routes />
+    </div> </Router>
   );
 }
 
