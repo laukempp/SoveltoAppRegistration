@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { loginUser } from "../../service/Auth";
 import auth from '../../service/Auth';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import Footer from "../../layout/Footer";
 import '../../styles/login.scss';
 export default function Login() {
@@ -88,10 +88,12 @@ export default function Login() {
               <button className="btnLogin" type="submit" disabled={isSubmitting}>
                 Login 
               </button>
+              
             </Form>
             
           )}
         </Formik>
+        <Link as={Link} to="/register">Luo uusi käyttäjä</Link>
         <Footer />
         
       </div>

@@ -3,7 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import './reg.scss';
 import * as Yup from "yup";
 import { registerUser } from "../../service/registerUser";
-
+import Logout from '../registration/RegRedirect';
+import RegRedirect from "../registration/RegRedirect";
 export default function Register() {
   const [message, setMessage] = useState({ message: "", success: false });
 
@@ -110,6 +111,7 @@ export default function Register() {
       </div>
     );
   } else if (message.success) {
-    return <div className="user__title">Käyttäjä luotu, voit nyt kirjautua sisään.</div>;
+    return <div className="text-white"><p>Käyttäjä luotu, voit nyt kirjautua sisään. </p>
+    <RegRedirect /></div>;
   }
 }
