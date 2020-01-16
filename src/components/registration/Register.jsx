@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Link } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage, FormikProvider } from "formik";
 import './reg.scss';
 import * as Yup from "yup";
 import { registerUser } from "../../service/registerUser";
@@ -104,6 +105,7 @@ export default function Register() {
                 <button className="btnLogin" type="submit" disabled={isSubmitting}>
                   Rekisteröidy
               </button>
+              <p className="text-white">Oletko jo rekisteröitynyt? <Link className="registerUser" as={Link} to="/login">Kirjaudu sisään</Link></p>
               </Form>
             )}
         </Formik>
