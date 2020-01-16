@@ -88,12 +88,13 @@ export default function Login() {
               <button className="btnLogin" type="submit" disabled={isSubmitting}>
                 Login 
               </button>
-              
+              <p className="text-white">Uusi käyttäjä? <Link className="registerUser" as={Link} to="/register">Rekisteröidy</Link></p>
             </Form>
             
           )}
+          
         </Formik>
-        <Link as={Link} to="/register">Luo uusi käyttäjä</Link>
+        
         <Footer />
         
       </div>
