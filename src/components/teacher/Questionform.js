@@ -148,8 +148,10 @@ export default function QuestionForm() {
                           <div className="row" id={index} key={index}>
                             <div className="col">
                               <label className="wrongAnsLabel" htmlFor={`wrong_answer.${one_wrong_answer}`}>Väärät vastaukset</label>
+                              
                               <Field 
                                 type="text"
+                                className="wrongAnsInput"
                                 value={one_wrong_answer}
                                 name={`wrong_answer.${index}`}
                                 placeholder="Lisää uusi"

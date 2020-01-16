@@ -101,7 +101,7 @@ export default function Register() {
                   className="invalidPassword"
                 />
 
-                <button className="btn" type="submit" disabled={isSubmitting}>
+                <button className="btnLogin" type="submit" disabled={isSubmitting}>
                   Rekisteröidy
               </button>
               </Form>

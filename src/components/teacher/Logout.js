@@ -8,7 +8,7 @@ export default function Logout() {
     })
           auth.logOut();      
     return ( 
-        <div className="logoutxt" >Logout successful
+        <div className="text-white" >Logout successful
        </div>
     )
 }

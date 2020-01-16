@@ -93,7 +93,7 @@ export default function Login() {
             
           )}
         </Formik>
-        <Link as={Link} to="/register">Luo uusi käyttäjä</Link>
+        <Link className="registerUser" as={Link} to="/register">Luo uusi käyttäjä</Link>
         <Footer />
         
       </div>
