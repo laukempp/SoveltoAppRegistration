@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function Checkbox({ option, count, unikey, toggleChecked }) {
-    
+
   let boxInfo = (
     <div className="mContainer">
       <div>
