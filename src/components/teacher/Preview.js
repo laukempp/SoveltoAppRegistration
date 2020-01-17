@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React from "react";
 import Checkbox from './Checkbox'
 
 export default function Preview({ questions, toggleChecked }) {
