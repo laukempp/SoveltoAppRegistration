@@ -20,7 +20,7 @@ export default function Login() {
     <>
       {authT ? <Redirect to="/dashboard" /> : null}
       <div className="user">
-        <h1 className="user__title">Sovelto Quiz Login</h1>
+        <h1 className="user__title">Soveltommi Login</h1>
         <Formik
           initialValues={{ login: "", password: "" }}
           validationSchema={loginSchema}
