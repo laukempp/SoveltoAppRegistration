@@ -112,7 +112,7 @@ export default function QuizForm() {
               <Field
                 type="name"
                 name="name"
-                placeholder="Kyselyn nimi"
+                placeholder="Tentin nimi"
                 id="kysynimi"
                 className={touched.name && errors.name ? "error" : null}
                 onChange={handleChange}
