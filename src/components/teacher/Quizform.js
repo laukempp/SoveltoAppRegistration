@@ -21,11 +21,15 @@ export default function QuizForm() {
   const [show, setShow] = useState(false);
   const [topics, setTopics] = useState([])
   const [title, setTitle] = useState()
+
+  //Muotoilee tulosten keräämiseen tarvittavan arrayn siten, että key on jokaisen kysymyksen id ja arvoksi tulee false
   const [checkedArray, setCheckedArray] = useState({checkboxes: questions.reduce((options, option) =>({...options, [option.id]: false}), {})});
   
+  //Hakee aihealueet tietokannasta lomakekenttää varten
   const fetchTopics = () => {
     getTopics().then(res => setTopics(res))
   }
+
   useEffect(() => {
     fetchTopics()
   }, [])
@@ -41,7 +45,8 @@ export default function QuizForm() {
     socket.on("renderScore", event => {
       console.log("tässä tulee oppilaan vastausdata", event)
     })
-
+  
+  //Funktio, joka kerää tulokset. Klikkaamalla checkboxia avaimen arvo muuttuu välillä true/false
   const toggleChecked = e => {
       const {name} = e.target;
       setCheckedArray(checkedArray => ({
@@ -49,15 +54,18 @@ export default function QuizForm() {
       }))
   }
 
+  //Funktio, joka rakentaa tulosarraysta arrayn, jossa on pelkästään valittujen kysymysten id:t (eli ne, joiden arvo on true)
   const createIdArray = () => {
       return Object.keys(checkedArray.checkboxes)
       .filter(checkbox => checkedArray.checkboxes[checkbox])
       .map(checkbox => 
       checkbox)
     }
-
+  
+  //Funktio, joka sulkee modaali-ikkunan  
   const handleClose = () => setShow(false);
-
+  
+  //Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
   const handleQuizSubmit = (e) => {
     e.preventDefault();
     let data = {title: title, question_ids: createIdArray(), quiznro: Math.round(Math.random() * 1000)}
