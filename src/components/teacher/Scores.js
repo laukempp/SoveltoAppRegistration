@@ -16,7 +16,7 @@ const Scores = () => {
       setQuestiondata(res.quizQuestions);
     });
   }, []);
-  console.log(scoreData);
+  console.log(scoreData[0]);
   console.log(questionData);
 
   const modifiedQuestionArray = questionData.map(question => {
@@ -33,31 +33,48 @@ const Scores = () => {
     // Finalizing the array
     return {
       question: question.question,
-      answers: [allAnswersMapped]
+      answers: allAnswersMapped,
+      correctOne: question.correct_answer
     };
+  });
+
+  const modifiedScore = scoreData.map(score => {
+    return score.user_answer;
   });
 
   console.log(modifiedQuestionArray);
 
-  // const array = transformQuizQuestions.map(question => (
-  //   <ScoreItem question={question.question} answers={question.answers} />
-  // ));
+  const array = modifiedQuestionArray.map((question, index) => {
+    return (
+      <div>
+        <ScoreItem
+          key={question.id}
+          question={question.question}
+          answers={question.answers}
+          correctOne={question.correctOne}
+          studentAnswer={scoreData[0].user_answer[index]}
+        />
+      </div>
+    );
+  });
 
-  return (
-    <div>
-      {modifiedQuestionArray.map(question => (
-        <div>
-          <h4>{question.question}</h4>
+  return <div>{array}</div>;
 
-          <ul>
-            {question.answers.map(sub => (
-              <li>{sub.answer} </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  );
+  // return (
+  //   <div>
+  //     {modifiedQuestionArray.map(question => (
+  //       <div>
+  //         <h4>{question.question}</h4>
+
+  //         <ul>
+  //           {question.answers.map(sub => (
+  //             <li>{sub.answer} </li>
+  //           ))}
+  //         </ul>
+  //       </div>
+  //     ))}
+  //   </div>
+  // );
 };
 
 export default Scores;
