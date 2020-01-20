@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Navigation = props => {
   return (
 
-    <Navbar className="navbar bg-light">
+    <Navbar collapseOnSelect expand="sm" className="navbar bg-light">
       <Nav.Link eventKey={1} as={Link} to="/dashboard">
         <Nav.Item><h3 id="sovelto-red">{props.title}</h3></Nav.Item>
       </Nav.Link>
