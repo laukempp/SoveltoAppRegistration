@@ -11,20 +11,20 @@ export default function Register() {
 
   const userSchema = Yup.object().shape({
     login: Yup.string()
-      .required("This field is required.")
-      .email("username has to be an email address."),
+      .required("Tämä kenttä vaaditaan.")
+      .email("Käyttäjänimen täytyy olla sähköposti."),
     password: Yup.string()
-      .required("password is required")
-      .min(8, "password has to be at least 8 characters long")
-      .max(128, "password too long, 128 characters is the max")
-      .matches(/^(?=.*\d).{8,}$/, "password must contain at least one number"),
+      .required("Tämä kenttä vaaditaan")
+      .min(8, "Salasanan pitää olla vähintään 8 merkkiä")
+      .max(128, "Salasana ei saa olla yli 128 merkkiä")
+      .matches(/^(?=.*\d).{8,}$/, "Salasanassa pitää olla vähintään yksi numero."),
     passwordConfirm: Yup.string()
-      .required("Password confirmation is required")
-      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Kirjoita salasana uudelleen")
+      .oneOf([Yup.ref("password")], "Salasanojen täytyy täsmätä.")
   });
   if (!message.success) {
     return (
-      <div className="user">
+      <div className="user text-white">
         <h1 className="user__title">Soveltommi rekisteröityminen</h1>
         <Formik
           initialValues={{ login: "", password: "" }}

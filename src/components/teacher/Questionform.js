@@ -140,6 +140,7 @@ export default function QuestionForm() {
                   className="wrongAns" name="wrong_answer"
                   render = {({remove, push }) => (
                     <div className="wrongAns">
+                      <label className="wrongAnsLabel"/*  htmlFor={`wrong_answer.${one_wrong_answer}`} */>Väärät vastaukset</label>
                       {values.wrong_answer && values.wrong_answer.length > 0 ? (
                         <div>
                         {values.wrong_answer.map((one_wrong_answer, index) => 
@@ -147,7 +148,7 @@ export default function QuestionForm() {
                            return (
                           <div className="row" id={index} key={index}>
                             <div className="col">
-                              <label className="wrongAnsLabel" htmlFor={`wrong_answer.${one_wrong_answer}`}>Väärät vastaukset</label>
+                              
                               
                               <Field 
                                 type="text"
@@ -197,11 +198,7 @@ export default function QuestionForm() {
 
 
                 <br />
-                <button className="btnLogin" onClick={event => {
-                  event.preventDefault();
-                  handleReset();
-                }}
-                >Tyhjennä</button>
+                
 
 
 
@@ -210,6 +207,12 @@ export default function QuestionForm() {
                     Lähetä
               </button>
                 </div>
+
+                <button className="btnLogin formEmpty" onClick={event => {
+                  event.preventDefault();
+                  handleReset();
+                }}
+                >Tyhjennä</button>
               </Form>
             )}
             }
