@@ -25,8 +25,7 @@ const Scores = () => {
         result={result}
         id={result.id}
         question={result.question}
-        count={result.count}
-        isCorrect={result.isCorrect}
+        data={result.results}
       />
     );
   });
