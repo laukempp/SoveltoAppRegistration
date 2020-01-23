@@ -1,6 +1,5 @@
 const url = "/api/topics/";
 
-
 export const fetchQuestions = querydata => {
   console.log("Tässä serviceclientissa näkyvä quiz-data " + querydata);
   let token = sessionStorage.getItem("tommi");
@@ -29,7 +28,6 @@ export const postQuiz = quiz => {
   });
 };
 
-
 export const getStudentQs = array => {
   let token = sessionStorage.getItem("tommi");
   console.log(JSON.stringify(array));
@@ -43,7 +41,6 @@ export const getStudentQs = array => {
     body: JSON.stringify(array)
   }).then(res => res.json());
 };
-
 
 export const postQuestion = question => {
   let token = sessionStorage.getItem("tommi");
@@ -65,7 +62,6 @@ export const getTopics = topic => {
     .catch(err => err);
 };
 
-
 export const postScores = score => {
   console.log("Tässä näkyy score" + score);
   return fetch(`/api/scores`, {
@@ -75,12 +71,19 @@ export const postScores = score => {
   });
 };
 
-export const getScores = () => {
-  return fetch("/api/scores")
-    .then(res => res.json())
-    .catch(err => err);
-};
+// export const getScores = () => {
+//   return fetch("/api/scores/all")
+//     .then(res => res.json())
+//     .catch(err => err);
+// };
 
+export const getScores = score => {
+  return fetch(`api/scores/all`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(score)
+  }).then(res => res.json());
+};
 
 /*
 

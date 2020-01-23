@@ -4,80 +4,96 @@ import ScoreItem from "./ScoreItem";
 
 const Scores = () => {
   const [scoreData, setScoreData] = useState([]);
-  const [questionData, setQuestiondata] = useState([]);
+  // const [questionData, setQuestiondata] = useState([]);
 
   // const fetchScores = () => {
   //   getScores().then(res => setScore(res));
   // };
 
+  const id = { quiz_id: 7 };
   useEffect(() => {
-    getScores().then(res => {
-      setScoreData(res.score);
-      setQuestiondata(res.quizQuestions);
+    getScores(id).then(res => {
+      setScoreData(res);
     });
   }, []);
-  console.log(scoreData[0]);
-  console.log(questionData);
+  console.log(scoreData);
 
-  const modifiedQuestionArray = questionData.map(question => {
-    // Combining answers to one array
-    const allAnswers = question.wrong_answer.concat(question.correct_answer);
-    console.log(allAnswers);
-    // Adding value of of "isCorrect" to answers
-    const allAnswersMapped = allAnswers.map(answer => {
-      return {
-        answer,
-        isCorrect: answer.includes(question.correct_answer)
-      };
-    });
-    // Finalizing the array
-    return {
-      question: question.question,
-      answers: allAnswersMapped,
-      correctOne: question.correct_answer
-    };
-  });
-
-  const modifiedScore = scoreData.map(score => {
-    return score.user_answer;
-  });
-
-  console.log(modifiedQuestionArray);
-
-  const array = modifiedQuestionArray.map((question, index) => {
+  // const scores = scoreData.map(result => {
+  const scores = scoreData.map(result => {
     return (
-      <div>
-        <ScoreItem
-          key={question.id}
-          question={question.question}
-          answers={question.answers}
-          correctOne={question.correctOne}
-          studentAnswer={scoreData[0].user_answer[index]}
-        />
-      </div>
+      <ScoreItem
+        result={result}
+        id={result.id}
+        question={result.question}
+        count={result.count}
+        isCorrect={result.isCorrect}
+      />
     );
   });
 
-  return <div>{array}</div>;
+  return <div>{scores}</div>;
 
-  // return (
-  //   <div>
-  //     {modifiedQuestionArray.map(question => (
-  //       <div>
-  //         <h4>{question.question}</h4>
+  // console.log(data);
 
-  //         <ul>
-  //           {question.answers.map(sub => (
-  //             <li>{sub.answer} </li>
-  //           ))}
-  //         </ul>
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
+  // const modifiedQuestionArray = questionData.map(question => {
+  //   // Combining answers to one array
+  //   const allAnswers = question.wrong_answer.concat(question.correct_answer);
+  //   console.log(allAnswers);
+  //   // Adding value of of "isCorrect" to answers
+  //   const allAnswersMapped = allAnswers.map(answer => {
+  //     return {
+  //       answer,
+  //       isCorrect: answer.includes(question.correct_answer)
+  //     };
+  //   });
+  //   // Finalizing the array
+  //   return {
+  //     question: question.question,
+  //     answers: allAnswersMapped,
+  //     correctOne: question.correct_answer
+  //   };
+  // });
+
+  // const modifiedScore = scoreData.map(score => {
+  //   return score.user_answer;
+  // });
+
+  // console.log(modifiedQuestionArray);
+
+  // const array = modifiedQuestionArray.map((question, index) => {
+
+  //     <div>
+  //       <ScoreItem
+  //         key={question.id}
+  //         question={question.question}
+  //         answers={question.answers}
+  //         correctOne={question.correctOne}
+  //         studentAnswer={scoreData[0].user_answer[index]}
+  //       />
+  //     </div>
+  //   );
+  // });
+
+  // return <div>{array}</div>;
 };
 
 export default Scores;
+
+// return (
+//   <div>
+//     {modifiedQuestionArray.map(question => (
+//       <div>
+//         <h4>{question.question}</h4>
+
+//         <ul>
+//           {question.answers.map(sub => (
+//             <li>{sub.answer} </li>
+//           ))}
+//         </ul>
+//       </div>
+//     ))}
+//   </div>
+// );
 
 //
 // return (
