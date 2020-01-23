@@ -4,22 +4,28 @@ const ScoreItem = ({ result, id, question, data }) => {
   console.log(data);
 
   return (
-    <div>
-      <h3>{question}</h3>
+    <div className="resultBG">
+      <h5>{question}</h5>
 
       {data.map(res => {
         let color = { backgroundColor: "#fff" };
         if (res.isCorrect === true) {
-          color = { backgroundColor: "#00ff00" };
+          color = { backgroundColor: "#33dd22" };
         } else {
-          color = { backgroundColor: "#fff73f" };
+          color = { backgroundColor: "#dfd861" };
         }
         return (
-          <div style={color}>
-            <ul>
-              {res.value} : {res.count}
-            </ul>
+          
+          <div >
+          <div className="resultContainer resCount" style={color}>
+            <div>
+             <span className="resValue"> {res.value}</span>
+              
+            </div>
+            
+          </div><span className="resNumber">{res.count} respondents</span>
           </div>
+          
         );
       })}
     </div>
