@@ -1,11 +1,27 @@
 import React from "react";
 
-const ScoreItem = ({ result, id, question, count, isCorrect }) => {
-  console.log(result);
+const ScoreItem = ({ result, id, question, data }) => {
+  console.log(data);
 
   return (
     <div>
-      <h2>{question}</h2>
+      <h3>{question}</h3>
+
+      {data.map(res => {
+        let color = { backgroundColor: "#fff" };
+        if (res.isCorrect === true) {
+          color = { backgroundColor: "#00ff00" };
+        } else {
+          color = { backgroundColor: "#fff73f" };
+        }
+        return (
+          <div style={color}>
+            <ul>
+              {res.value} : {res.count}
+            </ul>
+          </div>
+        );
+      })}
     </div>
   );
 
