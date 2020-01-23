@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getScores } from ".//../../service/Request";
 import ScoreItem from "./ScoreItem";
-
+import {Navigation} from '../../layout/Navbar';
 const Scores = () => {
   const [scoreData, setScoreData] = useState([]);
   // const [questionData, setQuestiondata] = useState([]);
@@ -30,7 +30,11 @@ const Scores = () => {
     );
   });
 
-  return <div>{scores}</div>;
+  return <div className="text-white">
+    <Navigation title={'Soveltommi'} />
+    <br />
+    <h3>Quiz id: {id.quiz_id}</h3>
+    {scores}</div>;
 
   // console.log(data);
 

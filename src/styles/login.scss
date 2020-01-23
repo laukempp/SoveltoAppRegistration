@@ -167,7 +167,7 @@ input[type=radio] {
 .text-white {
     color: ghostwhite;
 }
-
+//toimii
 .qFormContainer {
     background-color: rgba(39, 37, 30, 0.404);
     max-width: 640px;
@@ -341,4 +341,47 @@ input[type=radio] {
     color: black;
     font-weight: 600;
     margin: 0 10px;
+}
+.resCount {
+    display: inline-block;
+    /* padding: 0 100px; */
+    font-weight: 600;
+    color: black;
+    left: 90%;
+    /* background-color: #fff; */
+    
+    margin-left: auto;
+}
+.resValue {
+    color: black;
+    display: inline;
+}
+.resultContainer {
+    width: 65%;
+    margin: auto;
+    background-color: #fff;
+    text-align: left;
+    margin: 2px 0;
+}
+.resultBG {
+    background-color: rgba(39, 37, 30, 0.404);
+    max-width: 600px;
+    width: 70%;
+    margin: auto;
+    padding-bottom: 15px;
+    margin-top: 2%;
+    border-radius: 5px;
+}
+.resNumber {
+    margin-left: 2%;
+}
+@media (min-width: 1000px){
+    .resultBG {
+        background-color: rgba(39, 37, 30, 0.404);
+        width: 50%;
+        margin: auto;
+        padding-bottom: 15px;
+        margin-top: 2%;
+        border-radius: 5px;
+    }
 }
