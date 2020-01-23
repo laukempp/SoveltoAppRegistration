@@ -51,7 +51,7 @@ export default function QuestionForm() {
   if (authT) {
     return (
       <div><Navigation title={'Soveltommi'} />
-      <div className="qFormContainer">
+      <div className="questionFormContainer">
         <p className="text-white formTitle" >Luo uusi kysymys</p>
       <div className="user text-white">
         <Formik
