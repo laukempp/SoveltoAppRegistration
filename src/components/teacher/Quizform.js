@@ -13,7 +13,7 @@ const quizformSchema = Yup.object().shape({
   .required("number is required")
   .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
   .integer("Kokonaisluku, kiitos")
-  .lessThan(11, "Enintään 10 kysymystä, ei kiusata oppilaita enempää")
+  .lessThan(1000, "Enintään 1000 kysymystä, ei kiusata oppilaita enempää")
 });
 
 export default function QuizForm() {
@@ -168,7 +168,7 @@ export default function QuizForm() {
         <Modal show={show} onHide={handleClose}>
           <form onSubmit={handleQuizSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Esikatselu</Modal.Title>
+            <Modal.Title>Esikatselu Quizille #12</Modal.Title>
           </Modal.Header>
           <Modal.Body>           
             <Preview questions={questions} toggleChecked={toggleChecked}/>
