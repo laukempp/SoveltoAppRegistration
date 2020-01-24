@@ -19,7 +19,7 @@ const ScoreItem = ({ result, id, question, data }) => {
           <div >
           <div className="resultContainer resCount" style={color}>
             <div>
-             <span className="resValue"> {res.value}</span>
+             <span className="resValue"> {res.value}</span>
               
             </div>
             
