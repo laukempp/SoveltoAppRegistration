@@ -12,14 +12,14 @@ const ScoreItem = ({ result, id, question, data }) => {
         if (res.isCorrect === true) {
           color = { backgroundColor: "#33dd22" };
         } else {
-          color = { backgroundColor: "#dfd861" };
+          color = { backgroundColor: "#eedd9d" };
         }
         return (
           
           <div >
           <div className="resultContainer resCount" style={color}>
             <div>
-             <span className="resValue"> {res.value}</span>
+             <span className="resValue"> {res.value}</span>
               
             </div>
             
