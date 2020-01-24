@@ -12,7 +12,7 @@ const ScoreItem = ({ result, id, question, data }) => {
         if (res.isCorrect === true) {
           color = { backgroundColor: "#33dd22" };
         } else {
-          color = { backgroundColor: "#dfd861" };
+          color = { backgroundColor: "#eedd9d" };
         }
         return (
           
