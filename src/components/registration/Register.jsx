@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage, FormikProvider } from "formik";
+import { Formik, Form, Field, ErrorMessage} from "formik";
 import './reg.scss';
 import * as Yup from "yup";
 import { registerUser } from "../../service/registerUser";
 import Logout from '../registration/RegRedirect';
 import RegRedirect from "../registration/RegRedirect";
+
 export default function Register() {
   const [message, setMessage] = useState({ message: "", success: false });
 
@@ -21,15 +22,19 @@ export default function Register() {
     passwordConfirm: Yup.string()
       .required("Kirjoita salasana uudelleen")
       .oneOf([Yup.ref("password")], "Salasanojen täytyy täsmätä.")
-  });
+  })
+
+  const badge = Math.round(Math.random() * 100000);
+
   if (!message.success) {
     return (
       <div className="user text-white">
         <h1 className="user__title">Soveltommi rekisteröityminen</h1>
         <Formik
-          initialValues={{ login: "", password: "" }}
+          initialValues={{ login: "", password: "", teacher_badge: ""}}
           validationSchema={userSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
+            values.teacher_badge = badge;
             setSubmitting(true);
             registerUser(values).then(res => {
               setMessage(res);
