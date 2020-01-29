@@ -69,6 +69,7 @@ export default function QuizForm() {
   const handleQuizSubmit = (e) => {
     e.preventDefault();
     let data = {title: title, question_ids: createIdArray(), quiznro: Math.round(Math.random() * 1000)}
+    console.log(data)
     postQuiz(data)
     .then(() => eventMessage(data))
     .then(() => handleClose()) 
