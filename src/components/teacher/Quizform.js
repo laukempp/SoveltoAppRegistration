@@ -171,8 +171,10 @@ export default function QuizForm() {
           <Modal.Header closeButton>
             <Modal.Title>Esikatselu Quizille #12</Modal.Title>
           </Modal.Header>
-          <Modal.Body>           
+          <Modal.Body>  
+            <div className="quizPreview">        
             <Preview questions={questions} toggleChecked={toggleChecked}/>
+          </div> 
             </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

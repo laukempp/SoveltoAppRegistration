@@ -9,6 +9,7 @@ $color-primary: rgb(182, 87, 60);
     box-sizing: border-box;
 }
 
+//animated background for the application
 body {
     font-family: $font-family;
     font-size: $font-size;
@@ -18,13 +19,13 @@ body {
     background: linear-gradient(90deg, rgba(226, 0, 38, 0.89) 10%, rgb(226, 0, 38) 90%);
     height: 100vh
 }
-
+//sets margin and width generally for forms
 .user {
     width: 90%;
     max-width: 340px;
     margin: 10vh auto;
 }
-
+//header for dashboard main screen on top of add new quiz
 .user__header {
     text-align: center;
     opacity: 0;
@@ -38,7 +39,7 @@ body {
     font-weight: 700;
     color: rgb(255, 255, 255);
 }
-
+//form layout of quiz and questionform
 .form {
     margin-top: 40px;
     border-radius: 6px;
@@ -53,7 +54,7 @@ body {
     opacity: 1;
     transform: translate3d(0, 0, 0);
 }
-
+//display settings of input fields, using id instead of class because formik occupies className
 #passfield, #emailfield, #kysynimi, #kysynum, #topic_id, .wrongAns, #correct_answer, #question, #topics_id, #quiztopic {
     display: block;
     width: 100%;
@@ -68,7 +69,7 @@ body {
         background: darken(#fff, 3%);
     }
 }
-
+//login button padding, width etc, button also used in quiz and question forms
 .btnLogin {
     display: block;
     width: 100%;
@@ -149,13 +150,24 @@ body {
 }
 
 .mContainer {
+    display: inline-block;
+    width: 90%;
     margin-bottom: 10px;
     background: rgb(245, 236, 236);
     border-radius: 10px;
     padding: 6px;
 
 }
-
+.quizPreview {
+    position: relative;
+    overflow: auto;
+    
+}
+.previewCheckbox  {
+    position: absolute;
+    margin-top: 16%;
+   margin-left: 2%;
+}
 input[type=radio] {
     margin-right: 5px;
 }
