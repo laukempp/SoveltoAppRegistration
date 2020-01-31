@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import socketIOClient from 'socket.io-client';
 import Preview from './Preview';
+import { uuid } from 'uuidv4';
 
 const quizformSchema = Yup.object().shape({
   name: Yup.string().required("Anna tentille nimi."),
@@ -68,7 +69,7 @@ export default function QuizForm() {
   //Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
   const handleQuizSubmit = (e) => {
     e.preventDefault();
-    let data = {title: title, question_ids: createIdArray(), quiznro: Math.round(Math.random() * 1000)}
+    let data = {title: title, question_ids: createIdArray(),  quiz_author: sessionStorage.getItem('badge'), quiz_badge: uuid()}
     console.log(data)
     postQuiz(data)
     .then(() => eventMessage(data))
