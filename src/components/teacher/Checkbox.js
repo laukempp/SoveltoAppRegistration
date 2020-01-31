@@ -30,7 +30,7 @@ export default function Checkbox({ option, count, unikey, toggleChecked }) {
   return (
     <div>
       {boxInfo}
-      <input type="checkbox" name={option.id} onChange={toggleChecked}/>
+      <input className="previewCheckbox" type="checkbox" name={option.id} onChange={toggleChecked}/>
     </div>
   );
 }
