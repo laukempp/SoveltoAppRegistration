@@ -141,10 +141,16 @@ export default function QuestionForm() {
                   render = {({remove, push }) => (
                     <div className="wrongAns">
                       <label className="wrongAnsLabel"/*  htmlFor={`wrong_answer.${one_wrong_answer}`} */>Väärät vastaukset</label>
-                      {values.wrong_answer && values.wrong_answer.length > 0 ? (
+                      {values.wrong_answer && values.wrong_answer.length > -1 ? (
                         <div>
                         {values.wrong_answer.map((one_wrong_answer, index) => 
                              {console.log("Yksi" + one_wrong_answer + " tämä on index " + index)
+                             let btnDisabler = false;
+                             if(index < 1){
+                               btnDisabler = true;
+                             }
+                             else
+                                btnDisabler = false;
                            return (
                           <div className="row" id={index} key={index}>
                             <div className="col">
@@ -169,6 +175,7 @@ export default function QuestionForm() {
                             </div>
                             <div className="col">
                               <button
+                                disabled={btnDisabler}
                                 type="button"
                                 className="qFormRemoveBtn"
                                 onClick={() => remove(index)}>X
