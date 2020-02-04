@@ -25,6 +25,7 @@ export default function Dashboard() {
       <Quizform/>
       {/*  <Questionform /> */}
     
+      <div className="annoyingPopUpBot">Hei, Olen ärsyttävä chatbotti sivun alakulmassa. Enkä voi auttaa.</div>
     <Footer />
 
     </div>

@@ -116,6 +116,10 @@ export default function QuizForm() {
               <div className="form__group">
               <div className="em">  
               <span className="detail_span">Tentin nimi</span>
+              <ErrorMessage
+                render={msg => <div className="invalidErrorBubble">{msg}</div>}
+                name="name"
+              />
               <Field
                 type="name"
                 name="name"
@@ -127,11 +131,8 @@ export default function QuizForm() {
                 onBlur={handleBlur}
                 value={values.name || ""}
               /></div></div>
-              <ErrorMessage
-                component="div"
-                name="name"
-                className="invalidQName"
-              />
+              
+              
                 <span className="detail_span">Tentin aihe</span>
               <Field
                 as="select"
@@ -147,7 +148,13 @@ export default function QuizForm() {
                     <option key={option.id} value={option.id} label={option.title} />)}
               </Field>
 
-              <span className="detail_span">Kysymysten lukumäärä</span>
+              <div className="em">
+                <span className="detail_span">Kysymysten lukumäärä</span>
+                <ErrorMessage
+                render={msg => <div className="invalidErrorBubble">{msg}</div>}
+                name="number"
+              />
+
               <Field
                 name="questionCount"
                 render={({field}) => (
@@ -187,11 +194,13 @@ export default function QuizForm() {
                 onBlur={handleBlur}
                 value={values.number || ""}
               /></div>
+
               <ErrorMessage
                 component="div"
                 name="number"
                 className="invalidQNumber"
                 />
+
             <div className="em">
               <button className="btnLogin" type="submit" disabled={isSubmitting}>
                 Luo uusi
@@ -221,7 +230,8 @@ export default function QuizForm() {
           </Modal.Footer>
           </form>
         </Modal>
-      </div></div>
+      </div>
+      </div>
     </>
   );
 }
