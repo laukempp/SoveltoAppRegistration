@@ -8,20 +8,21 @@ import socketIOClient from 'socket.io-client';
 import Preview from './Preview';
 import { uuid } from 'uuidv4';
 
+//validointi lomakkeeseen
 const quizformSchema = Yup.object().shape({
-  name: Yup.string().required("Anna tentille nimi."),
+  name: Yup.string().required("Tentillä täytyy olla nimi"),
   number: Yup.number()
-  .required("number is required")
   .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
-  .integer("Kokonaisluku, kiitos")
-  .lessThan(1000, "Enintään 1000 kysymystä, ei kiusata oppilaita enempää")
+  .integer("Numeron täytyy olla kokonaisluku")
+  .lessThan(101, "Luku saa olla enintään 100")
 });
 
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
   const [show, setShow] = useState(false);
   const [topics, setTopics] = useState([])
-  const [title, setTitle] = useState()
+  const [title, setTitle] = useState();
+  const [nro, setNumber] = useState();
 
   //Muotoilee tulosten keräämiseen tarvittavan arrayn siten, että key on jokaisen kysymyksen id ja arvoksi tulee false
   const [checkedArray, setCheckedArray] = useState({checkboxes: questions.reduce((options, option) =>({...options, [option.id]: false}), {})});
@@ -80,16 +81,20 @@ export default function QuizForm() {
     socket.emit('eventClick', 'tämä tulee quizformista')
   }*/
 
+  console.log(nro)
+
   return (
     <>
     <div className="qFormContainer text-white">
       <h3 className="detail_header formTitle">Luo uusi tentti</h3>
       <div className="user">     
         <Formik
-          initialValues={{name: '', topics_id: 1, number: 0 }}
+          initialValues={{name: '', topics_id: 1, number: 0, questionCount: "true"}}
           validationSchema={quizformSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
+            values.number = values.questionCount === "true" ? 0 : nro;
             setSubmitting(true);
+            console.log(values)
             fetchQuestions(values)
               .then(res => setQuestions(res))
               .then(() => setTitle(values.name))
@@ -142,23 +147,60 @@ export default function QuizForm() {
                 {topics.map(option => 
                     <option key={option.id} value={option.id} label={option.title} />)}
               </Field>
+
               <div className="em">
                 <span className="detail_span">Kysymysten lukumäärä</span>
                 <ErrorMessage
                 render={msg => <div className="invalidErrorBubble">{msg}</div>}
                 name="number"
               />
+
               <Field
+                name="questionCount"
+                render={({field}) => (
+                  <div>
+                  <div>
+                    <label>Kaikki kysymykset: </label>
+                   <input
+                    {...field}
+                      name="questionCount"
+                      type="radio" 
+                      value="true"
+                      checked={field.value === "true"}
+                      onChange={handleChange}/>
+                  </div>
+                  <div>
+                    <label>Valitse kysymysten lukumäärä: </label>
+                   <input 
+                   {...field}
+                      type="radio" 
+                      name="questionCount"
+                      value="false"
+                      checked={field.value === "false"}
+                      onChange={handleChange}/>
+                </div> 
+                </div>              
+              )}/>
+              
+
+              <div className={values.questionCount === "true" ? "hidden" : "em"}>
+                <Field
                 type="number"
                 name="number"
                 id="kysynum"
                 placeholder="Kysymysten määrä"
                 className={touched.number && errors.number ? "error" : null}
-                onChange={handleChange}
+                onChange={(e) => {handleChange(e); setNumber(e.target.value)}}
                 onBlur={handleBlur}
                 value={values.number || ""}
               /></div>
-              
+
+              <ErrorMessage
+                component="div"
+                name="number"
+                className="invalidQNumber"
+                />
+
             <div className="em">
               <button className="btnLogin" type="submit" disabled={isSubmitting}>
                 Luo uusi
