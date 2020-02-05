@@ -74,7 +74,8 @@ export default function QuizForm() {
     console.log(data)
     postQuiz(data)
     .then(() => eventMessage(data))
-    .then(() => handleClose()) 
+    .then(() => handleClose())
+    .then(() => setCheckedArray({checkboxes: questions.reduce((options, option) =>({...options, [option.id]: false}), {})}))
   }
 
   /*const eventClick = () => {
@@ -144,7 +145,7 @@ export default function QuizForm() {
                 value={values.topics_id}
                 style={{ display: "block" }}
               >
-                {topics.map(option => 
+                {topics.length > 1 && topics.map(option => 
                     <option key={option.id} value={option.id} label={option.title} />)}
               </Field>
 
