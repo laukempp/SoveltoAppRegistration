@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getScores } from ".//../../service/Request";
 import ScoreItem from "./ScoreItem";
 import {Navigation} from '../../layout/Navbar';
+
 const Scores = () => {
   const [scoreData, setScoreData] = useState([]);
   // const [questionData, setQuestiondata] = useState([]);
@@ -10,9 +11,13 @@ const Scores = () => {
   //   getScores().then(res => setScore(res));
   // };
 
-  const id = { quiz_id: 7 };
+  const id = sessionStorage.getItem('badge')
+  const badge = {teacher_badge: parseInt(id)};
+
+  console.log(badge)
+
   useEffect(() => {
-    getScores(id).then(res => {
+    getScores(badge).then(res => {
       setScoreData(res);
     });
   }, []);
