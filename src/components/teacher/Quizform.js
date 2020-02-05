@@ -10,13 +10,16 @@ import { uuid } from 'uuidv4';
 
 //validointi lomakkeeseen
 const quizformSchema = Yup.object().shape({
+  name: Yup.string().required("Tentillä täytyy olla nimi")
+});
+
+const quizformSelectNumberScema = Yup.object().shape({
   name: Yup.string().required("Tentillä täytyy olla nimi"),
   number: Yup.number()
   .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
   .integer("Numeron täytyy olla kokonaisluku")
-  .lessThan(101, "Luku saa olla enintään 100")
+  .lessThan(10001, "Luku saa olla enintään 10000")
 });
-
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
   const [show, setShow] = useState(false);
@@ -75,6 +78,7 @@ export default function QuizForm() {
     postQuiz(data)
     .then(() => eventMessage(data))
     .then(() => handleClose()) 
+    .then(() =>  setCheckedArray({checkboxes: questions.reduce((options, option) =>({...options, [option.id]: false}), {})}))
   }
 
   /*const eventClick = () => {
@@ -149,7 +153,7 @@ export default function QuizForm() {
               </Field>
 
               <div className="em">
-                <span className="detail_span">Kysymysten lukumäärä</span>
+                <span className="detail_span text-center">Kysymysten lukumäärä</span>
                 <ErrorMessage
                 render={msg => <div className="invalidErrorBubble">{msg}</div>}
                 name="number"
@@ -159,8 +163,8 @@ export default function QuizForm() {
                 name="questionCount"
                 render={({field}) => (
                   <div>
-                  <div>
-                    <label>Kaikki kysymykset: </label>
+                  <div className="inline-block">
+                    <label>Kaikki: </label>
                    <input
                     {...field}
                       name="questionCount"
@@ -169,8 +173,8 @@ export default function QuizForm() {
                       checked={field.value === "true"}
                       onChange={handleChange}/>
                   </div>
-                  <div>
-                    <label>Valitse kysymysten lukumäärä: </label>
+                  <div className="inline-block">
+                    <label>Valitse: </label>
                    <input 
                    {...field}
                       type="radio" 
@@ -195,11 +199,7 @@ export default function QuizForm() {
                 value={values.number || ""}
               /></div>
 
-              <ErrorMessage
-                component="div"
-                name="number"
-                className="invalidQNumber"
-                />
+             
 
             <div className="em">
               <button className="btnLogin" type="submit" disabled={isSubmitting}>
