@@ -78,6 +78,7 @@ export default function QuizForm() {
     postQuiz(data)
     .then(() => eventMessage(data))
     .then(() => handleClose()) 
+    .then(() =>  setCheckedArray({checkboxes: questions.reduce((options, option) =>({...options, [option.id]: false}), {})}))
   }
 
   /*const eventClick = () => {
