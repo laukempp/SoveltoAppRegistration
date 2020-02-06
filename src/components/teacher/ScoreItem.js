@@ -19,7 +19,7 @@ const ScoreItem = ({ result, id, question, data }) => {
         counter += score.count;
         console.log(counter);
         if (score.isCorrect === true) {
-          return <span>Question score: {(score.count / counter) * 100}%</span>;
+          return <span>{(score.count / counter) * 100}% got it right</span>;
         }
       })}
 
