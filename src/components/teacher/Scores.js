@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getScores } from ".//../../service/Request";
 import ScoreItem from "./ScoreItem";
-import {Navigation} from '../../layout/Navbar';
+import { Navigation } from "../../layout/Navbar";
 
 const Scores = () => {
   const [scoreData, setScoreData] = useState([]);
@@ -11,10 +11,10 @@ const Scores = () => {
   //   getScores().then(res => setScore(res));
   // };
 
-  const id = sessionStorage.getItem('badge')
-  const badge = {teacher_badge: parseInt(id)};
+  const id = sessionStorage.getItem("badge");
+  const badge = { teacher_badge: parseInt(id) };
 
-  console.log(badge)
+  console.log(badge);
 
   useEffect(() => {
     getScores(badge).then(res => {
@@ -23,7 +23,6 @@ const Scores = () => {
   }, []);
   console.log(scoreData);
 
-  // const scores = scoreData.map(result => {
   const scores = scoreData.map(result => {
     return (
       <ScoreItem
@@ -34,12 +33,34 @@ const Scores = () => {
       />
     );
   });
+  let howManyCorrect = 0;
+  let howManyAnswers = 0;
+  const answers = scoreData.map(result => {
+    const answerss = result.results;
+    console.log(answerss);
+    answerss.map(answerr => {
+      howManyAnswers += answerr.count;
+      if (answerr.isCorrect === true) {
+        howManyCorrect += answerr.count;
+      }
+    });
+  });
+  console.log(answers);
+  console.log(howManyCorrect);
 
-  return <div className="text-white">
-    <Navigation title={'Soveltommi'} />
-    <br />
-    <h3>Quiz id: {id.quiz_id}</h3>
-    {scores}</div>;
+  return (
+    <div className="text-white">
+      <Navigation title={"Soveltommi"} />
+      <br />
+      <h3>Quiz id: {id.quiz_id}</h3>
+      <h4>
+        Quiz Total Score:{" "}
+        {Math.round((howManyCorrect / howManyAnswers) * 100 * 100) / 100}%
+      </h4>
+      <div></div>
+      {scores}
+    </div>
+  );
 
   // console.log(data);
 
