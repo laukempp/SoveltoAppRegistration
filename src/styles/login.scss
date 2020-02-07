@@ -407,7 +407,7 @@ input[type=radio] {
     padding-left: 1%;
     padding-right: 1%;
 }
-@media (min-width: 1000px){
+/* @media (min-width: 1000px){
     .resultBG {
         background-color: rgba(39, 37, 30, 0.404);
         width: 50%;
@@ -416,7 +416,7 @@ input[type=radio] {
         margin-top: 2%;
         border-radius: 5px;
     }
-}
+} */
 
 .invalidErrorBubble {
     background-color: rgb(46, 42, 42);
@@ -453,9 +453,9 @@ input[type=radio] {
     height: 30px;
     bottom: 0;
     left: 0;
-    width: 30%;
+    width: 25%;
     text-align: left;
-    position: absolute;
+    position: relative;
     font-size: 14px;
     opacity: 50%;
     &:hover {
