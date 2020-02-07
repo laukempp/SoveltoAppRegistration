@@ -373,7 +373,9 @@ input[type=radio] {
     display: inline;
 }
 .resultContainer {
-    width: 65%;
+    max-width: 70%;
+    width: 70%;
+    display: inline-block;
     margin: auto;
     background-color: #fff;
     text-align: left;
@@ -382,7 +384,7 @@ input[type=radio] {
 .resultBG {
     background-color: rgba(39, 37, 30, 0.404);
     max-width: 600px;
-    width: 70%;
+    width: 100%;
     margin: auto;
     padding-bottom: 15px;
     margin-top: 2%;
@@ -390,7 +392,20 @@ input[type=radio] {
     
 }
 .resNumber {
+    display: grid;
+    float: left;
     margin-left: 2%;
+    margin-right: 2%;
+}
+.valueContainer {
+    float: left;
+    
+}
+.thisd {
+    display: inline-flex;
+    width: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
 }
 @media (min-width: 1000px){
     .resultBG {

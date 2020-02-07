@@ -31,15 +31,15 @@ const ScoreItem = ({ result, id, question, data }) => {
           color = { backgroundColor: "#eedd9d" };
         }
         return (
-          <div>
+          <div className="thisd">
             <div className="resultContainer resCount" style={color}>
-              <div>
+              <div className="valueContainer">
                 <span className="resValue"> {res.value}</span>
               </div>
             </div>
-            <span className="resNumber">
+            <div className="resNumber">
               {res.count} respondents ({(res.count / counter) * 100}%)
-            </span>
+            </div>
           </div>
         );
       })}
