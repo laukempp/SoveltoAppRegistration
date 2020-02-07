@@ -19,7 +19,7 @@ const ScoreItem = ({ result, id, question, data }) => {
         counter += score.count;
         console.log(counter);
         if (score.isCorrect === true) {
-          return <span>{(score.count / counter) * 100}% got it right</span>;
+          return <span>{Math.round((score.count / counter) * 100)}% got it right</span>;
         }
       })}
 
@@ -38,7 +38,7 @@ const ScoreItem = ({ result, id, question, data }) => {
               </div>
             </div>
             <div className="resNumber">
-              {res.count} respondents ({(res.count / counter) * 100}%)
+              {res.count} respondents ({Math.round((res.count / counter) * 100)}%)
             </div>
           </div>
         );
