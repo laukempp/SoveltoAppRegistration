@@ -95,7 +95,7 @@ export default function QuizForm() {
       <h3 className="detail_header formTitle">Luo uusi tentti</h3>
       <div className="user">     
         <Formik
-          initialValues={{name: '', topics_id: 1, number: 1000, questionCount: "true"}}
+          initialValues={{name: '', topics_id: 1, number: 0, questionCount: "true"}}
           validationSchema={quizformSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             values.number = values.questionCount === "true" ? 1000 : nro;
