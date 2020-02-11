@@ -68,7 +68,9 @@ export default function QuizForm() {
     }
   
   //Funktio, joka sulkee modaali-ikkunan  
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setCheckedArray({checkboxes: questions.reduce((options, option) =>({...options, [option.id]: false}), {})})
+    setShow(false)}
   
   //Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
   const handleQuizSubmit = (e) => {
@@ -99,7 +101,7 @@ export default function QuizForm() {
           initialValues={{name: '', topics_id: 1, number: 0, questionCount: "true"}}
           validationSchema={quizformSchema}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            values.number = values.questionCount === "true" ? 0 : nro;
+            values.number = values.questionCount === "true" ? 1000 : nro;
             setSubmitting(true);
             console.log(values)
             fetchQuestions(values)
@@ -151,7 +153,7 @@ export default function QuizForm() {
                 value={values.topics_id}
                 style={{ display: "block" }}
               >
-                {topics.map(option => 
+                {topics.length > 1 && topics.map(option => 
                     <option key={option.id} value={option.id} label={option.title} />)}
               </Field>
 
