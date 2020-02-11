@@ -52,7 +52,7 @@ const Scores = () => {
     <div className="text-white">
       <Navigation title={"Soveltommi"} />
       <br />
-      <h3>Quiz id: {id.quiz_id}</h3>
+      {/* <h3>Quiz id: {id.quiz_id}</h3> */}
       <h4>
         Quiz Total Score:{" "}
         {Math.round((howManyCorrect / howManyAnswers) * 100 * 100) / 100}%
