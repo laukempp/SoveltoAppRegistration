@@ -4,8 +4,7 @@ import * as Yup from "yup";
 import { fetchQuestions, getTopics, postQuiz } from "../../service/Request";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { Tab, Tabs, TabList } from "react-tabs";
-import SingleQuestionForm from "../teacher/SingleQuestionform";
+import SingleQuestionform from "../teacher/SingleQuestionform";
 
 import socketIOClient from "socket.io-client";
 import Preview from "./Preview";
@@ -23,9 +22,11 @@ const quizformSelectNumberScema = Yup.object().shape({
     .integer("Numeron täytyy olla kokonaisluku")
     .lessThan(10001, "Luku saa olla enintään 10000")
 });
+
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
   const [show, setShow] = useState(false);
+  const [showw, setShoww] = useState(false);
   const [topics, setTopics] = useState([]);
   const [title, setTitle] = useState();
   const [nro, setNumber] = useState();
@@ -111,228 +112,232 @@ export default function QuizForm() {
         })
       );
   };
+  const initial = {
+    question: "",
+    correct_answer: "",
+    wrong_answer: [""],
+    topics_id: 1
+  };
+
+  console.log(topics);
+
+  const openQuestionform = () => {
+    setShoww(true);
+  };
+
+  const closeQuestionform = () => {
+    setShoww(false);
+  };
 
   /*const eventClick = () => {
     socket.emit('eventClick', 'tämä tulee quizformista')
   }*/
 
-  const [activeTab, setActiveTab] = useState(false);
-
-  const tabSwitch = () => {
-    console.log();
-    if (activeTab === false && document.getElementById("tab2")) {
-      setActiveTab(true);
-    }
-    if (activeTab === true && document.getElementById("tab1")) {
-      setActiveTab(false);
-    }
-    return;
-  };
-  console.log(activeTab);
-
-  if (activeTab) {
-    return <SingleQuestionForm />;
-  } else {
-    return (
-      <>
-        <div className="qFormContainer text-white">
-          <div className="tabs">
-            <div>
-              <div>
-                {" "}
-                <button id="tab1" onClick={tabSwitch}>
-                  Tab 1
-                </button>
-              </div>
-              <div>
-                {" "}
-                <button id="tab2" onClick={tabSwitch}>
-                  {" "}
-                  Tab 2
-                </button>
-              </div>
-            </div>
-          </div>
-          <h3 className="detail_header formTitle">Luo uusi tentti</h3>
-          <div className="user">
-            <Formik
-              initialValues={{
-                name: "",
-                topics_id: 1,
-                number: 0,
-                questionCount: "true"
-              }}
-              validationSchema={quizformSchema}
-              onSubmit={(values, { setSubmitting, resetForm }) => {
-                values.number = values.questionCount === "true" ? 1000 : nro;
-                setSubmitting(true);
-                console.log(values);
-                fetchQuestions(values)
-                  .then(res => setQuestions(res))
-                  .then(() => setTitle(values.name))
-                  .then(() => setShow(true));
-                resetForm();
-                setSubmitting(false);
-              }}
-            >
-              {({
-                values,
-                errors,
-                touched,
-                isSubmitting,
-                handleChange,
-                handleBlur,
-                handleSubmit
-              }) => (
-                <Form className="form" onSubmit={handleSubmit}>
-                  <div className="form__group">
-                    <div className="em">
-                      <span className="detail_span">Tentin nimi</span>
-                      <ErrorMessage
-                        render={msg => (
-                          <div className="invalidErrorBubble">{msg}</div>
-                        )}
-                        name="name"
-                      />
-                      <Field
-                        type="name"
-                        name="name"
-                        placeholder="Tentin nimi"
-                        id="kysynimi"
-                        className={touched.name && errors.name ? "error" : null}
-                        onChange={handleChange}
-                        autoComplete="off"
-                        onBlur={handleBlur}
-                        value={values.name || ""}
-                      />
-                    </div>
-                  </div>
-                  <span className="detail_span">Tentin aihe</span>
-                  <Field
-                    as="select"
-                    name="topics_id"
-                    id="quiztopic"
-                    className={
-                      touched.topics_id && errors.topics_id ? "error" : null
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.topics_id}
-                    style={{ display: "block" }}
-                  >
-                    {topics.length > 1 &&
-                      topics.map(option => (
-                        <option
-                          key={option.id}
-                          value={option.id}
-                          label={option.title}
-                        />
-                      ))}
-                  </Field>
+  return (
+    <>
+      <div className="qFormContainer text-white">
+        <h3 className="detail_header formTitle">Luo uusi tentti</h3>
+        <div className="user">
+          <Formik
+            initialValues={{
+              name: "",
+              topics_id: 1,
+              number: 0,
+              questionCount: "true"
+            }}
+            validationSchema={quizformSchema}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              values.number = values.questionCount === "true" ? 1000 : nro;
+              setSubmitting(true);
+              console.log(values);
+              fetchQuestions(values)
+                .then(res => setQuestions(res))
+                .then(() => setTitle(values.name))
+                .then(() => setShow(true));
+              resetForm();
+              setSubmitting(false);
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              isSubmitting,
+              handleChange,
+              handleBlur,
+              handleSubmit
+            }) => (
+              <Form className="form" onSubmit={handleSubmit}>
+                <div className="form__group">
                   <div className="em">
-                    <span className="detail_span text-center">
-                      Kysymysten lukumäärä
-                    </span>
+                    <span className="detail_span">Tentin nimi</span>
                     <ErrorMessage
                       render={msg => (
                         <div className="invalidErrorBubble">{msg}</div>
                       )}
-                      name="number"
+                      name="name"
                     />
-
                     <Field
-                      name="questionCount"
-                      render={({ field }) => (
-                        <div>
-                          <div className="inline-block">
-                            <label>Kaikki: </label>
-                            <input
-                              {...field}
-                              name="questionCount"
-                              type="radio"
-                              value="true"
-                              checked={field.value === "true"}
-                              onChange={handleChange}
-                            />
-                          </div>
-                          <div className="inline-block">
-                            <label>Valitse: </label>
-                            <input
-                              {...field}
-                              type="radio"
-                              name="questionCount"
-                              value="false"
-                              checked={field.value === "false"}
-                              onChange={handleChange}
-                            />
-                          </div>
-                        </div>
-                      )}
+                      type="name"
+                      name="name"
+                      placeholder="Tentin nimi"
+                      id="kysynimi"
+                      className={touched.name && errors.name ? "error" : null}
+                      onChange={handleChange}
+                      autoComplete="off"
+                      onBlur={handleBlur}
+                      value={values.name || ""}
                     />
-
-                    <div
-                      className={
-                        values.questionCount === "true" ? "hidden" : "em"
-                      }
-                    >
-                      <Field
-                        type="number"
-                        name="number"
-                        id="kysynum"
-                        placeholder="Kysymysten määrä"
-                        className={
-                          touched.number && errors.number ? "error" : null
-                        }
-                        onChange={e => {
-                          handleChange(e);
-                          setNumber(e.target.value);
-                        }}
-                        onBlur={handleBlur}
-                        value={values.number || ""}
+                  </div>
+                </div>
+                <span className="detail_span">Tentin aihe</span>
+                <Field
+                  as="select"
+                  name="topics_id"
+                  id="quiztopic"
+                  className={
+                    touched.topics_id && errors.topics_id ? "error" : null
+                  }
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.topics_id}
+                  style={{ display: "block" }}
+                >
+                  {topics.length > 1 &&
+                    topics.map(option => (
+                      <option
+                        key={option.id}
+                        value={option.id}
+                        label={option.title}
                       />
-                    </div>
+                    ))}
+                </Field>
+                <div className="em">
+                  <span className="detail_span text-center">
+                    Kysymysten lukumäärä
+                  </span>
+                  <ErrorMessage
+                    render={msg => (
+                      <div className="invalidErrorBubble">{msg}</div>
+                    )}
+                    name="number"
+                  />
 
+                  <Field
+                    name="questionCount"
+                    render={({ field }) => (
+                      <div>
+                        <div className="inline-block">
+                          <label>Kaikki: </label>
+                          <input
+                            {...field}
+                            name="questionCount"
+                            type="radio"
+                            value="true"
+                            checked={field.value === "true"}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="inline-block">
+                          <label>Valitse: </label>
+                          <input
+                            {...field}
+                            type="radio"
+                            name="questionCount"
+                            value="false"
+                            checked={field.value === "false"}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  />
+
+                  <div
+                    className={
+                      values.questionCount === "true" ? "hidden" : "em"
+                    }
+                  >
+                    <Field
+                      type="number"
+                      name="number"
+                      id="kysynum"
+                      placeholder="Kysymysten määrä"
+                      className={
+                        touched.number && errors.number ? "error" : null
+                      }
+                      onChange={e => {
+                        handleChange(e);
+                        setNumber(e.target.value);
+                      }}
+                      onBlur={handleBlur}
+                      value={values.number || ""}
+                    />
+                  </div>
+
+                  <div className="em">
+                    <button
+                      className="btnLogin"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Tentti valmiista kysymyksistä
+                    </button>
+                  </div>
+                  <div>
                     <div className="em">
                       <button
                         className="btnLogin"
-                        type="submit"
-                        disabled={isSubmitting}
+                        type="button"
+                        onClick={openQuestionform}
                       >
-                        Luo uusi
+                        Luo kysymyksiä ja tenttejä
                       </button>
                     </div>
-                  </div>{" "}
-                </Form>
-              )}
-            </Formik>
-            {/*  <button onClick={buttonHappen}>send message</button> */}
-
-            <Modal show={show} onHide={handleClose}>
-              <form onSubmit={handleQuizSubmit}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Esikatselu Quizille #12</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className="quizPreview">
-                    <Preview
-                      questions={questions}
-                      toggleChecked={toggleChecked}
-                    />
                   </div>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Sulje
-                  </Button>
-                  <Button className="sendQ" type="submit">
-                    Lähetä quiz
-                  </Button>
-                </Modal.Footer>
-              </form>
-            </Modal>
-          </div>
+                </div>{" "}
+              </Form>
+            )}
+          </Formik>
+          {/*  <button onClick={buttonHappen}>send message</button> */}
+
+          <Modal show={show} onHide={handleClose}>
+            <form onSubmit={handleQuizSubmit}>
+              <Modal.Header closeButton>
+                <Modal.Title>Esikatselu Quizille #12</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="quizPreview">
+                  <Preview
+                    questions={questions}
+                    toggleChecked={toggleChecked}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Sulje
+                </Button>
+              </Modal.Footer>
+            </form>
+          </Modal>
+          <Modal show={showw} onHide={closeQuestionform}>
+            <div>
+              <Modal.Header>
+                <Modal.Title>Luo kysymys ja tentti</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div>
+                  <SingleQuestionform initial={initial} />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={closeQuestionform}>Sulje</Button>
+              </Modal.Footer>
+            </div>
+          </Modal>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }
