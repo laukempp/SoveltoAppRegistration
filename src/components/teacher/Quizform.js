@@ -26,7 +26,7 @@ const quizformSelectNumberScema = Yup.object().shape({
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
   const [show, setShow] = useState(false);
-  const [showw, setShoww] = useState(false);
+  const [showQuestionform, setShowQuestionform] = useState(false);
   const [topics, setTopics] = useState([]);
   const [title, setTitle] = useState();
   const [nro, setNumber] = useState();
@@ -38,6 +38,7 @@ export default function QuizForm() {
       {}
     )
   });
+  console.log(checkedArray);
 
   //Hakee aihealueet tietokannasta lomakekenttää varten
   const fetchTopics = () => {
@@ -112,21 +113,15 @@ export default function QuizForm() {
         })
       );
   };
-  const initial = {
-    question: "",
-    correct_answer: "",
-    wrong_answer: [""],
-    topics_id: 1
-  };
 
   console.log(topics);
 
   const openQuestionform = () => {
-    setShoww(true);
+    showQuestionform(true);
   };
 
   const closeQuestionform = () => {
-    setShoww(false);
+    setShowQuestionform(false);
   };
 
   /*const eventClick = () => {
@@ -318,17 +313,20 @@ export default function QuizForm() {
                 <Button variant="secondary" onClick={handleClose}>
                   Sulje
                 </Button>
+                <Button className="sendQ" type="submit">
+                  Lähetä quiz
+                </Button>
               </Modal.Footer>
             </form>
           </Modal>
-          <Modal show={showw} onHide={closeQuestionform}>
+          <Modal show={showQuestionform} onHide={closeQuestionform}>
             <div>
               <Modal.Header>
                 <Modal.Title>Luo kysymys ja tentti</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <div>
-                  <SingleQuestionform initial={initial} />
+                  <SingleQuestionform />
                 </div>
               </Modal.Body>
               <Modal.Footer>

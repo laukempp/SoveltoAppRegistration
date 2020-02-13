@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Navigation } from "../../layout/Navbar";
 import { uuid } from "uuidv4";
 
-const SingleQuestionform = ({ initial }) => {
+const SingleQuestionform = () => {
   const [topics, setTopics] = useState([]);
   const validationSchema = Yup.object().shape({
     question: Yup.string()
@@ -37,13 +37,29 @@ const SingleQuestionform = ({ initial }) => {
   return (
     <div>
       <Formik
-        initialValues={initial}
+        initialValues={{
+          question: "",
+          correct_answer: "",
+          wrong_answer: [""],
+          topics_id: 1,
+          isFirstButton: false,
+          isSecondButton: false,
+          isThirdButton: false
+        }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          setSubmitting(true);
-          postQuestion(values);
-          resetForm();
-          setSubmitting(false);
+          if (values.isFirstButton) {
+            setSubmitting(true);
+            postQuestion(values);
+            resetForm();
+            setSubmitting(false);
+          }
+          if (values.isSecondButton) {
+            console.log("kakkosnappi toimii");
+          }
+          if (values.isThirdButton) {
+            console.log("kolmosnappi toimii");
+          }
         }}
       >
         {({
@@ -54,7 +70,8 @@ const SingleQuestionform = ({ initial }) => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          handleReset
+          handleReset,
+          setFieldValue
         }) => {
           return (
             <Form onSubmit={handleSubmit}>
@@ -189,9 +206,14 @@ const SingleQuestionform = ({ initial }) => {
 
               <div className="input-row">
                 <button
+                  id="first-button"
                   className="btnLogin"
-                  type="submit"
+                  type="button"
                   disabled={isSubmitting}
+                  onClick={e => {
+                    setFieldValue("isFirstButton", true);
+                    handleSubmit(e);
+                  }}
                 >
                   Tallenna kysymys kysymyspankkiin
                 </button>
@@ -200,7 +222,15 @@ const SingleQuestionform = ({ initial }) => {
                 <br />
               </div>
               <div className="input-row">
-                <button className="btnLogin" type="button">
+                <button
+                  id="second-button"
+                  className="btnLogin"
+                  type="button"
+                  onClick={e => {
+                    setFieldValue("isSecondButton", true);
+                    handleSubmit(e);
+                  }}
+                >
                   Tallenna kysymyspankkiin ja aloita tentti
                 </button>
                 <div>
@@ -208,7 +238,15 @@ const SingleQuestionform = ({ initial }) => {
                 </div>
               </div>
               <div className="input-row">
-                <button className="btnLogin" type="button">
+                <button
+                  id="third-button"
+                  className="btnLogin"
+                  type="button"
+                  onClick={e => {
+                    setFieldValue("isThirdButton", true);
+                    handleSubmit(e);
+                  }}
+                >
                   Aloita tentti tallentamatta kysymystä
                 </button>
               </div>
