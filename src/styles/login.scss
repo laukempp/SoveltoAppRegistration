@@ -1,3 +1,4 @@
+//setting primary color, font family and font size for the application
 $font-family:   "Roboto";
 $font-size:     14px;
 
@@ -131,27 +132,30 @@ body {
         background-position: 0 0
     }
 }
+
+//adds margin and aligns text to left on quizform
 .em {
     margin-top: 5%;
     margin-bottom: 10px;
     text-align: left;
     
 }
+//changes font color and font weight of quiz forms "quiz name" and "quiz topic"
 .detail_span {
     color: whitesmoke;
-    /* background-color: rgba(0, 0, 0, 0.15);
-    border-radius: 5px; */
+    font-weight: 600;
 }
+//changes font color and adds a slight border radius to quiz form header
 .detail_header {
     color: whitesmoke;  
     border-radius: 5px;
 }
-
+//changes font-size and font-weight of quiz preview in modal window
 .mQuestion {
     font-size: 17px;
     font-weight: bold;
 }
-
+//container for quiz preview modal window
 .mContainer {
     display: inline-block;
     width: 90%;
@@ -161,11 +165,13 @@ body {
     padding: 6px;
 
 }
+//handles position of preview in quizform
 .quizPreview {
     position: relative;
     overflow: auto;
     
 }
+//sets the position of checkbox within preview modal window
 .previewCheckbox  {
     position: absolute;
     margin-top: 16%;
@@ -174,15 +180,16 @@ body {
 input[type=radio] {
     margin-right: 5px;
 }
- 
+ //preview modal window send button
 .sendQ {
     background: rgb(206, 89, 69) !important;
     border: rgb(182, 87, 60) !important;
 }
+//class to set text color white, used widely within the entire application
 .text-white {
     color: ghostwhite;
 }
-//toimii
+//containers for questionform, used to set width, margin, borders and on load animation
 .qFormContainer {
     background-color: rgba(39, 37, 30, 0.404);
     max-width: 640px;
@@ -195,6 +202,7 @@ input[type=radio] {
     transform: translate3d(0, 1000px, 0);
     animation: arrive 400ms ease-in 0.3s forwards;
 }
+//containers for questionform, used to set width, margin, borders and on load animation
 .questionFormContainer {
     background-color: rgba(39, 37, 30, 0.404);
     max-width: 640px;
@@ -208,10 +216,11 @@ input[type=radio] {
     animation: arrive 400ms ease-in 0.3s forwards;
 }
 
-
+//not found
 #correct_answer {
     margin: 10px 0px;
 }
+//questionform responsivity for over 780px width view
 @media (min-width: 780px){
     .wrongAnsInput {
         width: 160%;
@@ -219,6 +228,7 @@ input[type=radio] {
         
         margin-bottom: 10px;
     }
+    //lining button with wrong answer input
 .qFormRemoveBtn {
     display: inline-block;
      width: 55%; 
@@ -238,6 +248,7 @@ input[type=radio] {
     }
 }
 }
+//questionform responsivity for max 780px style width view
 @media (max-width: 779px){
     .wrongAnsInput {
         width: 160%;
@@ -245,6 +256,7 @@ input[type=radio] {
         
         margin-bottom: 10px;
     }
+    //lining button with wrong answer input
     .qFormRemoveBtn {
         display: inline-block;
         width: 55%; 
@@ -283,6 +295,7 @@ input[type=radio] {
     }
    
 }
+//questionform responsivity for mobile style width view
 @media (max-width: 450px){
     .questionFormContainer {
         background-color: rgba(39, 37, 30, 0.404);
@@ -311,7 +324,7 @@ input[type=radio] {
         animation: arrive 400ms ease-in 0.3s forwards;
     }
 }
-
+//div for each wrong answer in question form
 #wrongAns {
     display: inline-block;
     width: 150%;
@@ -323,22 +336,24 @@ input[type=radio] {
     outline: 0;
     transition: 0.3s;
 }
-
+//label for wrong answer
 .wrongAnsLabel {
     margin-left: 15%;
 }
+//Title for question form
 .formTitle {
     display: block;
     font-size: 30px;
     margin-bottom: -30px;
 }
-
-.quizTitle {
+//????
+/* .quizTitle {
     display: block;
     font-size: 30px;
     margin-bottom: 30px;
     margin-top: -15px;
-}
+} */
+//used in register component on a link to login page
 .registerUser {
     font-weight: 650;
     color: rgb(245, 226, 191);
@@ -346,6 +361,7 @@ input[type=radio] {
         color: lightblue;
     }
 }
+
 .formEmpty {
     margin-top: 10px;
     background-color: rgb(112, 96, 96);
@@ -353,11 +369,13 @@ input[type=radio] {
         background-color: rgba(77, 57, 57, 0.849);
     }
 }
+//navbar links color changed and font-weight/margin 
 .NavLink {
     color: black;
     font-weight: 600;
     margin: 0 10px;
 }
+//determines the color of result based on script in scoreitem component, also adds margin and display
 .resCount {
     display: inline-block;
     /* padding: 0 100px; */
@@ -368,10 +386,12 @@ input[type=radio] {
     
     margin-left: auto;
 }
+//result value display and font color in scoreitem component
 .resValue {
     color: black;
     display: inline;
 }
+//resultcontainer in scoreitem component, width, display
 .resultContainer {
     max-width: 70%;
     width: 70%;
@@ -381,6 +401,7 @@ input[type=radio] {
     text-align: left;
     margin: 2px 0;
 }
+//background and position for the scoreitem resultcontainer
 .resultBG {
     background-color: rgba(39, 37, 30, 0.404);
     max-width: 600px;
@@ -391,16 +412,19 @@ input[type=radio] {
     border-radius: 5px;
     
 }
+//display and margin for the amount of respondents in scoreitem component
 .resNumber {
     display: grid;
     float: left;
     margin-left: 2%;
     margin-right: 2%;
 }
+//answer value in scoreitem component, floating on the left
 .valueContainer {
     float: left;
     
 }
+//div for valuecontainer and resnumber in scoreitem component, added display 
 .thisd {
     display: inline-flex;
     width: 100%;
@@ -417,7 +441,7 @@ input[type=radio] {
         border-radius: 5px;
     }
 } */
-
+//empty form input bubble in quizform  and questionform
 .invalidErrorBubble {
     background-color: rgb(46, 42, 42);
     width: 50%;
@@ -429,6 +453,7 @@ input[type=radio] {
     border-bottom-left-radius: 0px;
 
 }
+//chatbot in dashboard, not functional (yet)
 .annoyingPopUpBot {
     background-color: rgb(46, 42, 42);
     color: grey;
@@ -449,6 +474,7 @@ input[type=radio] {
         position: static;
     }
 }
+//footer with copyrightsign and names of developers, visible in login screen and dashboard
 .footer {
     height: 30px;
     bottom: 0;
@@ -465,15 +491,18 @@ input[type=radio] {
         }
     }
   }
+  //used in quizforms amount selector
 .inline-block {
     display: inline-block;
     padding: 1px;
     margin: 10% 10%;
 }
-.text-center {
+//??
+/* .text-center {
     margin-top: 15px;
     
-}
+} */
+//used to hide input for question amount in quizform
 .hidden {
     opacity: 0%;
 }
