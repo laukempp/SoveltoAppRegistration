@@ -318,6 +318,9 @@ export default function QuizForm() {
                 <Button variant="secondary" onClick={handleClose}>
                   Sulje
                 </Button>
+                <Button className="sendQ" type="submit">
+                  Lähetä quiz
+                </Button>
               </Modal.Footer>
             </form>
           </Modal>

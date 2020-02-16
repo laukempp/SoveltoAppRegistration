@@ -5,6 +5,9 @@ import * as Yup from "yup";
 import { Navigation } from "../../layout/Navbar";
 import { uuid } from "uuidv4";
 
+import socketIOClient from "socket.io-client";
+
+// Kysymyksenluontilomakkeen validointi
 const SingleQuestionform = ({ initial }) => {
   const [topics, setTopics] = useState([]);
   const validationSchema = Yup.object().shape({
@@ -22,6 +25,7 @@ const SingleQuestionform = ({ initial }) => {
       .required("Vähintään yksi väärä vastaus vaaditaan")
   });
 
+  // Haetaan valmiit aihealueet kysymyksille
   const fetchTopics = () => {
     getTopics().then(res => setTopics(res));
   };
@@ -30,6 +34,24 @@ const SingleQuestionform = ({ initial }) => {
   }, []);
   console.log(topics);
 
+  const socket = socketIOClient("http://localhost:5001");
+
+  const eventMessage = object => {
+    return new Promise(resolve => {
+      socket.emit("eventMessage", object);
+      resolve();
+    });
+  };
+
+  const submitAndSave = () => {
+    let data = {
+      title: "popquiz",
+
+      quiz_author: sessionStorage.getItem("badge"),
+      quiz_badge: uuid()
+    };
+  };
+
   let topicInput = topics.map(option => {
     return <option key={option.id} value={option.id} label={option.title} />;
   });
@@ -37,13 +59,35 @@ const SingleQuestionform = ({ initial }) => {
   return (
     <div>
       <Formik
-        initialValues={initial}
+        initialValues={{
+          question: "",
+          correct_answer: "",
+          wrong_answer: [""],
+          topics_id: 1,
+          isFirstButton: false,
+          isSecondButton: false,
+          isThirdButton: false
+        }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          setSubmitting(true);
-          postQuestion(values);
-          resetForm();
-          setSubmitting(false);
+          if (values.isFirstButton) {
+            setSubmitting(true);
+            postQuestion(values);
+            resetForm();
+            setSubmitting(false);
+          }
+          if (values.isSecondButton) {
+            setSubmitting(true);
+            postQuestion(values);
+            resetForm();
+            setSubmitting(false);
+          }
+          if (values.isThirdButton) {
+            setSubmitting(true);
+            postQuestion(values);
+            resetForm();
+            setSubmitting(false);
+          }
         }}
       >
         {({
@@ -54,7 +98,8 @@ const SingleQuestionform = ({ initial }) => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          handleReset
+          handleReset,
+          setFieldValue
         }) => {
           return (
             <Form onSubmit={handleSubmit}>
@@ -189,8 +234,13 @@ const SingleQuestionform = ({ initial }) => {
 
               <div className="input-row">
                 <button
+                  id="first-button"
+                  onClick={e => {
+                    setFieldValue("isFirstButton", true);
+                    handleSubmit(e);
+                  }}
                   className="btnLogin"
-                  type="submit"
+                  type="button"
                   disabled={isSubmitting}
                 >
                   Tallenna kysymys kysymyspankkiin
@@ -200,7 +250,15 @@ const SingleQuestionform = ({ initial }) => {
                 <br />
               </div>
               <div className="input-row">
-                <button className="btnLogin" type="button">
+                <button
+                  id="second-button"
+                  onClick={e => {
+                    setFieldValue("isSecondButton", true);
+                    handleSubmit(e);
+                  }}
+                  className="btnLogin"
+                  type="button"
+                >
                   Tallenna kysymyspankkiin ja aloita tentti
                 </button>
                 <div>
@@ -208,7 +266,15 @@ const SingleQuestionform = ({ initial }) => {
                 </div>
               </div>
               <div className="input-row">
-                <button className="btnLogin" type="button">
+                <button
+                  id="third-button"
+                  onClick={e => {
+                    setFieldValue("isThirdButton", true);
+                    handleSubmit(e);
+                  }}
+                  className="btnLogin"
+                  type="button"
+                >
                   Aloita tentti tallentamatta kysymystä
                 </button>
               </div>

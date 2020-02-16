@@ -19,7 +19,11 @@ const ScoreItem = ({ result, id, question, data }) => {
         counter += score.count;
         console.log(counter);
         if (score.isCorrect === true) {
-          return <span>{Math.round((score.count / counter) * 100)}% got it right</span>;
+          return (
+            <span>
+              {Math.round((score.count / counter) * 100)}% got it right
+            </span>
+          );
         }
       })}
 
@@ -38,33 +42,14 @@ const ScoreItem = ({ result, id, question, data }) => {
               </div>
             </div>
             <div className="resNumber">
-              {res.count} respondents ({Math.round((res.count / counter) * 100)}%)
+              {res.count} respondents ({Math.round((res.count / counter) * 100)}
+              %)
             </div>
           </div>
         );
       })}
     </div>
   );
-
-  // return (
-  //   <div>
-  //     <h5>{question}</h5>
-  //     {answers.map(item => {
-  //       let color = { backgroundColor: "#fff" };
-  //       if (item.answer === correctOne && item.answer === studentAnswer) {
-  //         color = { backgroundColor: "#00800" };
-  //       } else if (
-  //         item.answer === correctOne &&
-  //         item.answer !== studentAnswer
-  //       ) {
-  //         color = { backgroundColor: "#fff73f" };
-  //       } else if (item.answer === studentAnswer) {
-  //         color = { backgroundColor: "#008000" };
-  //       }
-  //       return <div style={color}>{item.answer}</div>;
-  //     })}
-  //   </div>
-  // );
 };
 
 export default ScoreItem;
