@@ -117,7 +117,7 @@ export default function QuizForm() {
   console.log(topics);
 
   const openQuestionform = () => {
-    showQuestionform(true);
+    setShowQuestionform(true);
   };
 
   const closeQuestionform = () => {

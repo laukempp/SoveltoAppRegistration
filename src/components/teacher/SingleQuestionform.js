@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import { postQuestion, getTopics, postQuiz } from "../../service/Request";
+import {
+  postQuestion,
+  getTopics,
+  postQuiz,
+  getQuestion
+} from "../../service/Request";
 import * as Yup from "yup";
 import { Navigation } from "../../layout/Navbar";
 import { uuid } from "uuidv4";
+import socketIOClient from "socket.io-client";
 
 const SingleQuestionform = () => {
   const [topics, setTopics] = useState([]);
+  const [question, setQuestion] = useState([]);
   const validationSchema = Yup.object().shape({
     question: Yup.string()
       .min(2, "Kysymyksen täytyy sisältää vähintään kaksi merkkiä.")
@@ -22,6 +29,7 @@ const SingleQuestionform = () => {
       .required("Vähintään yksi väärä vastaus vaaditaan")
   });
 
+  // Haetaan valmiit aihealueet kysymyksille
   const fetchTopics = () => {
     getTopics().then(res => setTopics(res));
   };
@@ -30,22 +38,61 @@ const SingleQuestionform = () => {
   }, []);
   console.log(topics);
 
+  const socket = socketIOClient("http://localhost:5001");
+
+  // const eventMessage = object => {
+  //   return new Promise(resolve => {
+  //     socket.emit("eventMessage", object);
+  //     resolve();
+  //   });
+  // };
+
+  const id = sessionStorage.getItem("badge");
+  // const badge = { q_author: parseInt(id) };
+  // console.log(badge);
+
+  const getQuestionId = () => {
+    getQuestion(id).then(res => setQuestion(res));
+  };
+
+  const makeData = () => {
+    let data = {
+      title: "popquiz",
+      question_ids: question,
+      quiz_author: sessionStorage.getItem("badge"),
+      quiz_badge: uuid()
+    };
+    console.log(data);
+  };
+
+  // const saveAndStartQuiz = () => {
+  //   let data = {
+  //     title: "popquiz",
+
+  //     quiz_author: sessionStorage.getItem("badge"),
+  //     quiz_badge: uuid()
+  //   };
+  // };
+
   let topicInput = topics.map(option => {
     return <option key={option.id} value={option.id} label={option.title} />;
   });
 
+  const initial = {
+    question: "",
+    correct_answer: "",
+    wrong_answer: [""],
+    topics_id: 1,
+    q_author: sessionStorage.getItem("badge"),
+    isFirstButton: false,
+    isSecondButton: false,
+    isThirdButton: false
+  };
+
   return (
     <div>
       <Formik
-        initialValues={{
-          question: "",
-          correct_answer: "",
-          wrong_answer: [""],
-          topics_id: 1,
-          isFirstButton: false,
-          isSecondButton: false,
-          isThirdButton: false
-        }}
+        initialValues={initial}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           if (values.isFirstButton) {
@@ -55,7 +102,11 @@ const SingleQuestionform = () => {
             setSubmitting(false);
           }
           if (values.isSecondButton) {
-            console.log("kakkosnappi toimii");
+            setSubmitting(true);
+            postQuestion(values).then(getQuestionId());
+            makeData();
+            resetForm();
+            setSubmitting(false);
           }
           if (values.isThirdButton) {
             console.log("kolmosnappi toimii");

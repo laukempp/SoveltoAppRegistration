@@ -71,17 +71,20 @@ export const postScores = score => {
   });
 };
 
-// export const getScores = () => {
-//   return fetch("/api/scores/all")
-//     .then(res => res.json())
-//     .catch(err => err);
-// };
-
 export const getScores = score => {
   return fetch(`api/scores/all`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(score)
+  }).then(res => res.json());
+};
+
+export const getQuestion = badge => {
+  console.log(badge);
+  return fetch("/api/question", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(badge)
   }).then(res => res.json());
 };
 
