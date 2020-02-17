@@ -3,7 +3,7 @@ import { getScores } from ".//../../service/Request";
 import ScoreItem from "./ScoreItem";
 import { Navigation } from "../../layout/Navbar";
 import socketIOClient from "socket.io-client";
-
+import ScoreIndividual from './ScoreIndividual';
 
 const Scores = () => {
   const [scoreData, setScoreData] = useState([]);
@@ -62,6 +62,9 @@ const Scores = () => {
       />
     );
   });
+
+  
+  
   let howManyCorrect = 0;
   let howManyAnswers = 0;
   const answers = scoreData.map(result => {
@@ -88,8 +91,11 @@ const Scores = () => {
        Quiz Total Score:{" "}
        {totalCorrect ? totalCorrect : 0}%
      </h4>
-     <div></div>
-      {scores}
+     <div>
+      {scores}</div>
+     {/*  <div>
+         {scorePerQuestion}
+       </div> */}
       </div>
        );
 }
@@ -105,6 +111,9 @@ const Scores = () => {
        </h4>
        <div></div>
        {scores}
+       {/* <div>
+         {scorePerQuestion}
+       </div> */}
         </div>
          );
     

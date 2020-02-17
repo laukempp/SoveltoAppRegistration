@@ -1,20 +1,29 @@
 import React from "react";
-
+import ScoreIndividual from './ScoreIndividual';
+import { Link } from 'react-router-dom';
 const ScoreItem = ({ result, id, question, data }) => {
   /* console.log(data); */
-
+ 
+ 
   const countAndScore = data.map(score => {
     return { count: score.count, isCorrect: score.isCorrect };
   });
-   /* console.log(countAndScore);
-  console.log(countAndScore[0].count);  */
-
+   /* console.log(countAndScore); */
+  /* console.log(result)
+  console.log(data) */
   let counter = 0;
   let keyCount = 0;
+ const scorePath = "/scores/"
   return (
     
     <div key={keyCount++} className="resultBG">
-      <h5>{question}</h5>
+      <h5>{question} </h5><Link to={{
+        pathname: `${scorePath}${result.id}`,
+        result: {
+          name: result
+        }
+        }}>hello-</Link>
+      
       {countAndScore.map(score => {
        /*  console.log(score); */
         counter += score.count;
@@ -32,7 +41,7 @@ const ScoreItem = ({ result, id, question, data }) => {
           color = { backgroundColor: "#eedd9d" };
         }
         return (
-          <div key={`hello`+ keyCount++} className="thisd">
+          <div key={`key`+ keyCount++} className="thisd">
             <div className="resultContainer resCount" style={color}>
               <div className="valueContainer">
                 <span className="resValue"> {res.value}</span>
