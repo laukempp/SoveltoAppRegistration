@@ -40,22 +40,14 @@ const SingleQuestionform = () => {
 
   const socket = socketIOClient("http://localhost:5001");
 
-  // const eventMessage = object => {
-  //   return new Promise(resolve => {
-  //     socket.emit("eventMessage", object);
-  //     resolve();
-  //   });
-  // };
-
-  const id = sessionStorage.getItem("badge");
-  // const badge = { q_author: parseInt(id) };
-  // console.log(badge);
-
-  const getQuestionId = () => {
-    getQuestion(id).then(res => setQuestion(res));
+  const eventMessage = object => {
+    return new Promise(resolve => {
+      socket.emit("eventMessage", object);
+      resolve();
+    });
   };
 
-  const makeData = () => {
+  const handleSingleQuestionQuizSubmit = (question) => {
     let data = {
       title: "popquiz",
       question_ids: question,
@@ -63,16 +55,8 @@ const SingleQuestionform = () => {
       quiz_badge: uuid()
     };
     console.log(data);
+    postQuiz(data).then(() => eventMessage(data));
   };
-
-  // const saveAndStartQuiz = () => {
-  //   let data = {
-  //     title: "popquiz",
-
-  //     quiz_author: sessionStorage.getItem("badge"),
-  //     quiz_badge: uuid()
-  //   };
-  // };
 
   let topicInput = topics.map(option => {
     return <option key={option.id} value={option.id} label={option.title} />;
@@ -83,11 +67,13 @@ const SingleQuestionform = () => {
     correct_answer: "",
     wrong_answer: [""],
     topics_id: 1,
-    q_author: sessionStorage.getItem("badge"),
+    q_author: parseInt(sessionStorage.getItem("badge")),
     isFirstButton: false,
     isSecondButton: false,
     isThirdButton: false
   };
+
+  console.log(question);
 
   return (
     <div>
@@ -103,8 +89,11 @@ const SingleQuestionform = () => {
           }
           if (values.isSecondButton) {
             setSubmitting(true);
-            postQuestion(values).then(getQuestionId());
-            makeData();
+            postQuestion(values)
+              .then(res => {
+                
+              
+            handleSingleQuestionQuizSubmit(res.id.toString())};
             resetForm();
             setSubmitting(false);
           }

@@ -43,12 +43,13 @@ export const getStudentQs = array => {
 };
 
 export const postQuestion = question => {
+  console.log(JSON.stringify(question));
   let token = sessionStorage.getItem("tommi");
   return fetch(`/api/topics/question`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: token },
     body: JSON.stringify(question)
-  });
+  }).then(res => res.json());
 };
 
 export const getTopics = topic => {
@@ -79,14 +80,14 @@ export const getScores = score => {
   }).then(res => res.json());
 };
 
-export const getQuestion = badge => {
-  console.log(badge);
-  return fetch("/api/question", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(badge)
-  }).then(res => res.json());
-};
+// export const getQuestion = badge => {
+//   console.log(badge);
+//   return fetch("/api/question", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(badge)
+//   }).then(res => res.json());
+// };
 
 /*
 
