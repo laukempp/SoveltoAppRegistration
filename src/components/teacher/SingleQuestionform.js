@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import {
   postQuestion,
+  postTemporaryQuestion,
   getTopics,
   postQuiz,
   getQuestion
@@ -94,7 +95,13 @@ const SingleQuestionform = () => {
             setSubmitting(false);
           }
           if (values.isThirdButton) {
-            console.log("kolmosnappi toimii");
+            console.log("kolmosnappi, ei vielä toiminnallisuutta");
+            // setSubmitting(true);
+            // postTemporaryQuestion(values).then(res => {
+            //   handleSingleQuestionQuizSubmit(res.id.toString());
+            // });
+            // resetForm();
+            // setSubmitting(false);
           }
         }}
       >
