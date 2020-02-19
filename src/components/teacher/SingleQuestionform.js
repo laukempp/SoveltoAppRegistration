@@ -69,6 +69,7 @@ const SingleQuestionform = () => {
     wrong_answer: [""],
     topics_id: 1,
     q_author: parseInt(sessionStorage.getItem("badge")),
+    istemporary: 0,
     isFirstButton: false,
     isSecondButton: false,
     isThirdButton: false
@@ -95,13 +96,13 @@ const SingleQuestionform = () => {
             setSubmitting(false);
           }
           if (values.isThirdButton) {
-            console.log("kolmosnappi, ei vielä toiminnallisuutta");
-            // setSubmitting(true);
-            // postTemporaryQuestion(values).then(res => {
-            //   handleSingleQuestionQuizSubmit(res.id.toString());
-            // });
-            // resetForm();
-            // setSubmitting(false);
+            setSubmitting(true);
+            console.log(values);
+            postQuestion(values).then(res => {
+              handleSingleQuestionQuizSubmit(res.id.toString());
+            });
+            resetForm();
+            setSubmitting(false);
           }
         }}
       >
@@ -114,7 +115,8 @@ const SingleQuestionform = () => {
           handleSubmit,
           isSubmitting,
           handleReset,
-          setFieldValue
+          setFieldValue,
+          setValues
         }) => {
           return (
             <Form onSubmit={handleSubmit}>
@@ -158,6 +160,20 @@ const SingleQuestionform = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.correct_answer}
+                className={
+                  touched.correct_answer && errors.correct_answer
+                    ? "has-error"
+                    : null
+                }
+              />
+              <Field
+                type="hidden"
+                name="isTemporary"
+                id="isTemporary"
+                placeholder=""
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.istemporary}
                 className={
                   touched.correct_answer && errors.correct_answer
                     ? "has-error"
@@ -287,6 +303,7 @@ const SingleQuestionform = () => {
                   type="button"
                   onClick={e => {
                     setFieldValue("isThirdButton", true);
+                    setFieldValue("istemporary", 1);
                     handleSubmit(e);
                   }}
                 >

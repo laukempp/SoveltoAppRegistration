@@ -52,14 +52,14 @@ export const postQuestion = question => {
   }).then(res => res.json());
 };
 
-export const postTemporaryQuestion = question => {
-  let token = sessionStorage.getItem("tommi");
-  return fetch(`/api/temporaryquestion`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: token },
-    body: JSON.stringify(question)
-  }).then(res => res.json());
-};
+// export const postTemporaryQuestion = question => {
+//   let token = sessionStorage.getItem("tommi");
+//   return fetch(`/api/temporaryquestion`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json", Authorization: token },
+//     body: JSON.stringify(question)
+//   }).then(res => res.json());
+// };
 
 export const getTopics = topic => {
   let token = sessionStorage.getItem("tommi");

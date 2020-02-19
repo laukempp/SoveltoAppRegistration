@@ -41,7 +41,8 @@ export default function QuestionForm() {
     correct_answer: "",
     wrong_answer: [""],
     topics_id: 1,
-    q_author: sessionStorage.getItem("badge")
+    q_author: sessionStorage.getItem("badge"),
+    istemporary: 0
   };
 
   console.log(initial.wrong_answer);
