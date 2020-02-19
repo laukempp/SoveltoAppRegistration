@@ -13,7 +13,7 @@ import socketIOClient from "socket.io-client";
 
 const SingleQuestionform = () => {
   const [topics, setTopics] = useState([]);
-  const [question, setQuestion] = useState([]);
+  // const [question, setQuestion] = useState([]);
   const validationSchema = Yup.object().shape({
     question: Yup.string()
       .min(2, "Kysymyksen täytyy sisältää vähintään kaksi merkkiä.")
@@ -47,10 +47,10 @@ const SingleQuestionform = () => {
     });
   };
 
-  const handleSingleQuestionQuizSubmit = (question) => {
+  const handleSingleQuestionQuizSubmit = question => {
     let data = {
       title: "popquiz",
-      question_ids: question,
+      question_ids: [question],
       quiz_author: sessionStorage.getItem("badge"),
       quiz_badge: uuid()
     };
@@ -73,8 +73,6 @@ const SingleQuestionform = () => {
     isThirdButton: false
   };
 
-  console.log(question);
-
   return (
     <div>
       <Formik
@@ -89,11 +87,9 @@ const SingleQuestionform = () => {
           }
           if (values.isSecondButton) {
             setSubmitting(true);
-            postQuestion(values)
-              .then(res => {
-                
-              
-            handleSingleQuestionQuizSubmit(res.id.toString())};
+            postQuestion(values).then(res => {
+              handleSingleQuestionQuizSubmit(res.id.toString());
+            });
             resetForm();
             setSubmitting(false);
           }
