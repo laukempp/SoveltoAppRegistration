@@ -57,6 +57,7 @@ const Scores = () => {
         key={keyCount}
         result={result}
         id={result.id}
+        scoreData={scoreData}
         question={result.question}
         data={result.results}
       />

@@ -508,11 +508,16 @@ input[type=radio] {
 }
 //Score per question data visualization
 .inline {
-    display: inline-table;
-    min-height: 75px;
-    min-width: 75px;
-    max-width: 50%;
-   
+    display: inline-block;
+    position: relative;
+    margin-top: 10%;
+    
+}
+.inline-table {
+    display: inline-block;
+    position: relative;
+    margin: auto;
+    padding-top: 2em;
 }
 .inlinePercent {
     display: inline-flex;
@@ -527,11 +532,14 @@ input[type=radio] {
     margin: 200% 5% 5% 5%;
     bottom: 0;
     max-width: 150px;
+    
 }
 .indivudualMarginDiv {
     margin: 10% 5% 0% 5%;
 }
-/* .studentSpan {
+.studentSpan {
     display: inline-flex;
     width: 40%;
-} */
+    height: 6em;
+    margin: 0 5px;
+}

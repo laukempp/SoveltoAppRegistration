@@ -1,13 +1,14 @@
 import React from "react";
 import ScoreIndividual from './ScoreIndividual';
 import { Link } from 'react-router-dom';
-const ScoreItem = ({ result, id, question, data }) => {
+const ScoreItem = ({ result, id, question, data, scoreData }) => {
   /* console.log(data); */
  
  
   const countAndScore = data.map(score => {
     return { count: score.count, isCorrect: score.isCorrect };
   });
+  /* console.log(data) */
    /* console.log(countAndScore); */
   /* console.log(result)
   console.log(data) */
@@ -20,7 +21,8 @@ const ScoreItem = ({ result, id, question, data }) => {
       <h5>{question} </h5><Link to={{
         pathname: `${scorePath}${result.id}`,
         result: {
-          name: result
+          name: result,
+          scoreData: scoreData
         }
         }}>hello-</Link>
       

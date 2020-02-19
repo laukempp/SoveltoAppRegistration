@@ -1,6 +1,16 @@
 import React, { createElement } from 'react'
 import {Navigation} from '../../layout/Navbar'
-export default function ScoreIndividual({result, id, question, data, location, match}) {
+
+const pixelCounter = (array, count) => {
+  let maxPixels = 400;
+  let pixelPercent = count / 10;
+  let returnPixels = maxPixels * pixelPercent;
+  console.log("array", array)
+  console.log("count", count)
+  console.log("pixel percent", pixelPercent)
+  return returnPixels;
+}
+export default function ScoreIndividual({result, id, question, scoreData, location, match}) {
     /* console.log("data",data)
     console.log("result",result)
     console.log("question",question)
@@ -24,6 +34,7 @@ export default function ScoreIndividual({result, id, question, data, location, m
          )
      }    
         const nameData = location.result.name
+        const responses = location.result.scoreData
         console.log(nameData)
         const resultDisplay = nameData.results.map(res => {
             return { value: res.value, count: res.count, isCorrect: res.isCorrect}
@@ -46,37 +57,63 @@ export default function ScoreIndividual({result, id, question, data, location, m
         <div className="text-white">
           <Navigation title={"Soveltommi"} />
        <br />
-       <div className="inline">
+       
        <p className="text-white">individual scores per question appear here</p>
         <span>{nameData.id}</span>
-       
+       <table className="inline-table">
 
-        <div id="resultsDiv"></div>
-        {nameData.results.map(res => {
-        let color = { backgroundColor: "#fff" };
-
+        <tbody className="inline">
+        <tr>
+      {nameData.results.map(res => {
+        let color = { backgroundColor: "#fff", border: 'black' };
+        let padding = { paddingTop: '0%'}
+        console.log(res.count)
+        console.log("pixelcounter", pixelCounter(responses, res.count));
+        let height = { height: '5%'}
+        let additionalHeight = { height: 400}
+        let changedColor = {backgroundColor: '#33bb22'}
+        let additionalPadding = { paddingTop: '0%'}
+        let addedPercent = 5;
+        let i = 0;
         if (res.isCorrect === true) {
           color = { backgroundColor: "#33dd22" };
+          
         } else {
           color = { backgroundColor: "#eedd9d" };
         }
-        return (
-          <div className="inline individualMarginDiv">
+
+        
+       /*  if(res.count > 1){
+        for(i in res.count){
+          if(res.count > i){
+          additionalPadding = { paddingTop: Math.abs(20 + 30)+'%'}
+          return <div style={{...color}}> {res.count}#######</div>
+        }
+          
+        }} */
+        if(res.count > 1) {
+          return <td className="individualColorDiv" style={{...color, ...padding}}><div style={{...additionalHeight, ...changedColor}}> {res.count}#######</div></td>
+        }
+        else
+        return <td className="individualColorDiv" style={{...color, ...padding}}><div style={{}}> {res.count}#######</div></td>
+      })
+
+        // {/* {return (
+          
+           
+            
               
-            <div className="inline individualColorDiv" style={color}>
-              <div className="">
-              <span className="studentSpan">{res.count ? res.count : 0} respondents ({Math.round((res.count / counter) * 100)}%) </span>
-               
-              </div>
-            </div>
-            <div className="">
+        //       <td className="studentSpan">{res.count ? res.count : 0} respondents ({Math.round((res.count / counter) * 100)}%) </td>
+            
+            
                 
-              <div className="inlinePercent"> {res.value} </div>
-            </div>
-          </div>
-        );
-      })}
-      </div>
+        //       <td className="inlinePercent"> {res.value} </td></tr></tr>
+            
+          
+        // )}; */}
+      }
+     
+      </tr></tbody></table>
     </div>
   
         
