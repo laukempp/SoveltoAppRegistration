@@ -18,13 +18,13 @@ const ScoreItem = ({ result, id, question, data, scoreData }) => {
   return (
     
     <div key={keyCount++} className="resultBG">
-      <h5>{question} </h5><Link to={{
+      <Link to={{
         pathname: `${scorePath}${result.id}`,
         result: {
           name: result,
           scoreData: scoreData
         }
-        }}>hello-</Link>
+        }}><h5 class="registerUser">{question} </h5></Link>
       
       {countAndScore.map(score => {
        /*  console.log(score); */

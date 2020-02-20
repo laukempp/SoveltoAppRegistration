@@ -3,7 +3,7 @@ import {Navigation} from '../../layout/Navbar'
 
 const pixelCounter = (array, count) => {
   let maxPixels = 400;
-  let pixelPercent = count / 10;
+  let pixelPercent = count / array[0].respondents;
   let returnPixels = maxPixels * pixelPercent;
   console.log("array", array)
   console.log("count", count)
@@ -58,29 +58,29 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
           <Navigation title={"Soveltommi"} />
        <br />
        
-       <p className="text-white">individual scores per question appear here</p>
-        <span>{nameData.id}</span>
+       <p className="text-white">individual scores per question appear here, Question ID: <span>{nameData.id}</span></p>
+        
        <table className="inline-table">
 
         <tbody className="inline">
-        <tr>
+        <tr className="min-height">
       {nameData.results.map(res => {
         let color = { backgroundColor: "#fff", border: 'black' };
-        let padding = { paddingTop: '0%'}
+        let padding = { bottom: '0'}
         console.log(res.count)
         console.log("pixelcounter", pixelCounter(responses, res.count));
         let height = { height: '5%'}
         let additionalHeight = { height: 400}
         let changedColor = {backgroundColor: '#33bb22'}
         let additionalPadding = { paddingTop: '0%'}
-        let addedPercent = 5;
-        let i = 0;
+        let keyCount = 0;
         if (res.isCorrect === true) {
           color = { backgroundColor: "#33dd22" };
           
         } else {
           color = { backgroundColor: "#eedd9d" };
         }
+
 
         
        /*  if(res.count > 1){
@@ -91,11 +91,16 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
         }
           
         }} */
-        if(res.count > 1) {
-          return <td className="individualColorDiv" style={{...color, ...padding}}><div style={{...additionalHeight, ...changedColor}}> {res.count}#######</div></td>
+        let pixelAmount = pixelCounter(responses, res.count)
+          let stylePixels = { height: pixelAmount + 'px'}
+        if(res.isCorrect === true) {
+          
+          changedColor = {backgroundColor: '#33bb22'}
+          return <td key={keyCount} className="individualColorDiv" style={{...color, ...padding}}>{res.value}<div className="heightDiv" style={{...stylePixels, ...changedColor}}>{res.count} respondents</div></td>
         }
         else
-        return <td className="individualColorDiv" style={{...color, ...padding}}><div style={{}}> {res.count}#######</div></td>
+        changedColor = {backgroundColor: '#eecc9d'}
+        return <td className="individualColorDiv min-height" style={{...color, ...padding}}>  {res.value}<div className="heightDiv min-height" style={{...stylePixels, ...changedColor}}>{res.count} respondents</div></td>
       })
 
         // {/* {return (

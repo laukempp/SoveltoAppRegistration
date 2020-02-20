@@ -516,7 +516,7 @@ input[type=radio] {
 .inline-table {
     display: inline-block;
     position: relative;
-    margin: auto;
+    margin-top: 40%;
     padding-top: 2em;
 }
 .inlinePercent {
@@ -529,10 +529,14 @@ input[type=radio] {
 .individualColorDiv {
     color: black;
     min-width: 150px;
-    margin: 200% 5% 5% 5%;
+    max-height: 48px;
+    margin: auto;
+    position: relative;
     bottom: 0;
     max-width: 150px;
-    
+    height: 48px;
+    word-wrap: break-word;
+    border-radius: 1px;
 }
 .indivudualMarginDiv {
     margin: 10% 5% 0% 5%;
@@ -542,4 +546,18 @@ input[type=radio] {
     width: 40%;
     height: 6em;
     margin: 0 5px;
+}
+.heightDiv {
+    float: none;
+    bottom: 48px;
+    padding-bottom: 24px;
+    margin-left: 5px;
+    position: absolute;
+    min-width: 140px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    animation: arrive 350ms ease-in-out 0.1s backwards;
+}
+.min-height {
+    min-height: 48px;
 }
