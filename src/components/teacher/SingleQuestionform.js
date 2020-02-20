@@ -48,12 +48,13 @@ const SingleQuestionform = () => {
     });
   };
 
-  const handleSingleQuestionQuizSubmit = question => {
+  const handleSingleQuestionQuizSubmit = (question, istemporary) => {
     let data = {
       title: "popquiz",
       question_ids: [question],
       quiz_author: sessionStorage.getItem("badge"),
-      quiz_badge: uuid()
+      quiz_badge: uuid(),
+      istemporary: istemporary
     };
     console.log(data);
     postQuiz(data).then(() => eventMessage(data));
@@ -69,6 +70,7 @@ const SingleQuestionform = () => {
     wrong_answer: [""],
     topics_id: 1,
     q_author: parseInt(sessionStorage.getItem("badge")),
+    istemporary: 0,
     isFirstButton: false,
     isSecondButton: false,
     isThirdButton: false
@@ -89,19 +91,24 @@ const SingleQuestionform = () => {
           if (values.isSecondButton) {
             setSubmitting(true);
             postQuestion(values).then(res => {
-              handleSingleQuestionQuizSubmit(res.id.toString());
+              handleSingleQuestionQuizSubmit(
+                res.id.toString(),
+                values.istemporary
+              );
             });
             resetForm();
             setSubmitting(false);
           }
           if (values.isThirdButton) {
-            console.log("kolmosnappi, ei vielä toiminnallisuutta");
-            // setSubmitting(true);
-            // postTemporaryQuestion(values).then(res => {
-            //   handleSingleQuestionQuizSubmit(res.id.toString());
-            // });
-            // resetForm();
-            // setSubmitting(false);
+            setSubmitting(true);
+            postQuestion(values).then(res => {
+              handleSingleQuestionQuizSubmit(
+                res.id.toString(),
+                values.istemporary
+              );
+            });
+            resetForm();
+            setSubmitting(false);
           }
         }}
       >
@@ -164,6 +171,15 @@ const SingleQuestionform = () => {
                     : null
                 }
               />
+              <Field
+                type="hidden"
+                name="istemporary"
+                id="istemporary"
+                placeholder=""
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.istemporary}
+              ></Field>
               <ErrorMessage
                 component="div"
                 name="correct_answer"
@@ -255,6 +271,7 @@ const SingleQuestionform = () => {
                   disabled={isSubmitting}
                   onClick={e => {
                     setFieldValue("isFirstButton", true);
+
                     handleSubmit(e);
                   }}
                 >
@@ -287,6 +304,7 @@ const SingleQuestionform = () => {
                   type="button"
                   onClick={e => {
                     setFieldValue("isThirdButton", true);
+                    setFieldValue("istemporary", 1);
                     handleSubmit(e);
                   }}
                 >
