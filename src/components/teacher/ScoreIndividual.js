@@ -1,4 +1,4 @@
-import React, { createElement } from 'react'
+import React from 'react'
 import {Navigation} from '../../layout/Navbar'
 
 const pixelCounter = (array, count) => {
@@ -58,7 +58,7 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
           <Navigation title={"Soveltommi"} />
        <br />
        
-       <p className="text-white">individual scores per question appear here, Question ID: <span>{nameData.id}</span></p>
+       <p className="text-white"> Question: {nameData.question}, ID: <span>{nameData.id}</span></p>
         
        <table className="inline-table">
 
@@ -100,7 +100,7 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
         }
         else
         changedColor = {backgroundColor: '#eecc9d'}
-        return <td className="individualColorDiv min-height" style={{...color, ...padding}}>  {res.value}<div className="heightDiv min-height" style={{...stylePixels, ...changedColor}}>{res.count} respondents</div></td>
+        return <td key={'hello' + keyCount} className="individualColorDiv min-height" style={{...color, ...padding}}>  {res.value}<div className="heightDiv min-height" style={{...stylePixels, ...changedColor}}>{res.count} respondents</div></td>
       })
 
         // {/* {return (
