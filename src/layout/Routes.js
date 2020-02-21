@@ -11,6 +11,7 @@ import Questionform from "../components/teacher/Questionform";
 import Register from ".././components/registration/Register";
 import Logout from "../components/teacher/Logout";
 import Scores from "../components/teacher/Scores";
+import ScoreIndividual from '../components/teacher/ScoreIndividual';
 
 const Routes = () => (
   <Router>
@@ -25,6 +26,7 @@ const Routes = () => (
       <Route exact path="/logout" component={Logout} />
 
       <Route exact path="/scores" component={Scores} />
+      <Route name="IndividualQuestion" exact path="/scores/:id" component={ScoreIndividual} />
       <Route component={Login} />
     </Switch>
   </Router>

@@ -1,29 +1,37 @@
 import React from "react";
-
-const ScoreItem = ({ result, id, question, data }) => {
-  console.log(data);
-
+import { Link } from 'react-router-dom';
+const ScoreItem = ({ result, id, question, data, scoreData }) => {
+  /* console.log(data); */
+ 
+ 
   const countAndScore = data.map(score => {
     return { count: score.count, isCorrect: score.isCorrect };
   });
-  console.log(countAndScore);
-  console.log(countAndScore[0].count);
-
+  /* console.log(data) */
+   /* console.log(countAndScore); */
+  /* console.log(result)
+  console.log(data) */
   let counter = 0;
-
+  let keyCount = 0;
+ const scorePath = "/scores/"
   return (
-    <div className="resultBG">
-      <h5>{question}</h5>
+    
+    <div key={keyCount++} className="resultBG">
+      <Link to={{
+        pathname: `${scorePath}${result.id}`,
+        result: {
+          name: result,
+          scoreData: scoreData
+        }
+        }}><h5 className="registerUser">{question} </h5></Link>
+      
       {countAndScore.map(score => {
-        console.log(score);
+       /*  console.log(score); */
         counter += score.count;
-        console.log(counter);
+        /* console.log(counter); */
         if (score.isCorrect === true) {
-          return (
-            <span>
-              {Math.round((score.count / counter) * 100)}% got it right
-            </span>
-          );
+
+          return <span key={keyCount++}>{Math.round((score.count / counter) * 100)}% got it right</span>;
         }
       })}
 
@@ -35,15 +43,15 @@ const ScoreItem = ({ result, id, question, data }) => {
           color = { backgroundColor: "#eedd9d" };
         }
         return (
-          <div className="thisd">
+          <div key={`key`+ keyCount++} className="thisd">
             <div className="resultContainer resCount" style={color}>
               <div className="valueContainer">
                 <span className="resValue"> {res.value}</span>
               </div>
             </div>
             <div className="resNumber">
-              {res.count} respondents ({Math.round((res.count / counter) * 100)}
-              %)
+
+              {res.count ? res.count : 0} respondents ({Math.round((res.count / counter) * 100)}%)
             </div>
           </div>
         );

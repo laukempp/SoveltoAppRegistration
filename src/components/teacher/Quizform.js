@@ -133,6 +133,8 @@ export default function QuizForm() {
     <>
       <div className="qFormContainer text-white">
         <h3 className="detail_header formTitle">Luo uusi tentti</h3>
+        <br />
+        <p>tunnuksesi on: {sessionStorage.getItem('badge')}</p>
         <div className="user">
           <Formik
             initialValues={{
