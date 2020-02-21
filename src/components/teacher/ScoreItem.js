@@ -1,5 +1,4 @@
 import React from "react";
-import ScoreIndividual from './ScoreIndividual';
 import { Link } from 'react-router-dom';
 const ScoreItem = ({ result, id, question, data, scoreData }) => {
   /* console.log(data); */
@@ -24,7 +23,7 @@ const ScoreItem = ({ result, id, question, data, scoreData }) => {
           name: result,
           scoreData: scoreData
         }
-        }}><h5 class="registerUser">{question} </h5></Link>
+        }}><h5 className="registerUser">{question} </h5></Link>
       
       {countAndScore.map(score => {
        /*  console.log(score); */
