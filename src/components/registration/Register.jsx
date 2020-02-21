@@ -10,6 +10,7 @@ import RegRedirect from "../registration/RegRedirect";
 export default function Register() {
   const [message, setMessage] = useState({ message: "", success: false });
 
+  //validation schema for user register
   const userSchema = Yup.object().shape({
     login: Yup.string()
       .required("Tämä kenttä vaaditaan.")
@@ -23,7 +24,7 @@ export default function Register() {
       .required("Kirjoita salasana uudelleen")
       .oneOf([Yup.ref("password")], "Salasanojen täytyy täsmätä.")
   })
-
+  //creating a badge for teacher upon registration that students will use in url to start the right quiz
   const badge = Math.round(Math.random() * 100000);
 
   if (!message.success) {
