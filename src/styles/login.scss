@@ -516,8 +516,15 @@ input[type=radio] {
 .inline-table {
     display: inline-block;
     position: relative;
-    margin-top: 40%;
+    margin-top: 20%;
     padding-top: 2em;
+}
+@media (max-width: 450px){
+    .inline-table {
+       
+        margin-top: 20%;
+        padding-top: 1em;
+    }
 }
 .inlinePercent {
     display: inline-flex;
