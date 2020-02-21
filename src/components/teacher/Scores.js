@@ -19,13 +19,12 @@ const Scores = () => {
   const id = sessionStorage.getItem("badge");
   const badge = { teacher_badge: parseInt(id) };
 
+
   useEffect(() => {
       getScores(badge).then(res => {
       setScoreData(res);
     });
   },[]);
- 
-
   
   /* const customEventHandler = () => {
     getScores(badge).then(res => {
@@ -64,8 +63,7 @@ const Scores = () => {
     );
   });
 
-  
-  
+  //Lasketaan oikeiden vastausten määrä koko quizin osalta
   let howManyCorrect = 0;
   let howManyAnswers = 0;
   const answers = scoreData.map(result => {
@@ -78,6 +76,7 @@ const Scores = () => {
       }
     });
   });
+
  /*  console.log(answers);
   console.log(howManyCorrect); */
     let totalCorrect = Math.round((howManyCorrect / howManyAnswers) * 100 * 100) / 100;
@@ -124,4 +123,3 @@ const Scores = () => {
 };
 
 export default Scores;
-
