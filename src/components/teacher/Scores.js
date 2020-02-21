@@ -3,7 +3,7 @@ import { getScores } from ".//../../service/Request";
 import ScoreItem from "./ScoreItem";
 import { Navigation } from "../../layout/Navbar";
 import socketIOClient from "socket.io-client";
-import ScoreIndividual from './ScoreIndividual';
+
 
 const Scores = () => {
   const [scoreData, setScoreData] = useState([]);
@@ -25,7 +25,7 @@ const Scores = () => {
       setScoreData(res);
     });
   },[]);
-  
+  console.log(scoreData)
   /* const customEventHandler = () => {
     getScores(badge).then(res => {
       setScoreData(res);
