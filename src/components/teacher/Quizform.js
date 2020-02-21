@@ -98,7 +98,8 @@ export default function QuizForm() {
       title: title,
       question_ids: createIdArray(),
       quiz_author: sessionStorage.getItem("badge"),
-      quiz_badge: uuid()
+      quiz_badge: uuid(),
+      istemporary: 0
     };
     console.log(data);
     postQuiz(data)

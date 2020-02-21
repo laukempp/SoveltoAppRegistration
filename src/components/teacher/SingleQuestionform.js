@@ -48,12 +48,13 @@ const SingleQuestionform = () => {
     });
   };
 
-  const handleSingleQuestionQuizSubmit = question => {
+  const handleSingleQuestionQuizSubmit = (question, istemporary) => {
     let data = {
       title: "popquiz",
       question_ids: [question],
       quiz_author: sessionStorage.getItem("badge"),
-      quiz_badge: uuid()
+      quiz_badge: uuid(),
+      istemporary: istemporary
     };
     console.log(data);
     postQuiz(data).then(() => eventMessage(data));
@@ -90,16 +91,21 @@ const SingleQuestionform = () => {
           if (values.isSecondButton) {
             setSubmitting(true);
             postQuestion(values).then(res => {
-              handleSingleQuestionQuizSubmit(res.id.toString());
+              handleSingleQuestionQuizSubmit(
+                res.id.toString(),
+                values.istemporary
+              );
             });
             resetForm();
             setSubmitting(false);
           }
           if (values.isThirdButton) {
             setSubmitting(true);
-            console.log(values);
             postQuestion(values).then(res => {
-              handleSingleQuestionQuizSubmit(res.id.toString());
+              handleSingleQuestionQuizSubmit(
+                res.id.toString(),
+                values.istemporary
+              );
             });
             resetForm();
             setSubmitting(false);
@@ -168,18 +174,13 @@ const SingleQuestionform = () => {
               />
               <Field
                 type="hidden"
-                name="isTemporary"
-                id="isTemporary"
+                name="istemporary"
+                id="istemporary"
                 placeholder=""
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.istemporary}
-                className={
-                  touched.correct_answer && errors.correct_answer
-                    ? "has-error"
-                    : null
-                }
-              />
+              ></Field>
               <ErrorMessage
                 component="div"
                 name="correct_answer"
@@ -271,6 +272,7 @@ const SingleQuestionform = () => {
                   disabled={isSubmitting}
                   onClick={e => {
                     setFieldValue("isFirstButton", true);
+
                     handleSubmit(e);
                   }}
                 >

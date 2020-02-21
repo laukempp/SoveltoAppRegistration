@@ -24,6 +24,15 @@ export const loginUser = user => {
     });
 };
 
+export const clearTemporary = () => {
+  let badge = sessionStorage.getItem("badge");
+  return fetch("/logout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ badge: badge })
+  });
+};
+
 class Auth {
   constructor() {
     this.auth = "";
@@ -50,6 +59,7 @@ class Auth {
     return sessionStorage.getItem("tommi");
   };
   logOut = () => {
+    clearTemporary();
     sessionStorage.removeItem("tommi");
   };
 }
