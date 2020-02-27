@@ -16,16 +16,15 @@ const Scores = () => {
 
   const socket = socketIOClient("http://localhost:5001");
   
-  const id = sessionStorage.getItem("badge");
-  const badge = { teacher_badge: parseInt(id) };
-
-
+  //Muutos 27.2. Anna -> badge siirretty useEffectin sisään
   useEffect(() => {
+      const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
+
       getScores(badge).then(res => {
       setScoreData(res);
     });
   },[]);
-  console.log(scoreData)
+
   /* const customEventHandler = () => {
     getScores(badge).then(res => {
       setScoreData(res);
@@ -35,15 +34,29 @@ const Scores = () => {
     setreRender(true)
     
   },10);
-  const timerSet = () => {setTimeout(() => {
+
+  /*const timerSet = () => {setTimeout(() => {
+    const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
     getScores(badge).then(res => {
     setScoreData(res);
   })}, 500)}
-  const timerClear = () => { clearTimeout(timerSet(), 3000)}
+  const timerClear = () => { clearTimeout(timerSet(), 3000)}*/
+
  useEffect(() => {
-  timerSet()
-  timerClear()
-  setreRender(false)
+    const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
+
+    let timerSet = setTimeout(() => {
+    getScores(badge).then(res => {
+    setScoreData(res);
+    })}, 500)
+
+    setreRender(false)
+
+    return () => {
+      clearTimeout(timerSet, 3000)
+    }
+  /*timerSet()
+  timerClear()*/
  },[reRender])
     
  
@@ -65,14 +78,12 @@ const Scores = () => {
 
   //Lasketaan oikeiden vastausten määrä koko quizin osalta
   let howManyCorrect = 0;
-  let howManyAnswers = 0;
-  const answers = scoreData.map(result => {
-    const answerss = result.results;
-    /* console.log(answerss); */
-    answerss.map(answerr => {
-      howManyAnswers += answerr.count;
-      if (answerr.isCorrect === true) {
-        howManyCorrect += answerr.count;
+  let howManyAnswers = scoreData[0] && scoreData[0].respondents
+  
+  scoreData[0] && scoreData.forEach(result => {
+    result.results.forEach(answer => {
+      if (answer.isCorrect === true) {
+        howManyCorrect += answer.count;
       }
     });
   });

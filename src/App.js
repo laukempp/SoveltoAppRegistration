@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Register from "./components/registration/Register";
+import "./components/registration/reg.scss";
 import Routes from "./layout/Routes";
 import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";

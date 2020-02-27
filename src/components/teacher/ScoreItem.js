@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 const ScoreItem = ({ result, id, question, data, scoreData }) => {
-  /* console.log(data); */
- 
  
   const countAndScore = data.map(score => {
     return { count: score.count, isCorrect: score.isCorrect };
@@ -33,6 +31,7 @@ const ScoreItem = ({ result, id, question, data, scoreData }) => {
 
           return <span key={keyCount++}>{Math.round((score.count / counter) * 100)}% got it right</span>;
         }
+        return ''
       })}
 
       {data.map(res => {
