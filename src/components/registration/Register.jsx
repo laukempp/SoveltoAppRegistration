@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage} from "formik";
 import './reg.scss';
 import * as Yup from "yup";
 import { registerUser } from "../../service/registerUser";
-import Logout from '../registration/RegRedirect';
+
 import RegRedirect from "../registration/RegRedirect";
 
 export default function Register() {

@@ -1,7 +1,6 @@
 const url = "/api/topics/";
 
 export const fetchQuestions = querydata => {
-  console.log("Tässä serviceclientissa näkyvä quiz-data " + querydata);
   let token = sessionStorage.getItem("tommi");
 
   return fetch(url, {

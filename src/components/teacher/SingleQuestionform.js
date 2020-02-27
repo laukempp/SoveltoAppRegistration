@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import {
   postQuestion,
-  postTemporaryQuestion,
   getTopics,
   postQuiz,
-  getQuestion
 } from "../../service/Request";
 import * as Yup from "yup";
-import { Navigation } from "../../layout/Navbar";
 import { uuid } from "uuidv4";
 import socketIOClient from "socket.io-client";
 

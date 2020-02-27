@@ -22,6 +22,23 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
     let counter = 0;
     let keyCount = 0;
 
+    const nameData = location && location.result && location.result.name
+    const responses = location && location.result && location.result.scoreData
+    console.log(nameData)
+    const resultDisplay = nameData && nameData.results.map(res => {
+      return { value: res.value, count: res.count, isCorrect: res.isCorrect}
+    })
+
+    const resultShow = resultDisplay && resultDisplay.map(score => {
+      /*  console.log(score); */
+       counter += score.count;
+       /* console.log(counter); */
+       if (score.isCorrect === true) {
+         return <span key={keyCount++}>{Math.round((score.count / counter) * 100)}% got it right</span>;
+       }
+       return ''
+     })
+
         /* if(match.params.id == location.result.name.id){
          console.log("hello")} */
     
@@ -33,25 +50,8 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
              </div>
          )
      }    
-        const nameData = location.result.name
-        const responses = location.result.scoreData
-        console.log(nameData)
-        const resultDisplay = nameData.results.map(res => {
-            return { value: res.value, count: res.count, isCorrect: res.isCorrect}
 
-        })
-             
-         
-        {resultDisplay.map(score => {
-            /*  console.log(score); */
-             counter += score.count;
-             /* console.log(counter); */
-             if (score.isCorrect === true) {
-               return <span key={keyCount++}>{Math.round((score.count / counter) * 100)}% got it right</span>;
-             }
-           })}
-    console.log(resultDisplay)
-    
+    console.log(resultDisplay) 
     
     return (
         <div className="text-white">
@@ -59,24 +59,22 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
        <br />
        
        <p className="text-white"> Question: {nameData.question}, ID: <span>{nameData.id}</span></p>
+       <p>{resultShow}</p>
         
        <table className="inline-table">
 
         <tbody className="inline">
         <tr className="min-height">
-      {nameData.results.map(res => {
+
+      {nameData.results.map((res, i) => {
         let color = { backgroundColor: "#fff", border: 'black' };
         let padding = { bottom: '0'}
         console.log(res.count)
         console.log("pixelcounter", pixelCounter(responses, res.count));
-        let height = { height: '5%'}
-        let additionalHeight = { height: 400}
         let changedColor = {backgroundColor: '#33bb22'}
-        let additionalPadding = { paddingTop: '0%'}
         let keyCount = 0;
         if (res.isCorrect === true) {
           color = { backgroundColor: "#33dd22" };
-          
         } else {
           color = { backgroundColor: "#eedd9d" };
         }
@@ -99,8 +97,9 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
           return <td key={keyCount} className="individualColorDiv" style={{...color, ...padding}}>{res.value}<div className="heightDiv" style={{...stylePixels, ...changedColor}}>{res.count} respondents</div></td>
         }
         else
+        keyCount=+5
         changedColor = {backgroundColor: '#eecc9d'}
-        return <td key={'hello' + keyCount} className="individualColorDiv min-height" style={{...color, ...padding}}>  {res.value}<div className="heightDiv min-height" style={{...stylePixels, ...changedColor}}>{res.count} respondents</div></td>
+        return <td key={'hello'+keyCount+i} className="individualColorDiv min-height" style={{...color, ...padding}}>  {res.value}<div className="heightDiv min-height" style={{...stylePixels, ...changedColor}}>{res.count} respondents</div></td>
       })
 
         // {/* {return (

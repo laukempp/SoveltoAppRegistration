@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage, FieldArray, getIn } from "formik";
+import { Formik, Form, Field, ErrorMessage, FieldArray} from "formik";
 import { postQuestion, getTopics } from "../../service/Request";
 import * as Yup from "yup";
 import auth from "../../service/Auth";

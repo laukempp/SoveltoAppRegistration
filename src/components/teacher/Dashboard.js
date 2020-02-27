@@ -9,11 +9,7 @@ import {Navigation} from '../../layout/Navbar';
 import Footer from '../../layout/Footer';
 
 export default function Dashboard() {
-  const authT = auth.sessionStorageGetItem();
-
-  console.log("hello from dashboard", authT);
-
- 
+  const authT = auth.sessionStorageGetItem(); 
 
   return (
     <div>
