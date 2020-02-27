@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { fetchQuestions, getTopics, postQuiz } from "../../service/Request";
+import {
+  fetchQuestions,
+  getTopics,
+  postQuiz,
+  getTags
+} from "../../service/Request";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import SingleQuestionform from "../teacher/SingleQuestionform";
-
+import SearchTag from "../teacher/SearchTag";
 import socketIOClient from "socket.io-client";
 import Preview from "./Preview";
 import { uuid } from "uuidv4";
 
 //validointi lomakkeeseen
 const quizformSchema = Yup.object().shape({
-  name: Yup.string().required("Tentillä täytyy olla nimi")
-});
-
-const quizformSelectNumberScema = Yup.object().shape({
   name: Yup.string().required("Tentillä täytyy olla nimi"),
-  number: Yup.number()
-    .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
-    .integer("Numeron täytyy olla kokonaisluku")
-    .lessThan(10001, "Luku saa olla enintään 10000")
+  questionCount: Yup.boolean(),
+  number: Yup.number().when("questionCount", {
+    is: true,
+    then: Yup.number()
+      .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
+      .integer("Numeron täytyy olla kokonaisluku")
+      .lessThan(10001, "Luku saa olla enintään 10000")
+  })
 });
 
 export default function QuizForm() {
@@ -38,11 +43,12 @@ export default function QuizForm() {
       {}
     )
   });
-  console.log(checkedArray);
+  const [suggestions, setSuggestions] = useState();
 
   //Hakee aihealueet tietokannasta lomakekenttää varten
   const fetchTopics = () => {
     getTopics().then(res => setTopics(res));
+    getTags().then(res => setSuggestions(res));
   };
 
   useEffect(() => {
@@ -115,8 +121,6 @@ export default function QuizForm() {
       );
   };
 
-  console.log(topics);
-
   const openQuestionform = () => {
     setShowQuestionform(true);
   };
@@ -134,20 +138,19 @@ export default function QuizForm() {
       <div className="qFormContainer text-white">
         <h3 className="detail_header formTitle">Luo uusi tentti</h3>
         <br />
-        <p>tunnuksesi on: {sessionStorage.getItem('badge')}</p>
+        <p>tunnuksesi on: {sessionStorage.getItem("badge")}</p>
         <div className="user">
           <Formik
             initialValues={{
               name: "",
               topics_id: 1,
               number: 0,
-              questionCount: "true"
+              questionCount: "false"
             }}
             validationSchema={quizformSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-              values.number = values.questionCount === "true" ? 1000 : nro;
+              values.number = values.questionCount === "true" ? nro : 1000;
               setSubmitting(true);
-              console.log(values);
               fetchQuestions(values)
                 .then(res => setQuestions(res))
                 .then(() => setTitle(values.name))
@@ -221,9 +224,8 @@ export default function QuizForm() {
                     name="number"
                   />
 
-                  <Field
-                    name="questionCount"
-                    render={({ field }) => (
+                  <Field name="questionCount">
+                    {({ field }) => (
                       <div>
                         <div className="inline-block">
                           <label>Kaikki: </label>
@@ -231,8 +233,8 @@ export default function QuizForm() {
                             {...field}
                             name="questionCount"
                             type="radio"
-                            value="true"
-                            checked={field.value === "true"}
+                            value="false"
+                            checked={field.value === "false"}
                             onChange={handleChange}
                           />
                         </div>
@@ -242,18 +244,18 @@ export default function QuizForm() {
                             {...field}
                             type="radio"
                             name="questionCount"
-                            value="false"
-                            checked={field.value === "false"}
+                            value="true"
+                            checked={field.value === "true"}
                             onChange={handleChange}
                           />
                         </div>
                       </div>
                     )}
-                  />
+                  </Field>
 
                   <div
                     className={
-                      values.questionCount === "true" ? "hidden" : "em"
+                      values.questionCount === "true" ? "em" : "hidden"
                     }
                   >
                     <Field
@@ -271,6 +273,9 @@ export default function QuizForm() {
                       onBlur={handleBlur}
                       value={values.number || ""}
                     />
+                  </div>
+                  <div>
+                    <SearchTag suggestions={suggestions} />
                   </div>
 
                   <div className="em">

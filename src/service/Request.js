@@ -1,7 +1,6 @@
 const url = "/api/topics/";
 
 export const fetchQuestions = querydata => {
-  console.log("Tässä serviceclientissa näkyvä quiz-data " + querydata);
   let token = sessionStorage.getItem("tommi");
 
   return fetch(url, {
@@ -52,14 +51,14 @@ export const postQuestion = question => {
   }).then(res => res.json());
 };
 
-export const postTemporaryQuestion = question => {
-  let token = sessionStorage.getItem("tommi");
-  return fetch(`/api/temporaryquestion`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: token },
-    body: JSON.stringify(question)
-  }).then(res => res.json());
-};
+// export const postTemporaryQuestion = question => {
+//   let token = sessionStorage.getItem("tommi");
+//   return fetch(`/api/temporaryquestion`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json", Authorization: token },
+//     body: JSON.stringify(question)
+//   }).then(res => res.json());
+// };
 
 export const getTopics = topic => {
   let token = sessionStorage.getItem("tommi");
@@ -87,6 +86,17 @@ export const getScores = score => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(score)
   }).then(res => res.json());
+};
+
+export const getTags = () => {
+  let token = sessionStorage.getItem("tommi");
+  return fetch("/api/topics/tags", {
+    headers: {
+      Authorization: token
+    }
+  })
+    .then(res => res.json())
+    .catch(err => err);
 };
 
 // export const getQuestion = badge => {
