@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage} from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { fetchQuestions, getTopics, postQuiz } from "../../service/Request";
+import {
+  fetchQuestions,
+  getTopics,
+  postQuiz,
+  getTags
+} from "../../service/Request";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import SingleQuestionform from "../teacher/SingleQuestionform";
+import SearchTag from "../teacher/SearchTag";
 import socketIOClient from "socket.io-client";
 import Preview from "./Preview";
 import { uuid } from "uuidv4";
@@ -13,14 +19,13 @@ import { uuid } from "uuidv4";
 const quizformSchema = Yup.object().shape({
   name: Yup.string().required("Tentillä täytyy olla nimi"),
   questionCount: Yup.boolean(),
-  number: Yup.number()
-            .when("questionCount", {
-              is: true,
-              then: Yup.number()
-              .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
-              .integer("Numeron täytyy olla kokonaisluku")
-              .lessThan(10001, "Luku saa olla enintään 10000")
-            })
+  number: Yup.number().when("questionCount", {
+    is: true,
+    then: Yup.number()
+      .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
+      .integer("Numeron täytyy olla kokonaisluku")
+      .lessThan(10001, "Luku saa olla enintään 10000")
+  })
 });
 
 export default function QuizForm() {
@@ -38,10 +43,12 @@ export default function QuizForm() {
       {}
     )
   });
+  const [suggestions, setSuggestions] = useState();
 
   //Hakee aihealueet tietokannasta lomakekenttää varten
   const fetchTopics = () => {
     getTopics().then(res => setTopics(res));
+    getTags().then(res => setSuggestions(res));
   };
 
   useEffect(() => {
@@ -131,7 +138,7 @@ export default function QuizForm() {
       <div className="qFormContainer text-white">
         <h3 className="detail_header formTitle">Luo uusi tentti</h3>
         <br />
-        <p>tunnuksesi on: {sessionStorage.getItem('badge')}</p>
+        <p>tunnuksesi on: {sessionStorage.getItem("badge")}</p>
         <div className="user">
           <Formik
             initialValues={{
@@ -217,8 +224,7 @@ export default function QuizForm() {
                     name="number"
                   />
 
-                  <Field
-                    name="questionCount">
+                  <Field name="questionCount">
                     {({ field }) => (
                       <div>
                         <div className="inline-block">
@@ -269,6 +275,7 @@ export default function QuizForm() {
                     />
                   </div>
                   <div>
+                    <SearchTag suggestions={suggestions} />
                   </div>
 
                   <div className="em">

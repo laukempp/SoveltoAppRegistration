@@ -88,6 +88,17 @@ export const getScores = score => {
   }).then(res => res.json());
 };
 
+export const getTags = () => {
+  let token = sessionStorage.getItem("tommi");
+  return fetch("/api/topics/tags", {
+    headers: {
+      Authorization: token
+    }
+  })
+    .then(res => res.json())
+    .catch(err => err);
+};
+
 // export const getQuestion = badge => {
 //   console.log(badge);
 //   return fetch("/api/question", {
