@@ -9,17 +9,12 @@ export const loginUser = user => {
       return res.json();
     })
     .then(jsonResponse => {
-      console.log(jsonResponse);
       if (jsonResponse.message) {
         return;
       } else {
         auth.sessionStorageAuth(jsonResponse.data);
         sessionStorage.setItem("badge", jsonResponse.badge);
         auth.setToken(jsonResponse.data);
-        console.log("Tässä badge " + jsonResponse.badge);
-        console.log("token log", auth.token());
-        console.log("authenticated log", auth.isAuthenticated());
-        console.log(sessionStorage.getItem("badge"));
       }
     });
 };
