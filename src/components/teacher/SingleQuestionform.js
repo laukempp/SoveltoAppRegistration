@@ -118,7 +118,8 @@ const SingleQuestionform = () => {
           handleSubmit,
           isSubmitting,
           handleReset,
-          setFieldValue
+          setFieldValue,
+          setValues
         }) => {
           return (
             <Form onSubmit={handleSubmit}>
