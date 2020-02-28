@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import ReactTags from "react-tag-autocomplete";
 import { uuid } from "uuidv4";
 
-const SearchTag = ({ suggestions }) => {
-  const [tags, setTags] = useState([
-    { id: 1, name: "Apples" },
-    { id: 2, name: "Pears" }
-  ]);
+const SearchTag = ({ tags, suggestions, collectTags }) => {
 
   const handleDelete = i => {
     setTags(tags.filter((tag, index) => index !== i));
@@ -18,6 +14,8 @@ const SearchTag = ({ suggestions }) => {
     tag["id"] = uuid();
     setTags(tags => [...tags, tag]);
   };
+
+  collectTags(tags)
 
   return (
     <div>

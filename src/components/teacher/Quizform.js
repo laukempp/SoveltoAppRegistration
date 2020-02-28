@@ -10,9 +10,9 @@ import {
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import SingleQuestionform from "../teacher/SingleQuestionform";
-import SearchTag from "../teacher/SearchTag";
 import socketIOClient from "socket.io-client";
 import Preview from "./Preview";
+import ReactTags from "react-tag-autocomplete";
 import { uuid } from "uuidv4";
 
 //validointi lomakkeeseen
@@ -28,6 +28,11 @@ const quizformSchema = Yup.object().shape({
   })
 });
 
+const createTagArray = array => {
+  let modified = array.map(item => item.name)
+  return Object.values(modified)
+}
+
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
   const [show, setShow] = useState(false);
@@ -35,6 +40,19 @@ export default function QuizForm() {
   const [topics, setTopics] = useState([]);
   const [title, setTitle] = useState();
   const [nro, setNumber] = useState();
+  const [suggestions, setSuggestions] = useState();
+  const [tags, setTags] = useState([]);
+
+  const handleDelete = i => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAddition = tag => {
+    tag["id"] = uuid();
+    setTags(tags => [...tags, tag]);
+  };
+
+  console.log(createTagArray(tags))
 
   //Muotoilee tulosten keräämiseen tarvittavan arrayn siten, että key on jokaisen kysymyksen id ja arvoksi tulee false
   const [checkedArray, setCheckedArray] = useState({
@@ -43,16 +61,15 @@ export default function QuizForm() {
       {}
     )
   });
-  const [suggestions, setSuggestions] = useState();
 
   //Hakee aihealueet tietokannasta lomakekenttää varten
-  const fetchTopics = () => {
+  const fetchData = () => {
     getTopics().then(res => setTopics(res));
     getTags().then(res => setSuggestions(res));
   };
 
   useEffect(() => {
-    fetchTopics();
+    fetchData();
   }, []);
 
   const socket = socketIOClient("http://localhost:5001");
@@ -145,11 +162,13 @@ export default function QuizForm() {
               name: "",
               topics_id: 1,
               number: 0,
-              questionCount: "false"
+              questionCount: "false",
+              q_tags: []
             }}
             validationSchema={quizformSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               values.number = values.questionCount === "true" ? nro : 1000;
+              values.q_tags = createTagArray(tags);
               setSubmitting(true);
               fetchQuestions(values)
                 .then(res => setQuestions(res))
@@ -275,7 +294,13 @@ export default function QuizForm() {
                     />
                   </div>
                   <div>
-                    <SearchTag suggestions={suggestions} />
+                  <ReactTags
+                      tags={tags}
+                      suggestions={suggestions}
+                      onDelete={handleDelete}
+                      onAddition={handleAddition}
+                      allowNew={true}
+                  />
                   </div>
 
                   <div className="em">
