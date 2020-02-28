@@ -78,7 +78,8 @@ const Scores = () => {
 
   //Lasketaan oikeiden vastausten määrä koko quizin osalta
   let howManyCorrect = 0;
-  let howManyAnswers = scoreData[0] && scoreData[0].respondents
+  let howManyAnswers = scoreData[0] && scoreData[0].respondents * scoreData.length;
+  let howManyRespondents = scoreData[0] && scoreData[0].respondents;
   
   scoreData[0] && scoreData.forEach(result => {
     result.results.forEach(answer => {
@@ -87,6 +88,8 @@ const Scores = () => {
       }
     });
   });
+
+  console.log(howManyCorrect)
 
  /*  console.log(answers);
   console.log(howManyCorrect); */
@@ -102,6 +105,10 @@ const Scores = () => {
        Quiz Total Score:{" "}
        {totalCorrect ? totalCorrect : 0}%
      </h4>
+     <p>
+       Vastaajien määrä:{" "}
+       {howManyRespondents}
+     </p>
      <div>
       {scores}</div>
      {/*  <div>
@@ -120,6 +127,10 @@ const Scores = () => {
          Quiz Total Score:{" "}
          {totalCorrect ? totalCorrect : 0}%
        </h4>
+       <p>
+       Vastaajien määrä:{" "}
+       {howManyRespondents}
+     </p>
        <div></div>
        {scores}
        {/* <div>

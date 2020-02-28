@@ -128,6 +128,7 @@ export default function QuizForm() {
     postQuiz(data)
       .then(() => eventMessage(data))
       .then(() => handleClose())
+      .then(() => setTags([]))
       .then(() =>
         setCheckedArray({
           checkboxes: questions.reduce(
