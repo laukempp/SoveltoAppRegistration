@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import {
-  postQuestion,
-  getTopics,
-  postQuiz,
-} from "../../service/Request";
+import { postQuestion, getTopics, postQuiz } from "../../service/Request";
 import * as Yup from "yup";
 import { uuid } from "uuidv4";
 import socketIOClient from "socket.io-client";
 
 const SingleQuestionform = () => {
   const [topics, setTopics] = useState([]);
-  // const [question, setQuestion] = useState([]);
+
   const validationSchema = Yup.object().shape({
     question: Yup.string()
       .min(2, "Kysymyksen täytyy sisältää vähintään kaksi merkkiä.")
@@ -44,7 +40,7 @@ const SingleQuestionform = () => {
       resolve();
     });
   };
-
+  // Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
   const handleSingleQuestionQuizSubmit = (question, istemporary) => {
     let data = {
       title: "popquiz",
