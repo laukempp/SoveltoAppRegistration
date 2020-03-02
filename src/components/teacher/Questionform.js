@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage, FieldArray} from "formik";
-import { postQuestion, getTopics } from "../../service/Request";
+import { postQuestion, getTopics, getTags } from "../../service/Request";
 import * as Yup from "yup";
 import auth from "../../service/Auth";
 import { Navigation } from "../../layout/Navbar";
+import ReactTags from "react-tag-autocomplete";
+import { uuid } from "uuidv4";
 
 const validationSchema = Yup.object().shape({
   question: Yup.string()
@@ -25,12 +27,30 @@ export default function QuestionForm() {
   const authT = auth.sessionStorageGetItem();
 
   const [topics, setTopics] = useState([]);
-  const fetchTopics = () => {
-    getTopics().then(res => setTopics(res));
+  const [tags, setTags] = useState([]);
+  const [suggestions, setSuggestions] = useState();
+  const handleDelete = i => {
+    setTags(tags.filter((tag, index) => index !== i));
   };
+
+  const handleAddition = tag => {
+    tag["id"] = uuid();
+    setTags(tags => [...tags, tag]);
+  };
+
+  const fetchData = () => {
+    getTopics().then(res => setTopics(res));
+    getTags().then(res => setSuggestions(res));
+  };
+
   useEffect(() => {
-    fetchTopics();
+    fetchData();
   }, []);
+
+  const createTagArray = array => {
+    let modified = array.map(item => item.name)
+    return Object.values(modified)
+  }
 
   let topicInput = topics.map(option => {
     return <option key={option.id} value={option.id} label={option.title} />;
@@ -41,6 +61,7 @@ export default function QuestionForm() {
     correct_answer: "",
     wrong_answer: [""],
     topics_id: 1,
+    q_tags: [],
     q_author: sessionStorage.getItem("badge"),
     istemporary: 0
   };
@@ -59,9 +80,11 @@ export default function QuestionForm() {
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
+                values.q_tags = createTagArray(tags)
                 console.log(values.wrong_answer);
                 postQuestion(values);
                 resetForm();
+                setTags([]);
                 setSubmitting(false);
               }}
             >
@@ -111,7 +134,16 @@ export default function QuestionForm() {
                     >
                       {topicInput}
                     </Field>
-
+                    <div>
+                  <ReactTags
+                      tags={tags}
+                      suggestions={suggestions}
+                      onDelete={handleDelete}
+                      onAddition={handleAddition}
+                      allowNew={true}
+                      placeholderText={"Lisää tägi"}
+                  />
+                  </div>
                     <div>{/* <br /> */}</div>
                     <Field
                       type="text"
@@ -229,6 +261,7 @@ export default function QuestionForm() {
                       onClick={event => {
                         event.preventDefault();
                         handleReset();
+                        setTags([]);
                       }}
                     >
                       Tyhjennä
