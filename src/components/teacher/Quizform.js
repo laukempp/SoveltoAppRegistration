@@ -52,8 +52,6 @@ export default function QuizForm() {
     setTags(tags => [...tags, tag]);
   };
 
-  console.log(createTagArray(tags))
-
   //Muotoilee tulosten keräämiseen tarvittavan arrayn siten, että key on jokaisen kysymyksen id ja arvoksi tulee false
   const [checkedArray, setCheckedArray] = useState({
     checkboxes: questions.reduce(
@@ -73,17 +71,6 @@ export default function QuizForm() {
   }, []);
 
   const socket = socketIOClient("http://localhost:5001");
-
-  const eventMessage = object => {
-    return new Promise(resolve => {
-      socket.emit("eventMessage", object);
-      resolve();
-    });
-  };
-
-  socket.on("renderScore", event => {
-    console.log("tässä tulee oppilaan vastausdata", event);
-  });
 
   //Funktio, joka kerää tulokset. Klikkaamalla checkboxia avaimen arvo muuttuu välillä true/false
   const toggleChecked = e => {
@@ -126,7 +113,7 @@ export default function QuizForm() {
     };
     console.log(data);
     postQuiz(data)
-      .then(() => eventMessage(data))
+      .then(() => socket.emit("eventMessage", data))
       .then(() => handleClose())
       .then(() => setTags([]))
       .then(() =>
@@ -147,10 +134,6 @@ export default function QuizForm() {
     setShowQuestionform(false);
   };
 
-  /*const eventClick = () => {
-    socket.emit('eventClick', 'tämä tulee quizformista')
-  }*/
-
   return (
     <>
       <div className="qFormContainer text-white">
@@ -161,7 +144,7 @@ export default function QuizForm() {
           <Formik
             initialValues={{
               name: "",
-              topics_id: 1,
+              topics_id: 0,
               number: 0,
               questionCount: "false",
               q_tags: []
@@ -216,6 +199,7 @@ export default function QuizForm() {
                   as="select"
                   name="topics_id"
                   id="quiztopic"
+                  placeholder="Valitse aihe"
                   className={
                     touched.topics_id && errors.topics_id ? "error" : null
                   }
@@ -224,7 +208,8 @@ export default function QuizForm() {
                   value={values.topics_id}
                   style={{ display: "block" }}
                 >
-                  {topics.length > 1 &&
+                <option defaultValue>Valitse aihe</option>
+                  {topics && topics.length > 1 &&
                     topics.map(option => (
                       <option
                         key={option.id}
