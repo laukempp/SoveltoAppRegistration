@@ -40,7 +40,7 @@ export default function QuizForm() {
   const [topics, setTopics] = useState([]);
   const [title, setTitle] = useState();
   const [nro, setNumber] = useState();
-  const [suggestions, setSuggestions] = useState();
+  const [suggestions, setSuggestions] = useState([]);
   const [tags, setTags] = useState([]);
 
   const handleDelete = i => {
@@ -280,14 +280,15 @@ export default function QuizForm() {
                       value={values.number || ""}
                     />
                   </div>
-                  <div>
+                  <div className='tagDiv'>
                   <ReactTags
                       tags={tags}
                       suggestions={suggestions}
                       onDelete={handleDelete}
                       onAddition={handleAddition}
-                      allowNew={true}
                       placeholderText={"Lisää tägi"}
+                      allowBackspace={false}
+                       
                   />
                   </div>
 
