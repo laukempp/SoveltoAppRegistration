@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Field, ErrorMessage, FieldArray, getIn } from "formik";
+import ReactTags from "react-tag-autocomplete";
 import FormButton from "./FormButton";
 const QuestionForm = ({
   values,
@@ -10,7 +11,13 @@ const QuestionForm = ({
   handleSubmit,
   isSubmitting,
   handleReset,
-  topicInput
+  topicInput,
+  handleAddition,
+  handleDelete,
+  tags,
+  suggestions,
+  onValidate,
+  createTagArray
 }) => (
   <Form className="form" onSubmit={handleSubmit}>
     <Field
@@ -38,6 +45,17 @@ const QuestionForm = ({
     >
       {topicInput}
     </Field>
+
+    <ReactTags
+                      tags={tags}
+                      suggestions={suggestions}
+                      onDelete={handleDelete}
+                      onAddition={handleAddition}
+                      allowNew={true}
+                      placeholderText={"Lisää tägi"}
+                      onValidate={onValidate}
+                      allowBackspace={false}
+                  />
 
     <Field
       type="text"
