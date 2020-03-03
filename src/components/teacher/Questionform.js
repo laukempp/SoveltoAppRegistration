@@ -46,11 +46,14 @@ export default function QuestionForm() {
   useEffect(() => {
     fetchData();
   }, []);
-
+  function onValidate(tag) {
+    return tag.name.length <= 20 && tag.name.length >= 2;
+  }
   const createTagArray = array => {
     let modified = array.map(item => item.name);
     return Object.values(modified);
   };
+
 
   let topicInput = topics.map(option => {
     return <option key={option.id} value={option.id} label={option.title} />;
@@ -134,15 +137,18 @@ export default function QuestionForm() {
                       {topicInput}
                     </Field>
                     <div>
-                      <ReactTags
-                        tags={tags}
-                        suggestions={suggestions}
-                        onDelete={handleDelete}
-                        onAddition={handleAddition}
-                        allowNew={true}
-                        placeholderText={"Lisää tägi"}
-                      />
-                    </div>
+
+                  <ReactTags
+                      tags={tags}
+                      suggestions={suggestions}
+                      onDelete={handleDelete}
+                      onAddition={handleAddition}
+                      allowNew={true}
+                      placeholderText={"Lisää tägi"}
+                      onValidate={onValidate}
+                      allowBackspace={false}
+                  />
+                  </div>
                     <div>{/* <br /> */}</div>
                     <Field
                       type="text"
