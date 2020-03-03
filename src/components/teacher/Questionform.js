@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage, FieldArray} from "formik";
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { postQuestion, getTopics, getTags } from "../../service/Request";
 import * as Yup from "yup";
 import auth from "../../service/Auth";
@@ -48,9 +48,9 @@ export default function QuestionForm() {
   }, []);
 
   const createTagArray = array => {
-    let modified = array.map(item => item.name)
-    return Object.values(modified)
-  }
+    let modified = array.map(item => item.name);
+    return Object.values(modified);
+  };
 
   let topicInput = topics.map(option => {
     return <option key={option.id} value={option.id} label={option.title} />;
@@ -62,8 +62,7 @@ export default function QuestionForm() {
     wrong_answer: [""],
     topics_id: 1,
     q_tags: [],
-    q_author: sessionStorage.getItem("badge"),
-    istemporary: 0
+    q_author: sessionStorage.getItem("badge")
   };
 
   console.log(initial.wrong_answer);
@@ -80,7 +79,7 @@ export default function QuestionForm() {
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
-                values.q_tags = createTagArray(tags)
+                values.q_tags = createTagArray(tags);
                 console.log(values.wrong_answer);
                 postQuestion(values);
                 resetForm();
@@ -135,15 +134,15 @@ export default function QuestionForm() {
                       {topicInput}
                     </Field>
                     <div>
-                  <ReactTags
-                      tags={tags}
-                      suggestions={suggestions}
-                      onDelete={handleDelete}
-                      onAddition={handleAddition}
-                      allowNew={true}
-                      placeholderText={"Lisää tägi"}
-                  />
-                  </div>
+                      <ReactTags
+                        tags={tags}
+                        suggestions={suggestions}
+                        onDelete={handleDelete}
+                        onAddition={handleAddition}
+                        allowNew={true}
+                        placeholderText={"Lisää tägi"}
+                      />
+                    </div>
                     <div>{/* <br /> */}</div>
                     <Field
                       type="text"

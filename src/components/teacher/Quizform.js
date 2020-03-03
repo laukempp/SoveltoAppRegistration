@@ -29,9 +29,9 @@ const quizformSchema = Yup.object().shape({
 });
 
 const createTagArray = array => {
-  let modified = array.map(item => item.name)
-  return Object.values(modified)
-}
+  let modified = array.map(item => item.name);
+  return Object.values(modified);
+};
 
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
@@ -153,7 +153,7 @@ export default function QuizForm() {
             onSubmit={(values, { setSubmitting, resetForm }) => {
               values.number = values.questionCount === "true" ? nro : 1000;
               values.q_tags = createTagArray(tags);
-              console.log(values)
+              console.log(values);
               setSubmitting(true);
               fetchQuestions(values)
                 .then(res => setQuestions(res))
@@ -209,8 +209,9 @@ export default function QuizForm() {
                   value={values.topics_id}
                   style={{ display: "block" }}
                 >
-                <option defaultValue>Valitse aihe</option>
-                  {topics && topics.length > 1 &&
+                  <option defaultValue>Valitse aihe</option>
+                  {topics &&
+                    topics.length > 1 &&
                     topics.map(option => (
                       <option
                         key={option.id}
@@ -281,14 +282,14 @@ export default function QuizForm() {
                     />
                   </div>
                   <div>
-                  <ReactTags
+                    <ReactTags
                       tags={tags}
                       suggestions={suggestions}
                       onDelete={handleDelete}
                       onAddition={handleAddition}
                       allowNew={true}
                       placeholderText={"Lisää tägi"}
-                  />
+                    />
                   </div>
 
                   <div className="em">
@@ -347,12 +348,19 @@ export default function QuizForm() {
                 <Modal.Title>Luo kysymys ja tentti</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div>
-                  <SingleQuestionform />
+                <div className="singleQuestionDiv">
+                  <SingleQuestionform
+                    topics={topics}
+                    tagsProps={tags}
+                    handleDelete={handleDelete}
+                    handleAddition={handleAddition}
+                  />
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={closeQuestionform}>Sulje</Button>
+                <Button variant="secondary" onClick={closeQuestionform}>
+                  Sulje
+                </Button>
               </Modal.Footer>
             </div>
           </Modal>

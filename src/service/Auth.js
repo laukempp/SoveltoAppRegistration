@@ -19,14 +19,15 @@ export const loginUser = user => {
     });
 };
 
-export const clearTemporary = () => {
-  let badge = sessionStorage.getItem("badge");
-  return fetch("/logout", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ badge: badge })
-  });
-};
+// Funktio, jota kutsutaan logoutin yhteydessä
+// export const clearTemporary = () => {
+//   let badge = sessionStorage.getItem("badge");
+//   return fetch("/logout", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ badge: badge })
+//   });
+// };
 
 class Auth {
   constructor() {
@@ -54,7 +55,7 @@ class Auth {
     return sessionStorage.getItem("tommi");
   };
   logOut = () => {
-    clearTemporary();
+    // clearTemporary();
     sessionStorage.removeItem("tommi");
   };
 }
