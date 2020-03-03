@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import {
   postQuestion,
-  getTopics,
   postQuiz,
   getTags
 } from "../../service/Request";
@@ -84,7 +83,6 @@ const SingleQuestionform = ({ topics }) => {
     q_tags: [],
     q_author: parseInt(sessionStorage.getItem("badge")),
     istemporary: 0,
-    isFirstButton: false,
     isSecondButton: false,
     isThirdButton: false
   };
@@ -292,24 +290,6 @@ const SingleQuestionform = ({ topics }) => {
               />
               <br />
 
-              <div className="input-row">
-                <button
-                  id="first-button"
-                  className="btnLogin"
-                  type="button"
-                  disabled={isSubmitting}
-                  onClick={e => {
-                    setFieldValue("isFirstButton", true);
-
-                    handleSubmit(e);
-                  }}
-                >
-                  Tallenna kysymys kysymyspankkiin
-                </button>
-              </div>
-              <div>
-                <br />
-              </div>
               <div className="input-row">
                 <button
                   id="second-button"
