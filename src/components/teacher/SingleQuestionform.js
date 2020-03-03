@@ -2,39 +2,54 @@ import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import {
   postQuestion,
-  getTopics,
   postQuiz,
+  getTags
 } from "../../service/Request";
 import * as Yup from "yup";
 import { uuid } from "uuidv4";
+import ReactTags from "react-tag-autocomplete";
 import socketIOClient from "socket.io-client";
 
-const SingleQuestionform = () => {
-  const [topics, setTopics] = useState([]);
-  // const [question, setQuestion] = useState([]);
-  const validationSchema = Yup.object().shape({
-    question: Yup.string()
-      .min(2, "Kysymyksen täytyy sisältää vähintään kaksi merkkiä.")
-      .max(255, "Kysymys ei voi olla pidempi kuin 255 merkkiä.")
-      .required("Kirjoita uusi kysymys."),
-    correct_answer: Yup.string()
-      .min(2, "Vastauksen täytyy sisältää vähintään kaksi merkkiä.")
-      .max(255, "Vastaus ei voi olla pidempi kuin 255 merkkiä.")
-      .required("Anna oikea vastaus"),
-    wrong_answer: Yup.array()
-      .min(1, "Vähintään yksi väärä vastaus.")
-      .max(3, "Enintään kolme väärää vastausta")
-      .required("Vähintään yksi väärä vastaus vaaditaan")
-  });
+const validationSchema = Yup.object().shape({
+  question: Yup.string()
+    .min(2, "Kysymyksen täytyy sisältää vähintään kaksi merkkiä.")
+    .max(255, "Kysymys ei voi olla pidempi kuin 255 merkkiä.")
+    .required("Kirjoita uusi kysymys."),
+  correct_answer: Yup.string()
+    .min(2, "Vastauksen täytyy sisältää vähintään kaksi merkkiä.")
+    .max(255, "Vastaus ei voi olla pidempi kuin 255 merkkiä.")
+    .required("Anna oikea vastaus"),
+  wrong_answer: Yup.array()
+    .min(1, "Vähintään yksi väärä vastaus.")
+    .max(3, "Enintään kolme väärää vastausta")
+    .required("Vähintään yksi väärä vastaus vaaditaan")
+});
 
-  // Haetaan valmiit aihealueet kysymyksille
-  const fetchTopics = () => {
-    getTopics().then(res => setTopics(res));
+const SingleQuestionform = ({ topics }) => {
+  const [tags, setTags] = useState([]);
+  const [suggestions, setSuggestions] = useState();
+
+  const handleDelete = i => {
+    setTags(tags.filter((tag, index) => index !== i));
   };
+
+  const handleAddition = tag => {
+    tag["id"] = uuid();
+    setTags(tags => [...tags, tag]);
+  };
+
+  const fetchData = () => {
+    getTags().then(res => setSuggestions(res));
+  };
+
   useEffect(() => {
-    fetchTopics();
+    fetchData();
   }, []);
-  console.log(topics);
+
+  const createTagArray = array => {
+    let modified = array.map(item => item.name);
+    return Object.values(modified);
+  };
 
   const socket = socketIOClient("http://localhost:5001");
 
@@ -44,7 +59,7 @@ const SingleQuestionform = () => {
       resolve();
     });
   };
-
+  // Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
   const handleSingleQuestionQuizSubmit = (question, istemporary) => {
     let data = {
       title: "popquiz",
@@ -53,7 +68,6 @@ const SingleQuestionform = () => {
       quiz_badge: uuid(),
       istemporary: istemporary
     };
-    console.log(data);
     postQuiz(data).then(() => eventMessage(data));
   };
 
@@ -66,6 +80,7 @@ const SingleQuestionform = () => {
     correct_answer: "",
     wrong_answer: [""],
     topics_id: 1,
+    q_tags: [],
     q_author: parseInt(sessionStorage.getItem("badge")),
     istemporary: 0,
     isSecondButton: false,
@@ -73,13 +88,22 @@ const SingleQuestionform = () => {
   };
 
   return (
-    <div>
+    <div className="singleQuestionFormContainer">
       <Formik
         initialValues={initial}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
+          if (values.isFirstButton) {
+            setSubmitting(true);
+            values.q_tags = createTagArray(tags);
+            postQuestion(values);
+            resetForm();
+            setTags([]);
+            setSubmitting(false);
+          }
           if (values.isSecondButton) {
             setSubmitting(true);
+            values.q_tags = createTagArray(tags);
             postQuestion(values).then(res => {
               handleSingleQuestionQuizSubmit(
                 res.id.toString(),
@@ -87,10 +111,12 @@ const SingleQuestionform = () => {
               );
             });
             resetForm();
+            setTags([]);
             setSubmitting(false);
           }
           if (values.isThirdButton) {
             setSubmitting(true);
+            values.q_tags = createTagArray(tags);
             postQuestion(values).then(res => {
               handleSingleQuestionQuizSubmit(
                 res.id.toString(),
@@ -98,6 +124,7 @@ const SingleQuestionform = () => {
               );
             });
             resetForm();
+            setTags([]);
             setSubmitting(false);
           }
         }}
@@ -110,12 +137,11 @@ const SingleQuestionform = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          handleReset,
-          setFieldValue,
-          setValues
+          setFieldValue
         }) => {
           return (
             <Form onSubmit={handleSubmit}>
+              <div className="singleQuestionFormInput"></div>
               <Field
                 type="text"
                 name="question"
@@ -147,6 +173,16 @@ const SingleQuestionform = () => {
               >
                 {topicInput}
               </Field>
+              <div>
+                <ReactTags
+                  tags={tags}
+                  suggestions={suggestions}
+                  onDelete={handleDelete}
+                  onAddition={handleAddition}
+                  allowNew={true}
+                  placeholderText={"Lisää tägi"}
+                />
+              </div>
               <div>{/* <br /> */}</div>
               <Field
                 type="text"
