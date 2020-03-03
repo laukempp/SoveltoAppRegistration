@@ -68,7 +68,6 @@ const SingleQuestionform = () => {
     topics_id: 1,
     q_author: parseInt(sessionStorage.getItem("badge")),
     istemporary: 0,
-    isFirstButton: false,
     isSecondButton: false,
     isThirdButton: false
   };
@@ -79,12 +78,6 @@ const SingleQuestionform = () => {
         initialValues={initial}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          if (values.isFirstButton) {
-            setSubmitting(true);
-            postQuestion(values);
-            resetForm();
-            setSubmitting(false);
-          }
           if (values.isSecondButton) {
             setSubmitting(true);
             postQuestion(values).then(res => {
@@ -261,24 +254,6 @@ const SingleQuestionform = () => {
               />
               <br />
 
-              <div className="input-row">
-                <button
-                  id="first-button"
-                  className="btnLogin"
-                  type="button"
-                  disabled={isSubmitting}
-                  onClick={e => {
-                    setFieldValue("isFirstButton", true);
-
-                    handleSubmit(e);
-                  }}
-                >
-                  Tallenna kysymys kysymyspankkiin
-                </button>
-              </div>
-              <div>
-                <br />
-              </div>
               <div className="input-row">
                 <button
                   id="second-button"
