@@ -1,237 +1,255 @@
 //setting primary color, font family and font size for the application
-$font-family:   "Roboto";
-$font-size:     14px;
+$font-family: "Roboto";
+$font-size: 14px;
 
 $color-primary: rgb(182, 87, 60);
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 //animated background for the application
 body {
-    font-family: $font-family;
-    font-size: $font-size;
-    background-size:  200% 100% !important;
-    animation: move 10s ease infinite;
-    transform: translate3d(0, 0, 0);
-    background: linear-gradient(90deg, rgba(226, 0, 38, 0.89) 10%, rgb(226, 0, 38) 90%);
-    height: 100vh
+  font-family: $font-family;
+  font-size: $font-size;
+  background-size: 200% 100% !important;
+  animation: move 10s ease infinite;
+  transform: translate3d(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(226, 0, 38, 0.89) 10%,
+    rgb(226, 0, 38) 90%
+  );
+  height: 100vh;
 }
 //sets margin and width generally for forms
 .user {
-    width: 90%;
-    max-width: 340px;
-    margin: 10vh auto;
+  width: 90%;
+  max-width: 340px;
+  margin: 10vh auto;
 }
 //header for dashboard main screen on top of add new quiz
 .user__header {
-    text-align: center;
-    opacity: 0;
-    transform: translate3d(0, 500px, 0);
-    animation: arrive 500ms ease-in-out 0.4s forwards;
+  text-align: center;
+  opacity: 0;
+  transform: translate3d(0, 500px, 0);
+  animation: arrive 500ms ease-in-out 0.4s forwards;
 }
 
 .user__title {
-    font-size: 25px;
-    margin-bottom: -5px;
-    font-weight: 700;
-    color: rgb(255, 255, 255);
+  font-size: 25px;
+  margin-bottom: -5px;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
 }
 //form layout of quiz and questionform
 .form {
-    margin-top: 40px;
-    border-radius: 6px;
-    overflow: hidden;
-    opacity: 0;
-    transform: translate3d(0, 500px, 0);
-    animation: arrive 400ms ease-in-out 0.7s forwards;
-    text-align: left;
-    font-weight: 550;
+  margin-top: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, 500px, 0);
+  animation: arrive 400ms ease-in-out 0.7s forwards;
+  text-align: left;
+  font-weight: 550;
 }
 
 .form--no {
-    animation: NO 1s ease-in-out;
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+  animation: NO 1s ease-in-out;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 //display settings of input fields, using id instead of class because formik occupies className
-#passfield, #emailfield, #kysynimi, #kysynum, #topic_id, .wrongAns, #correct_answer, #question, #topics_id, #quiztopic {
-    display: block;
-    width: 100%;
-    padding: 20px;
-    font-family: $font-family;
-    -webkit-appearance: none;
-    border: 0;
-    outline: 0;
-    transition: 0.3s;
-    
-    &:focus {
-        background: darken(#fff, 3%);
-    }
+#passfield,
+#emailfield,
+#kysynimi,
+#kysynum,
+#topic_id,
+.wrongAns,
+#correct_answer,
+#question,
+#topics_id,
+#quiztopic {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  font-family: $font-family;
+  -webkit-appearance: none;
+  border: 0;
+  outline: 0;
+  transition: 0.3s;
+
+  &:focus {
+    background: darken(#fff, 3%);
+  }
 }
 //login button padding, width etc, button also used in quiz and question forms
 .btnLogin {
-    display: block;
-    width: 100%;
-    padding: 20px;
-    font-family: $font-family;
-    -webkit-appearance: none;
-    outline: 0;
-    border: 0;
-    color: white;
-    background: darken($color-primary, 5%);
-    transition: 0.3s;
-    
-    &:hover {
-        background: darken($color-primary, 10%);
-    }
+  display: block;
+  width: 100%;
+  padding: 20px;
+  font-family: $font-family;
+  -webkit-appearance: none;
+  outline: 0;
+  border: 0;
+  color: white;
+  background: darken($color-primary, 5%);
+  transition: 0.3s;
+
+  &:hover {
+    background: darken($color-primary, 10%);
+  }
 }
 
 @keyframes NO {
-  from, to {
+  from,
+  to {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     -webkit-transform: translate3d(-10px, 0, 0);
     transform: translate3d(-10px, 0, 0);
   }
 
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     -webkit-transform: translate3d(10px, 0, 0);
     transform: translate3d(10px, 0, 0);
   }
 }
 
 @keyframes arrive {
-    0% {
-        opacity: 0;
-        transform: translate3d(0, 50px, 0);
-    }
-    
-    100% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @keyframes move {
-    0% {
-        background-position: 0 0
-    }
+  0% {
+    background-position: 0 0;
+  }
 
-    50% {
-        background-position: 100% 0
-    }
+  50% {
+    background-position: 100% 0;
+  }
 
-    100% {
-        background-position: 0 0
-    }
+  100% {
+    background-position: 0 0;
+  }
 }
 
 //adds margin and aligns text to left on quizform
 .em {
-    margin-top: 5%;
-    margin-bottom: 10px;
-    text-align: left;
-    
+  margin-top: 5%;
+  margin-bottom: 10px;
+  text-align: left;
 }
 //changes font color and font weight of quiz forms "quiz name" and "quiz topic"
 .detail_span {
-    color: whitesmoke;
-    font-weight: 600;
+  color: whitesmoke;
+  font-weight: 600;
 }
 //changes font color and adds a slight border radius to quiz form header
 .detail_header {
-    color: whitesmoke;  
-    border-radius: 5px;
+  color: whitesmoke;
+  border-radius: 5px;
 }
 //changes font-size and font-weight of quiz preview in modal window
 .mQuestion {
-    font-size: 17px;
-    font-weight: bold;
+  font-size: 17px;
+  font-weight: bold;
 }
 //container for quiz preview modal window
 .mContainer {
-    display: inline-block;
-    width: 90%;
-    margin-bottom: 10px;
-    background: rgb(245, 236, 236);
-    border-radius: 10px;
-    padding: 6px;
-
+  display: inline-block;
+  width: 90%;
+  margin-bottom: 10px;
+  background: rgb(245, 236, 236);
+  border-radius: 10px;
+  padding: 6px;
 }
 //handles position of preview in quizform
 .quizPreview {
-    position: relative;
-    overflow: auto;
-    
+  position: relative;
+  overflow: auto;
 }
 //sets the position of checkbox within preview modal window
-.previewCheckbox  {
-    position: absolute;
-    margin-top: 16%;
-   margin-left: 2%;
+.previewCheckbox {
+  position: absolute;
+  margin-top: 16%;
+  margin-left: 2%;
 }
-input[type=radio] {
-    margin-right: 5px;
+input[type="radio"] {
+  margin-right: 5px;
 }
- //preview modal window send button
+//preview modal window send button
 .sendQ {
-    background: rgb(206, 89, 69) !important;
-    border: rgb(182, 87, 60) !important;
+  background: rgb(206, 89, 69) !important;
+  border: rgb(182, 87, 60) !important;
 }
 //class to set text color white, used widely within the entire application
 .text-white {
-    color: ghostwhite;
+  color: ghostwhite;
 }
 //containers for questionform, used to set width, margin, borders and on load animation
 .qFormContainer {
-    background-color: rgba(39, 37, 30, 0.404);
-    max-width: 640px;
-    min-width: 200px;
-    width: 50%;
-    margin: auto;
-    margin-top: 2%;
-    border-radius: 20px;
-    padding: 1%;
-    transform: translate3d(0, 1000px, 0);
-    animation: arrive 400ms ease-in 0.3s forwards;
+  background-color: rgba(39, 37, 30, 0.404);
+  max-width: 640px;
+  min-width: 200px;
+  width: 50%;
+  margin: auto;
+  margin-top: 2%;
+  border-radius: 20px;
+  padding: 1%;
+  transform: translate3d(0, 1000px, 0);
+  animation: arrive 400ms ease-in 0.3s forwards;
 }
 //containers for questionform, used to set width, margin, borders and on load animation
 .questionFormContainer {
-    background-color: rgba(39, 37, 30, 0.404);
-    max-width: 640px;
-    min-width: 200px;
-    width: 50%;
-    margin: auto;
-    margin-top: 2%;
-    border-radius: 20px;
-    padding: 1%;
-    transform: translate3d(0, 1000px, 0);
-    animation: arrive 400ms ease-in 0.3s forwards;
+  background-color: rgba(39, 37, 30, 0.404);
+  max-width: 640px;
+  min-width: 200px;
+  width: 50%;
+  margin: auto;
+  margin-top: 2%;
+  border-radius: 20px;
+  padding: 1%;
+  transform: translate3d(0, 1000px, 0);
+  animation: arrive 400ms ease-in 0.3s forwards;
 }
 
 //not found
 #correct_answer {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }
 //questionform responsivity for over 780px width view
-@media (min-width: 780px){
-    .wrongAnsInput {
-        width: 160%;
-        padding: 5px;
-        
-        margin-bottom: 10px;
-    }
-    //lining button with wrong answer input
-.qFormRemoveBtn {
+@media (min-width: 780px) {
+  .wrongAnsInput {
+    width: 160%;
+    padding: 5px;
+
+    margin-bottom: 10px;
+  }
+  //lining button with wrong answer input
+  .qFormRemoveBtn {
     display: inline-block;
-     width: 55%; 
+    width: 55%;
     padding: 7px 7px;
     margin: 0px;
     margin-left: 45%;
@@ -242,27 +260,27 @@ input[type=radio] {
     color: white;
     background: darken(rgb(235, 1, 1), 5%);
     transition: 0.3s;
-    
+
     &:hover {
-        background: darken(rgb(235, 1, 1), 10%);
+      background: darken(rgb(235, 1, 1), 10%);
     }
-}
+  }
 }
 //questionform responsivity for max 780px style width view
-@media (max-width: 779px){
-    .wrongAnsInput {
-        width: 160%;
-        padding: 5px;
-        
-        margin-bottom: 10px;
-    }
-    //lining button with wrong answer input
-    .qFormRemoveBtn {
-        display: inline-block;
-        width: 55%; 
-       padding: 7px 7px;
-       margin: 0px;
-       margin-left: 45%;
+@media (max-width: 779px) {
+  .wrongAnsInput {
+    width: 160%;
+    padding: 5px;
+
+    margin-bottom: 10px;
+  }
+  //lining button with wrong answer input
+  .qFormRemoveBtn {
+    display: inline-block;
+    width: 55%;
+    padding: 7px 7px;
+    margin: 0px;
+    margin-left: 45%;
     font-family: $font-family;
     -webkit-appearance: none;
     outline: 0;
@@ -270,81 +288,79 @@ input[type=radio] {
     color: white;
     background: darken(rgb(235, 1, 1), 5%);
     transition: 0.3s;
-    
-    &:hover {
-        background: darken(rgb(235, 1, 1), 10%);
-    }
-    }
-    .wrongAnsInput {
-        
-        padding: 5px;
-    }
 
-    .questionFormContainer {
-        background-color: rgba(39, 37, 30, 0.404);
-        max-width: 500px;
-        min-width: 100px;
-        margin: 0 -10%;
-        width: 55%;
-        margin: auto;
-        margin-top: 2%;
-        border-radius: 20px;
-        padding: 1%;
-        transform: translate3d(0, 1000px, 0);
-        animation: arrive 400ms ease-in 0.3s forwards;
+    &:hover {
+      background: darken(rgb(235, 1, 1), 10%);
     }
-   
+  }
+  .wrongAnsInput {
+    padding: 5px;
+  }
+
+  .questionFormContainer {
+    background-color: rgba(39, 37, 30, 0.404);
+    max-width: 500px;
+    min-width: 100px;
+    margin: 0 -10%;
+    width: 55%;
+    margin: auto;
+    margin-top: 2%;
+    border-radius: 20px;
+    padding: 1%;
+    transform: translate3d(0, 1000px, 0);
+    animation: arrive 400ms ease-in 0.3s forwards;
+  }
 }
 //questionform responsivity for mobile style width view
-@media (max-width: 450px){
-    .questionFormContainer {
-        background-color: rgba(39, 37, 30, 0.404);
-        max-width: 500px;
-        min-width: 100px;
-        margin: 0 -10%;
-        width: 100%;
-        margin: auto;
-        margin-top: 2%;
-        border-radius: 20px;
-        padding: 1%;
-        transform: translate3d(0, 1000px, 0);
-        animation: arrive 400ms ease-in 0.3s forwards;
-    }
-    .qFormContainer {
-        background-color: rgba(39, 37, 30, 0.404);
-        max-width: 500px;
-        min-width: 100px;
-        margin: 0 -10%;
-        width: 100%;
-        margin: auto;
-        margin-top: 2%;
-        border-radius: 20px;
-        padding: 1%;
-        transform: translate3d(0, 1000px, 0);
-        animation: arrive 400ms ease-in 0.3s forwards;
-    }
+@media (max-width: 450px) {
+  .questionFormContainer {
+    background-color: rgba(39, 37, 30, 0.404);
+    max-width: 500px;
+    min-width: 100px;
+    margin: 0 -10%;
+    width: 100%;
+    margin: auto;
+    margin-top: 2%;
+    border-radius: 20px;
+    padding: 1%;
+    transform: translate3d(0, 1000px, 0);
+    animation: arrive 400ms ease-in 0.3s forwards;
+  }
+  .qFormContainer {
+    background-color: rgba(39, 37, 30, 0.404);
+    max-width: 500px;
+    min-width: 100px;
+    margin: 0 -10%;
+    width: 100%;
+    margin: auto;
+    margin-top: 2%;
+    border-radius: 20px;
+    padding: 1%;
+    transform: translate3d(0, 1000px, 0);
+    animation: arrive 400ms ease-in 0.3s forwards;
+  }
 }
 //div for each wrong answer in question form
 #wrongAns {
-    display: inline-block;
-    width: 150%;
-    padding: 20px 30px;
-    margin-left: -15px;
-    font-family: $font-family;
-    -webkit-appearance: none;
-    border: 0;
-    outline: 0;
-    transition: 0.3s;
+  display: inline-block;
+  width: 150%;
+  padding: 20px 30px;
+  margin-left: -15px;
+  font-family: $font-family;
+  -webkit-appearance: none;
+  border: 0;
+  outline: 0;
+  transition: 0.3s;
 }
 //label for wrong answer
 .wrongAnsLabel {
-    margin-left: 15%;
+  margin-left: 15%;
 }
 //Title for question form
 .formTitle {
-    display: block;
-    font-size: 30px;
-    margin-bottom: -30px;
+  display: block;
+  font-size: 30px;
+  margin-bottom: -30px;
 }
 //????
 /* .quizTitle {
@@ -355,81 +371,79 @@ input[type=radio] {
 } */
 //used in register component on a link to login page
 .registerUser {
-    font-weight: 650;
-    color: rgb(245, 226, 191);
-    &:hover {
-        color: lightblue;
-    }
+  font-weight: 650;
+  color: rgb(245, 226, 191);
+  &:hover {
+    color: lightblue;
+  }
 }
 
 .formEmpty {
-    margin-top: 10px;
-    background-color: rgb(112, 96, 96);
-    &:hover {
-        background-color: rgba(77, 57, 57, 0.849);
-    }
+  margin-top: 10px;
+  background-color: rgb(112, 96, 96);
+  &:hover {
+    background-color: rgba(77, 57, 57, 0.849);
+  }
 }
-//navbar links color changed and font-weight/margin 
+//navbar links color changed and font-weight/margin
 .NavLink {
-    color: black;
-    font-weight: 600;
-    margin: 0 10px;
+  color: black;
+  font-weight: 600;
+  margin: 0 10px;
 }
 //determines the color of result based on script in scoreitem component, also adds margin and display
 .resCount {
-    display: inline-block;
-    /* padding: 0 100px; */
-    font-weight: 600;
-    color: black;
-    left: 90%;
-    /* background-color: #fff; */
-    
-    margin-left: auto;
+  display: inline-block;
+  /* padding: 0 100px; */
+  font-weight: 600;
+  color: black;
+  left: 90%;
+  /* background-color: #fff; */
+
+  margin-left: auto;
 }
 //result value display and font color in scoreitem component
 .resValue {
-    color: black;
-    display: inline;
+  color: black;
+  display: inline;
 }
 //resultcontainer in scoreitem component, width, display
 .resultContainer {
-    max-width: 70%;
-    width: 70%;
-    display: inline-block;
-    margin: auto;
-    background-color: #fff;
-    text-align: left;
-    margin: 2px 0;
+  max-width: 70%;
+  width: 70%;
+  display: inline-block;
+  margin: auto;
+  background-color: #fff;
+  text-align: left;
+  margin: 2px 0;
 }
 //background and position for the scoreitem resultcontainer
 .resultBG {
-    background-color: rgba(39, 37, 30, 0.404);
-    max-width: 600px;
-    width: 100%;
-    margin: auto;
-    padding-bottom: 15px;
-    margin-top: 2%;
-    border-radius: 5px;
-    
+  background-color: rgba(39, 37, 30, 0.404);
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+  padding-bottom: 15px;
+  margin-top: 2%;
+  border-radius: 5px;
 }
 //display and margin for the amount of respondents in scoreitem component
 .resNumber {
-    display: grid;
-    float: left;
-    margin-left: 2%;
-    margin-right: 2%;
+  display: grid;
+  float: left;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 //answer value in scoreitem component, floating on the left
 .valueContainer {
-    float: left;
-    
+  float: left;
 }
-//div for valuecontainer and resnumber in scoreitem component, added display 
+//div for valuecontainer and resnumber in scoreitem component, added display
 .thisd {
-    display: inline-flex;
-    width: 100%;
-    padding-left: 1%;
-    padding-right: 0%;
+  display: inline-flex;
+  width: 100%;
+  padding-left: 1%;
+  padding-right: 0%;
 }
 /* @media (min-width: 1000px){
     .resultBG {
@@ -443,59 +457,58 @@ input[type=radio] {
 } */
 //empty form input bubble in quizform  and questionform
 .invalidErrorBubble {
-    background-color: rgb(46, 42, 42);
-    width: 50%;
-    position: relative;
-    margin-left: 50%;
-    margin-bottom: 2%;
-    padding: 20px;
-    border-radius: 30px;
-    border-bottom-left-radius: 0px;
-
+  background-color: rgb(46, 42, 42);
+  width: 50%;
+  position: relative;
+  margin-left: 50%;
+  margin-bottom: 2%;
+  padding: 20px;
+  border-radius: 30px;
+  border-bottom-left-radius: 0px;
 }
 //chatbot in dashboard, not functional (yet)
 .annoyingPopUpBot {
-    background-color: rgb(46, 42, 42);
-    color: grey;
-    width: 50%;
-    font-size: 10px;
-    position: static;
-    margin-left: 50%;
+  background-color: rgb(46, 42, 42);
+  color: grey;
+  width: 50%;
+  font-size: 10px;
+  position: static;
+  margin-left: 50%;
+  margin: 2% 49.5%;
+  padding: 20px;
+  border-radius: 30px;
+  border-bottom-right-radius: 0px;
+  top: 99%;
+  &:hover {
     margin: 2% 49.5%;
-    padding: 20px;
-    border-radius: 30px;
-    border-bottom-right-radius: 0px;
-    top: 99%;
-    &:hover {
-        margin: 2% 49.5%;
-        font-size: 20px;
-        width: 50%;
-        color: white;
-        position: static;
-    }
+    font-size: 20px;
+    width: 50%;
+    color: white;
+    position: static;
+  }
 }
 //footer with copyrightsign and names of developers, visible in login screen and dashboard
 .footer {
-    height: 30px;
-    bottom: 0;
-    left: 0;
-    width: 25%;
-    text-align: left;
-    position: relative;
-    font-size: 14px;
-    opacity: 50%;
-    &:hover {
-        opacity: 100%;
-        &::shadow {
-            background-color:blue;
-        }
+  height: 30px;
+  bottom: 0;
+  left: 0;
+  width: 25%;
+  text-align: left;
+  position: relative;
+  font-size: 14px;
+  opacity: 50%;
+  &:hover {
+    opacity: 100%;
+    &::shadow {
+      background-color: blue;
     }
   }
-  //used in quizforms amount selector
+}
+//used in quizforms amount selector
 .inline-block {
-    display: inline-block;
-    padding: 1px;
-    margin: 10% 10%;
+  display: inline-block;
+  padding: 1px;
+  margin: 10% 10%;
 }
 //??
 /* .text-center {
@@ -504,77 +517,74 @@ input[type=radio] {
 } */
 //used to hide input for question amount in quizform
 .hidden {
-    opacity: 0%;
+  opacity: 0%;
 }
 //Score per question data visualization
 .inline {
-    display: inline-block;
-    position: relative;
-    margin-top: 10%;
-    
+  display: inline-block;
+  position: relative;
+  margin-top: 10%;
 }
 .inline-table {
-    display: inline-block;
-    position: relative;
-    margin-top: 20%;
-    padding-top: 2em;
+  display: inline-block;
+  position: relative;
+  margin-top: 20%;
+  padding-top: 2em;
 }
-@media (max-width: 1050px){
-    .inline-table {
-       
-        margin-top: 50%;
-        padding-top: 1em;
-    }
+@media (max-width: 1050px) {
+  .inline-table {
+    margin-top: 50%;
+    padding-top: 1em;
+  }
 }
 
-@media (max-width: 720px){
-    .inline-table {
-       
-        margin-top: 100%;
-        padding-top: 1em;
-    }
+@media (max-width: 720px) {
+  .inline-table {
+    margin-top: 100%;
+    padding-top: 1em;
+  }
 }
 
 .inlinePercent {
-    display: inline-flex;
-    min-height: 75px;
-    min-width: 75px;
-    max-width: 75px;
-    
+  display: inline-flex;
+  min-height: 75px;
+  min-width: 75px;
+  max-width: 75px;
 }
 .individualColorDiv {
-    color: black;
-    min-width: 150px;
-    max-height: 48px;
-    margin: auto;
-    position: relative;
-    bottom: 0;
-    max-width: 150px;
-    height: 48px;
-    word-wrap: break-word;
-    border-radius: 1px;
+  color: black;
+  min-width: 150px;
+  max-height: 48px;
+  margin: auto;
+  position: relative;
+  bottom: 0;
+  max-width: 150px;
+  height: 48px;
+  word-wrap: break-word;
+  border-radius: 1px;
 }
 .indivudualMarginDiv {
-    margin: 10% 5% 0% 5%;
+  margin: 10% 5% 0% 5%;
 }
 .studentSpan {
-    display: inline-flex;
-    width: 40%;
-    height: 6em;
-    margin: 0 5px;
+  display: inline-flex;
+  width: 40%;
+  height: 6em;
+  margin: 0 5px;
 }
 .heightDiv {
-    float: none;
-    bottom: 48px;
-    padding-bottom: 24px;
-    margin-left: 5px;
-    position: absolute;
-    min-width: 140px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    animation: arrive 350ms ease-in-out 0.1s backwards;
+  float: none;
+  bottom: 48px;
+  padding-bottom: 24px;
+  margin-left: 5px;
+  position: absolute;
+  min-width: 140px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  animation: arrive 350ms ease-in-out 0.1s backwards;
 }
 .min-height {
+
     min-height: 48px;
 }
 
