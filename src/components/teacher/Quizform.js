@@ -153,6 +153,7 @@ export default function QuizForm() {
             onSubmit={(values, { setSubmitting, resetForm }) => {
               values.number = values.questionCount === "true" ? nro : 1000;
               values.q_tags = createTagArray(tags);
+              console.log(values)
               setSubmitting(true);
               fetchQuestions(values)
                 .then(res => setQuestions(res))
@@ -286,6 +287,7 @@ export default function QuizForm() {
                       onDelete={handleDelete}
                       onAddition={handleAddition}
                       allowNew={true}
+                      placeholderText={"Lisää tägi"}
                   />
                   </div>
 
@@ -325,6 +327,7 @@ export default function QuizForm() {
                   <Preview
                     questions={questions}
                     toggleChecked={toggleChecked}
+                    tags={createTagArray(tags)}
                   />
                 </div>
               </Modal.Body>
