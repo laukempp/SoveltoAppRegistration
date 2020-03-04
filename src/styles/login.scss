@@ -144,11 +144,13 @@ body {
 .detail_span {
     color: whitesmoke;
     font-weight: 600;
+    user-select: none;
 }
 //changes font color and adds a slight border radius to quiz form header
 .detail_header {
     color: whitesmoke;  
     border-radius: 5px;
+    user-select: none;
 }
 //changes font-size and font-weight of quiz preview in modal window
 .mQuestion {
@@ -505,6 +507,7 @@ input[type=radio] {
 //used to hide input for question amount in quizform
 .hidden {
     opacity: 0%;
+    display: none;
 }
 //Score per question data visualization
 .inline {
@@ -718,4 +721,7 @@ input[type=radio] {
   }
   .react-tags__search-input {
       min-width: 40%;
+  }
+  .react-tags__search-wrapper {
+      max-width: 95%;
   }
