@@ -16,8 +16,7 @@ const QuestionForm = ({
   handleDelete,
   tags,
   suggestions,
-  onValidate,
-  createTagArray
+  onValidate
 }) => (
   <Form className="form" onSubmit={handleSubmit}>
     <Field
