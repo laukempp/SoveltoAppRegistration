@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Field, ErrorMessage, FieldArray, getIn } from "formik";
+import useTags from "../hooks/useTags"
 import ReactTags from "react-tag-autocomplete";
 import FormButton from "./FormButton";
 const QuestionForm = ({
@@ -9,16 +10,13 @@ const QuestionForm = ({
   handleChange,
   handleBlur,
   handleSubmit,
-  isSubmitting,
-  handleReset,
   topicInput,
-  handleAddition,
-  handleDelete,
-  tags,
-  suggestions,
-  onValidate,
-  createTagArray
-}) => (
+  submitProps
+}) => {
+
+  const {tags, suggestions, handleAddition, handleDelete, onValidate} = useTags()
+  
+  return (
   <Form className="form" onSubmit={handleSubmit}>
     <Field
       type="text"
@@ -153,24 +151,22 @@ const QuestionForm = ({
 
     <div className="input-row">
       <FormButton
-        buttonClass={"btnLogin"}
-        buttonType={"submit"}
-        buttonDisabled={isSubmitting}
-        buttonText={"Lähetä"}
+        buttonProps={submitProps}
       />
     </div>
 
     <div className="input-row">
-      <FormButton
+      {/*<FormButton
         buttonClass={"btnLogin formEmpty"}
         buttonText={"Tyhjennä"}
         handleClick={event => {
           event.preventDefault();
           handleReset();
         }}
-      />
+      />*/}
     </div>
   </Form>
-);
+)
+      };
 
 export default QuestionForm;

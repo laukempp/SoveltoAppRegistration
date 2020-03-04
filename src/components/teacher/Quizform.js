@@ -29,9 +29,9 @@ const quizformSchema = Yup.object().shape({
 });
 
 const createTagArray = array => {
-  let modified = array.map(item => item.name);
-  return Object.values(modified);
-};
+  let modified = array.map(item => item.name)
+  return Object.values(modified)
+}
 
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
@@ -40,7 +40,7 @@ export default function QuizForm() {
   const [topics, setTopics] = useState([]);
   const [title, setTitle] = useState();
   const [nro, setNumber] = useState();
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState();
   const [tags, setTags] = useState([]);
 
   const handleDelete = i => {
@@ -153,7 +153,6 @@ export default function QuizForm() {
             onSubmit={(values, { setSubmitting, resetForm }) => {
               values.number = values.questionCount === "true" ? nro : 1000;
               values.q_tags = createTagArray(tags);
-              console.log(values);
               setSubmitting(true);
               fetchQuestions(values)
                 .then(res => setQuestions(res))
@@ -209,9 +208,8 @@ export default function QuizForm() {
                   value={values.topics_id}
                   style={{ display: "block" }}
                 >
-                  <option defaultValue>Valitse aihe</option>
-                  {topics &&
-                    topics.length > 1 &&
+                <option defaultValue>Valitse aihe</option>
+                  {topics && topics.length > 1 &&
                     topics.map(option => (
                       <option
                         key={option.id}
@@ -281,16 +279,13 @@ export default function QuizForm() {
                       value={values.number || ""}
                     />
                   </div>
-
-                  <div className='tagDiv'>
+                  <div>
                   <ReactTags
                       tags={tags}
                       suggestions={suggestions}
                       onDelete={handleDelete}
                       onAddition={handleAddition}
-                      placeholderText={"Lisää tägi"}
-                      allowBackspace={false}
-                       
+                      allowNew={true}
                   />
                   </div>
 
@@ -330,7 +325,6 @@ export default function QuizForm() {
                   <Preview
                     questions={questions}
                     toggleChecked={toggleChecked}
-                    tags={createTagArray(tags)}
                   />
                 </div>
               </Modal.Body>
@@ -350,19 +344,12 @@ export default function QuizForm() {
                 <Modal.Title>Luo kysymys ja tentti</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div className="singleQuestionDiv">
-                  <SingleQuestionform
-                    topics={topics}
-                    tagsProps={tags}
-                    handleDelete={handleDelete}
-                    handleAddition={handleAddition}
-                  />
+                <div>
+                  <SingleQuestionform />
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={closeQuestionform}>
-                  Sulje
-                </Button>
+                <Button onClick={closeQuestionform}>Sulje</Button>
               </Modal.Footer>
             </div>
           </Modal>
