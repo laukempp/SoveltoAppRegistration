@@ -11,7 +11,7 @@ export default function Preview({ questions, toggleChecked, tags }) {
     return array1
   }
     console.log("tagfilter function",tagFilter(questions, tags))
-    console.log("tags",tags)
+    console.log("tags", tags)
   const sortedQuestions = tagFilter(questions, tags).sort((array1, array2) => {
      if(array2[0]) {return array2.q_tags.length - array1.q_tags.length}
      return ""
