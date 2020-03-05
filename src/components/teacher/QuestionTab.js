@@ -7,7 +7,7 @@ import { questionValuesPost } from "../../service/FormProps";
 import { questionValidationSchema } from "../../service/Validation";
 import { uuid } from "uuidv4";
 import auth from "../../service/Auth";
-import QuestionForm from "./QuestionForm";
+import QuestionForm from "./Questionform";
 
 export default function QuestionTab() {
   const [topics, setTopics] = useState([]);

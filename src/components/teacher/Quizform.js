@@ -43,6 +43,8 @@ export default function QuizForm() {
   const [suggestions, setSuggestions] = useState();
   const [tags, setTags] = useState([]);
 
+  console.log("quizform", tags)
+
   const handleDelete = i => {
     setTags(tags.filter((tag, index) => index !== i));
   };
@@ -156,6 +158,7 @@ export default function QuizForm() {
               setSubmitting(true);
               fetchQuestions(values)
                 .then(res => setQuestions(res))
+                .then(() => setTags([]))
                 .then(() => setTitle(values.name))
                 .then(() => setShow(true));
               resetForm();
@@ -285,7 +288,6 @@ export default function QuizForm() {
                       suggestions={suggestions}
                       onDelete={handleDelete}
                       onAddition={handleAddition}
-                      allowNew={true}
                   />
                   </div>
 
@@ -325,6 +327,7 @@ export default function QuizForm() {
                   <Preview
                     questions={questions}
                     toggleChecked={toggleChecked}
+                    tags={tags}
                   />
                 </div>
               </Modal.Body>
