@@ -8,32 +8,19 @@ import { quizValidationSchema } from "../../service/Validation";
 import socketIOClient from "socket.io-client";
 import Preview from "./Preview";
 import ReactTags from "react-tag-autocomplete";
-import useToggle from "../hooks/useToggle"
 import { uuid } from "uuidv4";
 
 export default function QuizForm() {
   const [questions, setQuestions] = useState([]);
+  const [show, setShow] = useState(false);
+  const [showQuestionform, setShowQuestionform] = useState(false);
   const [topics, setTopics] = useState([]);
   const [title, setTitle] = useState();
   const [nro, setNumber] = useState();
   const [suggestions, setSuggestions] = useState();
   const [tags, setTags] = useState([]);
 
-  const socket = socketIOClient("http://localhost:5001");
-
-  const {show, toggleShow, content, toggleContent} = useToggle();
-
   const tagArray = Object.values(tags && tags.map(item => item.name));
-
-  const initial = {checkboxes: questions.reduce(
-      (options, option) => ({ ...options, [option.id]: false }), {}
-    )}
-
-    //Hakee aihealueet tietokannasta lomakekenttää varten
-  useEffect(() => {
-      getTopics().then(res => setTopics(res));
-      getTags().then(res => setSuggestions(res));
-    }, []);
 
   const handleDelete = i => {
     setTags(tags.filter((tag, index) => index !== i));
@@ -49,7 +36,20 @@ export default function QuizForm() {
   }
 
   //Muotoilee tulosten keräämiseen tarvittavan arrayn siten, että key on jokaisen kysymyksen id ja arvoksi tulee false
-  const [checkedArray, setCheckedArray] = useState(initial);
+  const [checkedArray, setCheckedArray] = useState({
+    checkboxes: questions.reduce(
+      (options, option) => ({ ...options, [option.id]: false }),
+      {}
+    )
+  });
+
+  //Hakee aihealueet tietokannasta lomakekenttää varten
+  useEffect(() => {
+    getTopics().then(res => setTopics(res));
+    getTags().then(res => setSuggestions(res));
+  }, []);
+
+  const socket = socketIOClient("http://localhost:5001");
 
   //Funktio, joka kerää tulokset. Klikkaamalla checkboxia avaimen arvo muuttuu välillä true/false
   const toggleChecked = e => {
@@ -63,14 +63,21 @@ export default function QuizForm() {
   };
 
   //Funktio, joka rakentaa tulosarraysta arrayn, jossa on pelkästään valittujen kysymysten id:t (eli ne, joiden arvo on true)
-  const idArray = Object.keys(checkedArray.checkboxes)
+  const createIdArray = () => {
+    return Object.keys(checkedArray.checkboxes)
       .filter(checkbox => checkedArray.checkboxes[checkbox])
       .map(checkbox => checkbox);
+  };
 
   //Funktio, joka sulkee modaali-ikkunan
   const handleClose = () => {
-    setCheckedArray(initial);
-    toggleShow();
+    setCheckedArray({
+      checkboxes: questions.reduce(
+        (options, option) => ({ ...options, [option.id]: false }),
+        {}
+      )
+    });
+    setShow(false);
   };
 
   //Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
@@ -78,7 +85,7 @@ export default function QuizForm() {
     e.preventDefault();
     let data = {
       title: title,
-      question_ids: idArray,
+      question_ids: createIdArray(),
       quiz_author: sessionStorage.getItem("badge"),
       quiz_badge: uuid(),
       istemporary: 0
@@ -96,6 +103,14 @@ export default function QuizForm() {
           )
         })
       );
+  };
+
+  const openQuestionform = () => {
+    setShowQuestionform(true);
+  };
+
+  const closeQuestionform = () => {
+    setShowQuestionform(false);
   };
 
   let topicInput = topics && topics[0] && topics.map(option => {
@@ -135,7 +150,7 @@ export default function QuizForm() {
                 .then(res => setQuestions(res))
                 .then(() => setTags([]))
                 .then(() => setTitle(values.name))
-                .then(() => toggleShow());
+                .then(() => setShow(true));
               resetForm();
               setSubmitting(false);
             }}
@@ -280,7 +295,7 @@ export default function QuizForm() {
                       <button
                         className="btnLogin"
                         type="button"
-                        onClick={toggleShow}
+                        onClick={openQuestionform}
                       >
                         Luo kysymyksiä ja tenttejä
                       </button>
@@ -299,13 +314,11 @@ export default function QuizForm() {
               </Modal.Header>
               <Modal.Body>
                 <div className="quizPreview">
-                  {content ? (<Preview
+                  <Preview
                     questions={questions}
                     toggleChecked={toggleChecked}
                     tags={tags}
-                  />) : (<QuestionPreview
-                  formProps={formProps}
-                  tagArray={tagArray} />)}
+                  />
                 </div>
               </Modal.Body>
               <Modal.Footer>
@@ -318,7 +331,7 @@ export default function QuizForm() {
               </Modal.Footer>
             </form>
           </Modal>
-          {/*<Modal show={show} onHide={handleClose}>
+          <Modal show={showQuestionform} onHide={closeQuestionform}>
             <div>
               <Modal.Header>
                 <Modal.Title>Luo kysymys ja tentti</Modal.Title>
@@ -331,10 +344,10 @@ export default function QuizForm() {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={toggleShow}>Sulje</Button>
+                <Button onClick={closeQuestionform}>Sulje</Button>
               </Modal.Footer>
             </div>
-                  </Modal>*/}
+          </Modal>
         </div>
       </div>
     </>

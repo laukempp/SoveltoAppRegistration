@@ -17,3 +17,15 @@ export const questionValidationSchema = Yup.object().shape({
             .required("Väärä vastaus ei voi olla tyhjä")
         )
   });
+
+  export const quizValidationSchema = Yup.object().shape({
+    name: Yup.string().required("Tentillä täytyy olla nimi"),
+    questionCount: Yup.boolean(),
+    number: Yup.number().when("questionCount", {
+      is: true,
+      then: Yup.number()
+        .positive("Numeron täytyy olla positiivinen luku ja suurempi kuin 0")
+        .integer("Numeron täytyy olla kokonaisluku")
+        .lessThan(10001, "Luku saa olla enintään 10000")
+    })
+  });

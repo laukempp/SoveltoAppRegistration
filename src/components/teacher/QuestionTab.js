@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik } from "formik";
-import { postQuestion, getTopics} from "../../service/Request";
+import { postQuestion, getTopics, getTags} from "../../service/Request";
 import { Navigation } from "../../layout/Navbar";
 import { questionValuesPost } from "../../service/FormProps";
 import { questionValidationSchema } from "../../service/Validation";
@@ -12,6 +12,7 @@ import QuestionForm from "./Questionform";
 export default function QuestionTab() {
   const [topics, setTopics] = useState([]);
   const [tags, setTags] = useState([]);
+  const [suggestions, setSuggestions] = useState();
 
   const authT = auth.sessionStorageGetItem();
   const tagArray = Object.values(tags && tags.map(item => item.name));
@@ -31,6 +32,7 @@ export default function QuestionTab() {
 
   useEffect(() => {
     getTopics().then(res => setTopics(res));
+    getTags().then(res => setSuggestions(res));
   }, []);
 
   let topicInput = topics && topics[0] && topics.map(option => {
@@ -42,7 +44,8 @@ export default function QuestionTab() {
     handleDelete: handleDelete,
     onValidate: onValidate,
     topicInput: topicInput,
-    tags: tags
+    tags: tags,
+    suggestions: suggestions
   }
 
   if (authT) {
@@ -67,7 +70,8 @@ export default function QuestionTab() {
                 <QuestionForm
                   {...props}
                   formProps={formProps}
-                  submitProps={{
+                  firstButtonProps={{
+                    buttonId: "firstQuesButton",
                     buttonClass: "btnLogin",
                     buttonDisabled: props.isSubmitting,
                     buttonText: "Lähetä",
@@ -75,7 +79,8 @@ export default function QuestionTab() {
                       props.setFieldValue("q_tags", tagArray);
                       props.handleSubmit(e);
                     }}}
-                  deleteProps={{
+                  secondButtonProps={{
+                    buttonId: "secondQuesButton",
                     buttonClass:"btnLogin formEmpty",
                     buttonText:"Tyhjennä",
                     handleClick: e => {

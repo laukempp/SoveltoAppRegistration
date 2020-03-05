@@ -11,11 +11,11 @@ const QuestionForm = ({
   handleBlur,
   handleSubmit,
   formProps,
-  submitProps,
-  deleteProps
+  firstButtonProps,
+  secondButtonProps
 }) => { 
   
-  const {tags, handleAddition, handleDelete, onValidate, topicInput} = formProps;
+  const {tags, handleAddition, handleDelete, onValidate, topicInput, suggestions} = formProps;
 
   return (
     <Form className="form" onSubmit={handleSubmit}>
@@ -50,6 +50,7 @@ const QuestionForm = ({
       </Field>
       <ReactTags
         tags={tags}
+        suggestions={suggestions}
         onDelete={handleDelete}
         onAddition={handleAddition}
         allowNew={true}
@@ -147,11 +148,11 @@ const QuestionForm = ({
       <br />
 
       <div className="input-row">
-        <FormButton buttonProps={submitProps} />
+        <FormButton buttonProps={firstButtonProps} />
       </div>
-
+      <br/>
       <div className="input-row">
-        <FormButton buttonProps={deleteProps} />
+        <FormButton buttonProps={secondButtonProps} />
       </div>
     </Form>
   );
