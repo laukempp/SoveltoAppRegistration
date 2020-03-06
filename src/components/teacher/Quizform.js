@@ -236,7 +236,8 @@ export default function QuizForm() {
                     {({ field }) => (
                       <div className="radioDiv">
                         <div className="inline-block">
-                          <label htmlFor="kaikki">Kaikki</label>
+                          <div className={values.questionCount === "true" ? "inactiveRadioBtn" : "activeRadioBtn"}>
+                          <label htmlFor="kaikki">Kaikki</label></div>
                           <input
                             {...field}
                             id="kaikki"
@@ -248,7 +249,8 @@ export default function QuizForm() {
                           />
                         </div>
                         <div className="inline-block">
-                          <label htmlFor="valitse">Valitse</label>
+                        <div className={values.questionCount === "false" ? "inactiveRadioBtn" : "activeRadioBtn"}>
+                          <label htmlFor="valitse">Valitse</label></div>
                           <input
                             {...field}
                             id="valitse"
