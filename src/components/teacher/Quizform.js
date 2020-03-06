@@ -348,7 +348,7 @@ export default function QuizForm() {
               </Modal.Header>
               <Modal.Body>
                 <div>
-                  <SingleQuestionform />
+                  <SingleQuestionform topics={topics}/>
                 </div>
               </Modal.Body>
               <Modal.Footer>
