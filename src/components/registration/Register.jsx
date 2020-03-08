@@ -55,6 +55,11 @@ export default function Register() {
           }) => (
               <Form className="form" onSubmit={handleSubmit}>
                 <div className="form__group">
+                  <ErrorMessage
+                  component="div"
+                  name="login"
+                  className="text-white invalidErrorBubble"
+                />
                   <Field
                     type="email"
                     name="login"
@@ -66,13 +71,14 @@ export default function Register() {
                     onBlur={handleBlur}
                     value={values.login || ""}
                   /></div>
-                <ErrorMessage
-                  component="div"
-                  name="login"
-                  className="invalidEmail"
-                />
+                
                 <div className="form__group">
                   <div className="form__input">
+                   <ErrorMessage
+                  component="div"
+                  name="password"
+                  className="text-white invalidErrorBubble"
+                /> 
                     <Field
                       type="password"
                       name="password"
@@ -83,10 +89,11 @@ export default function Register() {
                       onBlur={handleBlur}
                       value={values.password || ""}
                     /></div></div>
+                
                 <ErrorMessage
                   component="div"
-                  name="password"
-                  className="invalidPassword"
+                  name="passwordConfirm"
+                  className="text-white invalidErrorBubble"
                 />
                 <Field
                   type="password"
@@ -102,11 +109,7 @@ export default function Register() {
                   onBlur={handleBlur}
                   value={values.passwordConfirm || ""}
                 />
-                <ErrorMessage
-                  component="div"
-                  name="passwordConfirm"
-                  className="invalidPassword"
-                />
+                
 
                 <button className="btnLogin" type="submit" disabled={isSubmitting}>
                   Rekisteröidy

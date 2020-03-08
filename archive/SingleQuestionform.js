@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import {
-  postQuestion,
-  postQuiz,
-  getTags
-} from "../../service/Request";
+import { postQuestion, postQuiz, getTags } from "../../service/Request";
 import * as Yup from "yup";
 import { uuid } from "uuidv4";
 import ReactTags from "react-tag-autocomplete";

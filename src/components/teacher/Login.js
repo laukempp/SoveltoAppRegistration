@@ -11,8 +11,8 @@ export default function Login() {
   
 
   const loginSchema = Yup.object().shape({
-    login: Yup.string().required("This field is required."),
-    password: Yup.string().required("password is required")
+    login: Yup.string().required("Käytä s-postia kirjautuaksesi sisään."),
+    password: Yup.string().required("Salasana ei voi olla tyhjä.")
   });
   return (
     <>
@@ -50,6 +50,11 @@ export default function Login() {
           }) => (
             <Form className="form" onSubmit={handleSubmit}>
               <div className="form__group">
+              <ErrorMessage
+                component="div"
+                name="login"
+                className="text-white invalidErrorBubble"
+              />
               <Field
                 type="email"
                 name="login"
@@ -61,12 +66,12 @@ export default function Login() {
                 onBlur={handleBlur}
                 value={values.login || ""}
               /></div>
+              
               <ErrorMessage
                 component="div"
-                name="login"
-                className="invalidEmail"
+                name="password"
+                className="text-white invalidErrorBubble"
               />
-              
               <Field
                 type="password"
                 name="password"
@@ -77,11 +82,7 @@ export default function Login() {
                 onBlur={handleBlur}
                 value={values.password || ""}
               />
-              <ErrorMessage
-                component="div"
-                name="password"
-                className="invalidPassword"
-              />
+              
 
               <button className="btnLogin" type="submit" disabled={isSubmitting}>
                 Login 
