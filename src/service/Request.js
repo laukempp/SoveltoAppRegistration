@@ -1,7 +1,6 @@
 const url = "/api/topics/";
 
 export const fetchQuestions = querydata => {
-  console.log("Tässä serviceclientissa näkyvä quiz-data " + querydata);
   let token = sessionStorage.getItem("tommi");
 
   return fetch(url, {
@@ -43,13 +42,23 @@ export const getStudentQs = array => {
 };
 
 export const postQuestion = question => {
+  console.log(JSON.stringify(question));
   let token = sessionStorage.getItem("tommi");
   return fetch(`/api/topics/question`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: token },
     body: JSON.stringify(question)
-  });
+  }).then(res => res.json());
 };
+
+// export const postTemporaryQuestion = question => {
+//   let token = sessionStorage.getItem("tommi");
+//   return fetch(`/api/temporaryquestion`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json", Authorization: token },
+//     body: JSON.stringify(question)
+//   }).then(res => res.json());
+// };
 
 export const getTopics = topic => {
   let token = sessionStorage.getItem("tommi");
@@ -71,12 +80,6 @@ export const postScores = score => {
   });
 };
 
-// export const getScores = () => {
-//   return fetch("/api/scores/all")
-//     .then(res => res.json())
-//     .catch(err => err);
-// };
-
 export const getScores = score => {
   return fetch(`api/scores/all`, {
     method: "POST",
@@ -85,30 +88,13 @@ export const getScores = score => {
   }).then(res => res.json());
 };
 
-/*
-
-
-//Kirjaudutaan sisään
-
-
-
-export const checkAuth = (token) => {
-
-  return token;
+export const getTags = () => {
+  let token = sessionStorage.getItem("tommi");
+  return fetch("/api/topics/tags", {
+    headers: {
+      Authorization: token
+    }
+  })
+    .then(res => res.json())
+    .catch(err => err);
 };
-
-export const logoutUser = () => {
-  localStorage.removeItem("tommi");
-};
-
-export const checkItem = () => {
-  let item = localStorage.getItem("tommi");
-  if (item) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-export const redirect = () => {};
- */

@@ -9,8 +9,6 @@ import '../../styles/login.scss';
 export default function Login() {
   const [authT, setAuthT] = useState(auth.isAuthenticated());
   
-  console.log("login authT", authT)
-  
 
   const loginSchema = Yup.object().shape({
     login: Yup.string().required("This field is required."),

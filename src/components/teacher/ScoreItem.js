@@ -1,11 +1,38 @@
 import React from "react";
+import { Link } from "react-router-dom";
+const ScoreItem = ({ result, id, question, data, scoreData }) => {
+  const countAndScore = data.map(score => {
+    return { count: score.count, isCorrect: score.isCorrect };
+  });
 
-const ScoreItem = ({ result, id, question, data }) => {
-  console.log(data);
-
+  let counter = 0;
+  let keyCount = 0;
+  const scorePath = "/scores/";
   return (
-    <div className="resultBG">
-      <h5>{question}</h5>
+    <div key={keyCount++} className="resultBG">
+      <Link
+        to={{
+          pathname: `${scorePath}${result.id}`,
+          result: {
+            name: result,
+            scoreData: scoreData
+          }
+        }}
+      >
+        <h5 className="registerUser">{question} </h5>
+      </Link>
+
+      {countAndScore.map(score => {
+        counter += score.count;
+        if (score.isCorrect === true) {
+          return (
+            <span key={keyCount++}>
+              {Math.round((score.count / counter) * 100)}% got it right
+            </span>
+          );
+        }
+        return "";
+      })}
 
       {data.map(res => {
         let color = { backgroundColor: "#fff" };
@@ -15,41 +42,21 @@ const ScoreItem = ({ result, id, question, data }) => {
           color = { backgroundColor: "#eedd9d" };
         }
         return (
-          
-          <div >
-          <div className="resultContainer resCount" style={color}>
-            <div>
-             <span className="resValue"> {res.value}</span>
-              
+          <div key={`key` + keyCount++} className="thisd">
+            <div className="resultContainer resCount" style={color}>
+              <div className="valueContainer">
+                <span className="resValue"> {res.value}</span>
+              </div>
             </div>
-            
-          </div><span className="resNumber">{res.count} respondents</span>
+            <div className="resNumber">
+              {res.count ? res.count : 0} respondents (
+              {Math.round((res.count / counter) * 100)}%)
+            </div>
           </div>
-          
         );
       })}
     </div>
   );
-
-  // return (
-  //   <div>
-  //     <h5>{question}</h5>
-  //     {answers.map(item => {
-  //       let color = { backgroundColor: "#fff" };
-  //       if (item.answer === correctOne && item.answer === studentAnswer) {
-  //         color = { backgroundColor: "#00800" };
-  //       } else if (
-  //         item.answer === correctOne &&
-  //         item.answer !== studentAnswer
-  //       ) {
-  //         color = { backgroundColor: "#fff73f" };
-  //       } else if (item.answer === studentAnswer) {
-  //         color = { backgroundColor: "#008000" };
-  //       }
-  //       return <div style={color}>{item.answer}</div>;
-  //     })}
-  //   </div>
-  // );
 };
 
 export default ScoreItem;

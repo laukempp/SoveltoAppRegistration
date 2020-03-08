@@ -1,120 +1,147 @@
 import React, { useEffect, useState } from "react";
 import { getScores } from ".//../../service/Request";
 import ScoreItem from "./ScoreItem";
-import {Navigation} from '../../layout/Navbar';
+import { Navigation } from "../../layout/Navbar";
+import socketIOClient from "socket.io-client";
+
+
 const Scores = () => {
   const [scoreData, setScoreData] = useState([]);
+  const [reRender,setreRender] = useState(false);
   // const [questionData, setQuestiondata] = useState([]);
 
   // const fetchScores = () => {
   //   getScores().then(res => setScore(res));
   // };
 
-  const id = { quiz_id: 7 };
+  const socket = socketIOClient("http://localhost:5001");
+  
+  //Muutos 27.2. Anna -> badge siirretty useEffectin sisään
   useEffect(() => {
-    getScores(id).then(res => {
+      const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
+
+      getScores(badge).then(res => {
       setScoreData(res);
     });
-  }, []);
-  console.log(scoreData);
+  },[]);
 
-  // const scores = scoreData.map(result => {
+  /* const customEventHandler = () => {
+    getScores(badge).then(res => {
+      setScoreData(res);
+    });
+  } */
+  socket.on("renderScore", ev => {
+    setreRender(true)
+    
+  },10);
+
+  /*const timerSet = () => {setTimeout(() => {
+    const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
+    getScores(badge).then(res => {
+    setScoreData(res);
+  })}, 500)}
+  const timerClear = () => { clearTimeout(timerSet(), 3000)}*/
+
+ useEffect(() => {
+    const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
+
+    let timerSet = setTimeout(() => {
+    getScores(badge).then(res => {
+    setScoreData(res);
+    })}, 500)
+
+    setreRender(false)
+
+    return () => {
+      clearTimeout(timerSet, 3000)
+    }
+  /*timerSet()
+  timerClear()*/
+ },[reRender])
+    
+ 
+  
+  let keyCount = 0;
   const scores = scoreData.map(result => {
+    keyCount++;
     return (
       <ScoreItem
+        key={keyCount}
         result={result}
         id={result.id}
+        scoreData={scoreData}
         question={result.question}
         data={result.results}
       />
     );
   });
 
-  return <div className="text-white">
-    <Navigation title={'Soveltommi'} />
-    <br />
-    <h3>Quiz id: {id.quiz_id}</h3>
-    {scores}</div>;
+  //Lasketaan oikeiden vastausten määrä koko quizin osalta
+  let howManyCorrect = 0;
+  let howManyAnswers = scoreData[0] && scoreData[0].respondents * scoreData.length;
+  let howManyRespondents = scoreData[0] && scoreData[0].respondents;
+  
+  scoreData[0] && scoreData.forEach(result => {
+    result.results.forEach(answer => {
+      if (answer.isCorrect === true) {
+        howManyCorrect += answer.count;
+      }
+    });
+  });
 
-  // console.log(data);
+  console.log(howManyCorrect)
 
-  // const modifiedQuestionArray = questionData.map(question => {
-  //   // Combining answers to one array
-  //   const allAnswers = question.wrong_answer.concat(question.correct_answer);
-  //   console.log(allAnswers);
-  //   // Adding value of of "isCorrect" to answers
-  //   const allAnswersMapped = allAnswers.map(answer => {
-  //     return {
-  //       answer,
-  //       isCorrect: answer.includes(question.correct_answer)
-  //     };
-  //   });
-  //   // Finalizing the array
-  //   return {
-  //     question: question.question,
-  //     answers: allAnswersMapped,
-  //     correctOne: question.correct_answer
-  //   };
-  // });
-
-  // const modifiedScore = scoreData.map(score => {
-  //   return score.user_answer;
-  // });
-
-  // console.log(modifiedQuestionArray);
-
-  // const array = modifiedQuestionArray.map((question, index) => {
-
-  //     <div>
-  //       <ScoreItem
-  //         key={question.id}
-  //         question={question.question}
-  //         answers={question.answers}
-  //         correctOne={question.correctOne}
-  //         studentAnswer={scoreData[0].user_answer[index]}
-  //       />
-  //     </div>
-  //   );
-  // });
-
-  // return <div>{array}</div>;
+ /*  console.log(answers);
+  console.log(howManyCorrect); */
+    let totalCorrect = Math.round((howManyCorrect / howManyAnswers) * 100 * 100) / 100;
+  
+    if(reRender){
+    return (
+      <div className="text-white">
+        <Navigation title={"Soveltommi"} />
+     <br />
+     
+     <h4>
+       Quiz Total Score:{" "}
+       {totalCorrect ? totalCorrect : 0}%
+     </h4>
+     <p>
+       Vastaajien määrä:{" "}
+       {howManyRespondents}
+     </p>
+     <div>
+      {scores}</div>
+     {/*  <div>
+         {scorePerQuestion}
+       </div> */}
+      </div>
+       );
+}
+    else
+       return (
+        <div className="text-white">
+          <Navigation title={"Soveltommi"} />
+       <br />
+       
+       <h4>
+         Quiz Total Score:{" "}
+         {totalCorrect ? totalCorrect : 0}%
+       </h4>
+       <p>
+       Vastaajien määrä:{" "}
+       {howManyRespondents}
+     </p>
+       <div></div>
+       {scores}
+       {/* <div>
+         {scorePerQuestion}
+       </div> */}
+        </div>
+         );
+    
+  
+ 
+  
 };
 
 export default Scores;
-
-// return (
-//   <div>
-//     {modifiedQuestionArray.map(question => (
-//       <div>
-//         <h4>{question.question}</h4>
-
-//         <ul>
-//           {question.answers.map(sub => (
-//             <li>{sub.answer} </li>
-//           ))}
-//         </ul>
-//       </div>
-//     ))}
-//   </div>
-// );
-
-//
-// return (
-//   <div>
-//     {transformQuizQuestions.map(question => (
-//       <div>
-//         {typeof question.answers == "object" ? (
-//           <div>
-//             {question.answers.map(details => (
-//               <div>{details.answer}</div>
-//             ))}
-//           </div>
-//         ) : null}
-//       </div>
-//     ))}
-//   </div>
-// );
-
-// };
-
-// export default Scores;
