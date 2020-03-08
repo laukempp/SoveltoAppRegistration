@@ -7,7 +7,7 @@ import { uuid } from "uuidv4";
 import socketIOClient from "socket.io-client";
 import QuestionForm from "./Questionform";
 
-const QuestionPreview = ({ formProps, tagArray }) => {
+const QuestionPreview = ({ formProps}) => {
 
   const socket = socketIOClient("http://localhost:5001");
 
@@ -54,7 +54,7 @@ const QuestionPreview = ({ formProps, tagArray }) => {
                 buttonText: "Tallenna kysymyspankkiin ja aloita tentti",
                 handleClick: e => {
                     props.setFieldValue("istemporary", 0);
-                    props.setFieldValue("q_tags", tagArray)
+                    props.setFieldValue("q_tags", formProps.tagArray)
                     props.handleSubmit(e);}
              }}
              secondButtonProps = {{
@@ -63,7 +63,7 @@ const QuestionPreview = ({ formProps, tagArray }) => {
                 buttonText: "Aloita tentti tallentamatta kysymystä",
                 handleClick: e => {
                     props.setFieldValue("istemporary", 1);
-                    props.setFieldValue("q_tags", tagArray)
+                    props.setFieldValue("q_tags", formProps.tagArray)
                     props.handleSubmit(e);}
              }}
              />

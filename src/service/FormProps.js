@@ -7,3 +7,14 @@ export const questionValuesPost = {
     q_tags: [],
     istemporary: 0
   };
+
+export const quizValues = {
+    name: "",
+    topics_id: 0,
+    number: 0,
+    questionCount: "false",
+    q_tags: [],
+    teacher_badge: sessionStorage.getItem("badge"),
+    useBadge: false,
+    timer: 0
+  };

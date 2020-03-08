@@ -7,11 +7,14 @@ const useToggle = () => {
 
     function toggleShow() {
       setShow(!show)
-      console.log("Here")
     }
 
-    function toggleContent() {
-      setContent(!content)
+    function showQuiz() {
+      setContent(true)
+    }
+
+    function showQuestion() {
+      setContent(false)
     }
 
       
@@ -19,7 +22,8 @@ const useToggle = () => {
     show,
     toggleShow,
     content,
-    toggleContent
+    showQuiz,
+    showQuestion
   }
 };
 
