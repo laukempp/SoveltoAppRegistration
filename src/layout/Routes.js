@@ -25,7 +25,7 @@ const Routes = () => (
       <Route exact path="/dashboard/question" component={QuestionTab} />
       <Route exact path="/logout" component={Logout} />
 
-      <Route exact path="/scores" component={Scores} />
+      <Route exact path="/dashboard/scores" component={Scores} />
       <Route name="IndividualQuestion" exact path="/scores/:id" component={ScoreIndividual} />
       <Route component={Login} />
     </Switch>

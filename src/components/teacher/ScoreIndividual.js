@@ -42,14 +42,20 @@ export default function ScoreIndividual({result, id, question, scoreData, locati
         /* if(match.params.id == location.result.name.id){
          console.log("hello")} */
     
-     if(location.result === undefined) {
+     if(location.result === undefined && sessionStorage.getItem("tommi") === null) {
          return (
              <div className="text-white">
-                 <p>Et klikannut linkkiä</p>
-                 <a href="/scores" className="registerUser">takaisin scoreihin</a>
+                 <p>Token vanhentunut, kirjaudu sisään uudelleen jatkaaksesi</p>
+                 <a href="/login/" className="registerUser">kirjaudu sisään</a>
              </div>
          )
      }    
+     else if (location.result === undefined) {
+      return (<div className="text-white">
+      <p>Et klikannut linkkiä</p>
+      <a href="/dashboard/scores" className="registerUser">takaisin scoreihin</a>
+  </div>)
+     }
 
     console.log(resultDisplay) 
     
