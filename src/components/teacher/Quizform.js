@@ -164,6 +164,8 @@ const QuizForm = ({
       </div>
     </Form>
   );
+
 };
 
 export default QuizForm;
+
