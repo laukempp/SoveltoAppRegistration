@@ -1,26 +1,23 @@
 import React from "react";
 
-export default function Checkbox({ option, count, unikey, toggleChecked }) {
+export default function Checkbox({ option, count, toggleChecked, isSelected }) {
 
+  //Tässä muotoillaan vain näkymä - radiobuttoneita ei voi klikata. 
   let boxInfo = (
     <div className="mContainer">
       <div>
         <label className="mQuestion">{option.question}</label>
       </div>
       <div>
-        <input type="radio" name="correct" disabled />
+        <input type="radio" disabled />
         <label htmlFor="correct">{option.correct_answer}</label>
       </div>
       {option.wrong_answer.map(wrongy => {
         count++;
-        unikey = unikey + 3;
         return (
           <div key={count}>
-            {" "}
-            <input type="radio" name={count} disabled />
-            <label key={count} htmlFor={count}>
-              {wrongy}
-            </label>
+            <input type="radio" disabled />
+            <label>{wrongy}</label>
           </div>
         );
       })}
@@ -30,7 +27,7 @@ export default function Checkbox({ option, count, unikey, toggleChecked }) {
   return (
     <div>
       {boxInfo}
-      <input className="previewCheckbox" type="checkbox" name={option.id} onChange={toggleChecked}/>
+      <input className="previewCheckbox" type="checkbox" name={option.id} onChange={toggleChecked} checked={isSelected}/>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import Checkbox from './Checkbox'
+import Checkbox from '../src/components/teacher/Checkbox'
 
 export default function Preview({ questions, toggleChecked, tags }) {
   const tagFilter = (array1, array2) => {
