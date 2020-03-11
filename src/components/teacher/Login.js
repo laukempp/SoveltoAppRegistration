@@ -8,17 +8,19 @@ import Footer from "../../layout/Footer";
 import '../../styles/login.scss';
 export default function Login() {
   const [authT, setAuthT] = useState(auth.isAuthenticated());
-  
+  const [message, setMessage] = useState();
 
   const loginSchema = Yup.object().shape({
     login: Yup.string().required("Käytä s-postia kirjautuaksesi sisään."),
     password: Yup.string().required("Salasana ei voi olla tyhjä.")
   });
+  
   return (
     <>
       {authT ? <Redirect to="/dashboard" /> : null}
       <div className="user">
         <h1 className="user__title">Soveltommi Login</h1>
+  {!authT ? (<div id="invalidCreds" className="text-white hidden invalidErrorBubble">{message}</div> ): null}
         <Formik
           initialValues={{ login: "", password: "" }}
           validationSchema={loginSchema}
@@ -26,6 +28,14 @@ export default function Login() {
             setSubmitting(true);
             loginUser(values).then(res => {
               setAuthT(auth.isAuthenticated())
+              let authMsg = document.getElementById("invalidCreds")
+              if(auth.isAuthenticated() === false){
+                setMessage("Väärä sähköposti tai salasana")
+                if(authMsg.classList.contains("hidden"))  {
+                    authMsg.classList.remove("hidden")
+                }
+              }
+              
             })
             
           
