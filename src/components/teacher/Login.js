@@ -16,7 +16,7 @@ export default function Login() {
       {authT ? <Redirect to="/dashboard" /> : null}
       <div className="user">
         <h1 className="user__title">Soveltommi Login</h1>
-  {!authT ? (<div id="invalidCreds" className="text-white hidden invalidErrorBubble">{message}</div> ): null}
+        {!authT ? (<div id="invalidCreds" className="text-white hidden invalidErrorBubble">{message}</div> ): null}
         <Formik
           initialValues={{ login: "", password: "" }}
           validationSchema={loginSchema}
@@ -30,8 +30,7 @@ export default function Login() {
                 if(authMsg.classList.contains("hidden"))  {
                     authMsg.classList.remove("hidden")
                 }
-              }
-              
+              }             
             })
             resetForm();
             setSubmitting(false);
@@ -80,8 +79,6 @@ export default function Login() {
                 onBlur={handleBlur}
                 value={values.password || ""}
               />
-              
-
               <button className="btnLogin" type="submit" disabled={isSubmitting} id="loginBtn">
                 Login 
               </button>

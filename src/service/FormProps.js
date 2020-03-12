@@ -16,5 +16,6 @@ export const quizValues = {
     q_tags: [],
     teacher_badge: sessionStorage.getItem("badge"),
     useBadge: false,
-    timer: 0
+    timer: 0,
+    quiz_type: false
   };

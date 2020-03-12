@@ -79,6 +79,16 @@ const QuizForm = ({
         checked={values.useBadge}
         />
       </div>
+      <div>
+      <label>Etenee kysymys kerrallaan</label>
+        <Field
+        type="checkbox"
+        id="quizType"
+        name="quiz_type"
+        className="quizType"
+        checked={values.quiz_type}
+        />
+      </div>
       <div className="em">
         <span className="detail_span text-center">Kysymysten lukumäärä</span>
         <ErrorMessage

@@ -7,13 +7,13 @@ import { uuid } from "uuidv4";
 
 export default function QuizPreview({ formProps }) {
 
-  const {questions, tags, title, handleClose, timer} = formProps;
+  const {questions, tags, quizSettings, handleClose} = formProps;
 
   const [checkedArray, setCheckedArray] = useState({checkboxes: questions.reduce(
     (options, option) => ({ ...options, [option.id]: false }), {}
   )}) 
 
-  console.log(timer)
+  console.log(quizSettings)
   const socket = socketIOClient("http://localhost:5001");
 
   //Funktio, joka kerää opettajan valitsemat kysymykset. Klikkaamalla checkboxia avaimen arvo muuttuu välillä true/false
@@ -51,12 +51,13 @@ export default function QuizPreview({ formProps }) {
       alert("Tyhjää tenttiä ei voi lähettää, ole hyvä ja valitse kysymyksiä lähetettäväksi")
     } else {
     let data = {
-      title: title,
+      title: quizSettings.title,
       question_ids: idArray,
       quiz_author: sessionStorage.getItem("badge"),
       quiz_badge: uuid(),
       istemporary: 0,
-      timer: timer
+      timer: quizSettings.timer,
+      quiz_type: quizSettings.quiz_type
     };
     postQuiz(data)
       .then(() => socket.emit("eventMessage", data))
