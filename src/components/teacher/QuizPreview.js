@@ -89,8 +89,8 @@ export default function QuizPreview({ formProps }) {
     <div>
       <form onSubmit={handleQuizSubmit}>
       {questions[0] ? (<div>
-        <FormButton buttonProps={{buttonText: "Valitse kaikki", handleClick: e => {selectAll(true)}}}/>
-        <FormButton buttonProps={{buttonText: "Poista valinnat", handleClick: e => {selectAll(false)}}}/>
+        <FormButton buttonProps={{buttonText: "Valitse kaikki", handleClick: e => {selectAll(true)}, buttonClass: "chooseAll"}}/>
+        <FormButton buttonProps={{buttonText: "Poista valinnat", handleClick: e => {selectAll(false)}, buttonClass: "removeAll"}}/>
       </div>) : null}
       {checkBoxInput}
       <div className="input-row">

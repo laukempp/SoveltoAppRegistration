@@ -68,18 +68,22 @@ const QuizForm = ({
             onAddition={handleAddition}
           />
         </div>
-      <div>
-      <label>Vain omat kysymykset</label>
+        
+         
+      <div className="ownQuestions">
         <Field
+        name="ownQuestions"
         type="checkbox"
         id="useBadge"
         name="useBadge"
         className="forCheckbox"
         checked={values.useBadge}
-        />
+        ></Field>
+      <label className={values.useBadge === "false" ? "activeRadioBtn" : "inactiveRadioBtn"} htmlFor="useBadge">Vain omat kysymykset</label>
       </div>
-      <div>
-      <label>Etenee kysymys kerrallaan</label>
+      <div className="questionForward">
+        
+      
         <Field
         type="checkbox"
         id="quizType"
@@ -87,6 +91,7 @@ const QuizForm = ({
         className="quizType"
         checked={values.quiz_type}
         />
+        <label className={values.quiz_type === "false" ? "activeRadioBtn" : "inactiveRadioBtn"} htmlFor="quizType">Etenee kysymys kerrallaan</label>
       </div>
       <div className="em">
         <span className="detail_span text-center">Kysymysten lukumäärä</span>
