@@ -3,16 +3,13 @@ import { getScores } from ".//../../service/Request";
 import ScoreItem from "./ScoreItem";
 import { Navigation } from "../../layout/Navbar";
 import socketIOClient from "socket.io-client";
-
+import auth from '../../service/Auth'
 
 const Scores = () => {
+  const authT = auth.sessionStorageGetItem(); 
   const [scoreData, setScoreData] = useState([]);
   const [reRender,setreRender] = useState(false);
-  // const [questionData, setQuestiondata] = useState([]);
-
-  // const fetchScores = () => {
-  //   getScores().then(res => setScore(res));
-  // };
+  
 
   const socket = socketIOClient("http://localhost:5001");
   
@@ -25,22 +22,11 @@ const Scores = () => {
     });
   },[]);
 
-  /* const customEventHandler = () => {
-    getScores(badge).then(res => {
-      setScoreData(res);
-    });
-  } */
+  
   socket.on("renderScore", ev => {
     setreRender(true)
     
   },10);
-
-  /*const timerSet = () => {setTimeout(() => {
-    const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
-    getScores(badge).then(res => {
-    setScoreData(res);
-  })}, 500)}
-  const timerClear = () => { clearTimeout(timerSet(), 3000)}*/
 
  useEffect(() => {
     const badge = { teacher_badge: parseInt(sessionStorage.getItem("badge")) };
@@ -55,8 +41,7 @@ const Scores = () => {
     return () => {
       clearTimeout(timerSet, 3000)
     }
-  /*timerSet()
-  timerClear()*/
+  
  },[reRender])
     
  
@@ -97,45 +82,43 @@ const Scores = () => {
   
     if(reRender){
     return (
-      <div className="text-white">
-        <Navigation title={"Soveltommi"} />
-     <br />
-     
-     <h4>
-       Quiz Total Score:{" "}
-       {totalCorrect ? totalCorrect : 0}%
-     </h4>
-     <p>
-       Vastaajien määrä:{" "}
-       {howManyRespondents}
-     </p>
-     <div>
-      {scores}</div>
-     {/*  <div>
-         {scorePerQuestion}
-       </div> */}
-      </div>
+      <div>
+      {authT ? <div className="text-white">
+      <Navigation title={"Soveltommi"} />
+   <br />
+   
+   <h4>
+     Quiz Total Score:{" "}
+     {totalCorrect ? totalCorrect : 0}%
+   </h4>
+   <p>
+     Vastaajien määrä:{" "}
+     {howManyRespondents}
+   </p>
+   <div>
+    {scores}</div>
+    </div> : (window.location.assign('login'))}
+    </div>
        );
 }
     else
        return (
-        <div className="text-white">
-          <Navigation title={"Soveltommi"} />
-       <br />
-       
-       <h4>
-         Quiz Total Score:{" "}
-         {totalCorrect ? totalCorrect : 0}%
-       </h4>
-       <p>
-       Vastaajien määrä:{" "}
-       {howManyRespondents}
-     </p>
-       <div></div>
-       {scores}
-       {/* <div>
-         {scorePerQuestion}
-       </div> */}
+         <div>
+         {authT ? <div className="text-white">
+         <Navigation title={"Soveltommi"} />
+      <br />
+      
+      <h4>
+        Quiz Total Score:{" "}
+        {totalCorrect ? totalCorrect : 0}%
+      </h4>
+      <p>
+      Vastaajien määrä:{" "}
+      {howManyRespondents}
+    </p>
+      <div></div>
+      {scores}
+       </div> : (window.location.assign('/login'))}
         </div>
          );
     
