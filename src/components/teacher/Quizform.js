@@ -68,8 +68,9 @@ const QuizForm = ({
             onAddition={handleAddition}
           />
         </div>
-      <div>
-      <label>Vain omat kysymykset</label>
+      <div className="ownQuestions">
+        <div className={values.useBadge === "false" ? "inactiveRadioBtn" : null}>
+      <label htmlFor="useBadge">Vain omat kysymykset</label></div>
         <Field
         type="checkbox"
         id="useBadge"
