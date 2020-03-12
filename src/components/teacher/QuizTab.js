@@ -19,6 +19,8 @@ export default function QuizTab() {
   const [message, setMessage] = useState("");
   const [timer, setTimer] = useState(0)
 
+  console.log(message)
+
   //Tuodaan toggle-hook komponentin käyttöön
   const {show, toggleShow, content, showQuiz, showQuestion} = useToggle();
 
@@ -45,6 +47,7 @@ export default function QuizTab() {
   //Funktio, joka sulkee modaali-ikkunan ja samalla resetoi komponentin tilan
   const handleClose = () => {
     setTitle("")
+    setMessage("")
     setTags([])
     toggleShow();
   };
@@ -70,24 +73,23 @@ export default function QuizTab() {
 
   return (
     <>
-      <div className="qFormContainer text-white">
+      <div className="qFormContainer text-white" id="qFormContainer">
         <h3 className="detail_header formTitle">Luo uusi tentti</h3>
         <br />
-        <p>tunnuksesi on: {sessionStorage.getItem("badge")}</p>
+        <p id="teacherTagP">Tunnuksesi on: {sessionStorage.getItem("badge")}</p>
         <div className="user">
           <Formik
             initialValues={quizValues}
             validationSchema={quizValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setSubmitting(true);
-              console.log(values)
               fetchQuestions(values)
                 .then(res => {
                   if (res.message) {
                     setQuestions([])
                     setMessage(res.message)}
                   else { 
-                    setQuestions(res)
+                    setQuestions(res)                    
                     }})
                 .then(() => setTags([]))
                 .then(() => setTitle(values.name))
