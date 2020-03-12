@@ -13,11 +13,10 @@ import { uuid } from "uuidv4";
 export default function QuizTab() {
   const [questions, setQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
-  const [title, setTitle] = useState("");
+  const [quizSettings, setQuizSettings] = useState({title: '', timer: 0, quiz_type: false});
   const [suggestions, setSuggestions] = useState();
   const [tags, setTags] = useState([]);
   const [message, setMessage] = useState("");
-  const [timer, setTimer] = useState(0)
 
   console.log(message)
 
@@ -46,7 +45,7 @@ export default function QuizTab() {
 
   //Funktio, joka sulkee modaali-ikkunan ja samalla resetoi komponentin tilan
   const handleClose = () => {
-    setTitle("")
+    setQuizSettings({title: '', timer: 0, quiz_type: false})
     setMessage("")
     setTags([])
     toggleShow();
@@ -62,13 +61,12 @@ export default function QuizTab() {
     handleAddition: handleAddition,
     handleDelete: handleDelete,
     handleClose: handleClose,
-    title:title,
+    quizSettings: quizSettings,
     topicInput: topicInput,
     tags: tags,
     suggestions: suggestions,
     tagArray: tagArray,
     questions: questions,
-    timer: timer
   }
 
   return (
@@ -92,8 +90,7 @@ export default function QuizTab() {
                     setQuestions(res)                    
                     }})
                 .then(() => setTags([]))
-                .then(() => setTitle(values.name))
-                .then(() => setTimer(values.timer))
+                .then(() => setQuizSettings({title: values.name, timer: values.timer, quiz_type: values.quiz_type}))
                 .then(() => showQuiz())
                 .then(() => toggleShow());
               resetForm();
@@ -109,10 +106,10 @@ export default function QuizTab() {
             )}
           </Formik>
 
-          <Modal show={show} onHide={handleClose} title={title}>
+          <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>
-                  {content ? ("Esikatselu Quizille " + title) : ("Luo uusi kysymys ja tentti")}</Modal.Title>
+                  {content ? ("Esikatselu Quizille " + quizSettings.title) : ("Luo uusi kysymys ja tentti")}</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <div>
