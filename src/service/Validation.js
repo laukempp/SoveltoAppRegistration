@@ -29,3 +29,8 @@ export const questionValidationSchema = Yup.object().shape({
         .lessThan(10001, "Luku saa olla enintään 10000")
     })
   });
+
+export const loginSchema = Yup.object().shape({
+  login: Yup.string().required("Käytä s-postia kirjautuaksesi sisään."),
+  password: Yup.string().required("Salasana ei voi olla tyhjä.")
+});

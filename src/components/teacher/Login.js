@@ -1,19 +1,15 @@
 import React, {useState} from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { loginUser } from "../../service/Auth";
 import auth from '../../service/Auth';
 import { Redirect, Link } from "react-router-dom";
 import Footer from "../../layout/Footer";
 import '../../styles/login.scss';
+import {loginSchema} from "../../service/Validation"
+
 export default function Login() {
   const [authT, setAuthT] = useState(auth.isAuthenticated());
   
-
-  const loginSchema = Yup.object().shape({
-    login: Yup.string().required("Käytä s-postia kirjautuaksesi sisään."),
-    password: Yup.string().required("Salasana ei voi olla tyhjä.")
-  });
   return (
     <>
       {authT ? <Redirect to="/dashboard" /> : null}
@@ -27,14 +23,6 @@ export default function Login() {
             loginUser(values).then(res => {
               setAuthT(auth.isAuthenticated())
             })
-            
-          
-              /* .then(res => {
-                return checkItem();
-              })
-              .then(item => {
-                setToDash(item);
-              }); */
             resetForm();
             setSubmitting(false);
           }}
@@ -84,10 +72,10 @@ export default function Login() {
               />
               
 
-              <button className="btnLogin" type="submit" disabled={isSubmitting}>
+              <button className="btnLogin" type="submit" disabled={isSubmitting} id="loginBtn">
                 Login 
               </button>
-              <p className="text-white">Uusi käyttäjä? <Link className="registerUser" as={Link} to="/register">Rekisteröidy</Link></p>
+              <p className="text-white" id="regLink">Uusi käyttäjä? <Link className="registerUser" as={Link} to="/register">Rekisteröidy</Link></p>
             </Form>
             
           )}

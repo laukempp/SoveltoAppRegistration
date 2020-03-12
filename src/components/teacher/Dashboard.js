@@ -14,7 +14,7 @@ export default function Dashboard() {
       {authT ? null : <Redirect to="/" />}
       <Navigation title={'Soveltommi'} />
        
-      <h1 className="user__header detail_header">Tervetuloa kojelaudalle</h1>
+      <h1 className="user__header detail_header" id="tervetuloa">Tervetuloa kojelaudalle</h1>
       <QuizTab/>
     
       <div className="annoyingPopUpBot">Hei, Olen ärsyttävä chatbotti sivun alakulmassa. Enkä voi auttaa.</div>
