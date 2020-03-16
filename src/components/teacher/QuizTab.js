@@ -9,9 +9,8 @@ import QuizPreview from "./QuizPreview";
 import useToggle from "../hooks/useToggle";
 import Modal from "react-bootstrap/Modal";
 import { uuid } from "uuidv4";
-import StatusMessage from "../../components/teacher/StatusMessage";
 
-export default function QuizTab() {
+export default function QuizTab({ showSuccessMessage }) {
   const [questions, setQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [title, setTitle] = useState("");
@@ -19,7 +18,6 @@ export default function QuizTab() {
   const [tags, setTags] = useState([]);
   const [message, setMessage] = useState("");
   const [timer, setTimer] = useState(0);
-  const [alertmessage, setAlertmessage] = useState(false);
 
   //Tuodaan toggle-hook komponentin käyttöön
   const { show, toggleShow, content, showQuiz, showQuestion } = useToggle();
@@ -30,11 +28,11 @@ export default function QuizTab() {
     getTags().then(res => setSuggestions(res));
   }, []);
 
-  const alertMsgData = msg => {
-    if (msg) {
-      setAlertmessage(true);
-    }
-  };
+  // const alertMsgData = msg => {
+  //   if (msg) {
+  //     setAlertmessage(true);
+  //   }
+  // };
 
   //Muodostetaan tietokantaan lähetettävä tag-Array (array koostuu pelkistä stringeistä)
   const tagArray = Object.values(tags && tags.map(item => item.name));
@@ -77,15 +75,12 @@ export default function QuizTab() {
     tagArray: tagArray,
     questions: questions,
     timer: timer,
-    alertMsgData: alertMsgData
+    showSuccessMessage: showSuccessMessage
   };
 
   return (
     <>
       <div className="qFormContainer text-white">
-        {alertmessage ? (
-          <StatusMessage alertmessage={"Tentti lähetetty."} />
-        ) : null}
         <h3 className="detail_header formTitle">Luo uusi tentti</h3>
         <br />
         <p>tunnuksesi on: {sessionStorage.getItem("badge")}</p>

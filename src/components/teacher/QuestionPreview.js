@@ -1,14 +1,13 @@
 import React from "react";
-import { Formik} from "formik";
-import {postQuestion,postQuiz} from "../../service/Request";
+import { Formik } from "formik";
+import { postQuestion, postQuiz } from "../../service/Request";
 import { questionValidationSchema } from "../../service/Validation";
 import { questionValuesPost } from "../../service/FormProps";
 import { uuid } from "uuidv4";
 import socketIOClient from "socket.io-client";
 import QuestionForm from "./Questionform";
 
-const QuestionPreview = ({ formProps}) => {
-
+const QuestionPreview = ({ formProps }) => {
   const socket = socketIOClient("http://localhost:5001");
 
   // Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
@@ -29,45 +28,53 @@ const QuestionPreview = ({ formProps}) => {
         initialValues={questionValuesPost}
         validationSchema={questionValidationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
+          setSubmitting(true);
+          if (values.isTemporary === 0) {
+            postQuestion(values).then(res => {
+              handleSingleQuestionQuizSubmit(
+                res.data.id.toString(),
+                values.istemporary
+              );
+            });
+          } else {
             setSubmitting(true);
-            if (values.isTemporary === 0) {
-                postQuestion(values).then(res => {
-                handleSingleQuestionQuizSubmit(res.id.toString(), values.istemporary);
-                });
-            } else {
-                setSubmitting(true);
-                postQuestion(values).then(res => {
-                handleSingleQuestionQuizSubmit(res.id.toString(), values.istemporary);
-                });
-            }
-            resetForm();
-            setSubmitting(false);
+            postQuestion(values).then(res => {
+              handleSingleQuestionQuizSubmit(
+                res.data.id.toString(),
+                values.istemporary
+              );
+            });
+          }
+          resetForm();
+          setSubmitting(false);
         }}
       >
         {props => (
-            <QuestionForm
+          <QuestionForm
             {...props}
             formProps={formProps}
-            firstButtonProps = {{
-                buttonId:"first-button",
-                buttonClass:"btnLogin",
-                buttonText: "Tallenna kysymyspankkiin ja aloita tentti",
-                handleClick: e => {
-                    props.setFieldValue("istemporary", 0);
-                    props.setFieldValue("q_tags", formProps.tagArray)
-                    props.handleSubmit(e);}
-             }}
-             secondButtonProps = {{
-                buttonId:"second-button",
-                buttonClass:"btnLogin",
-                buttonText: "Aloita tentti tallentamatta kysymystä",
-                handleClick: e => {
-                    props.setFieldValue("istemporary", 1);
-                    props.setFieldValue("q_tags", formProps.tagArray)
-                    props.handleSubmit(e);}
-             }}
-             />
-        )}       
+            firstButtonProps={{
+              buttonId: "first-button",
+              buttonClass: "btnLogin",
+              buttonText: "Tallenna kysymyspankkiin ja aloita tentti",
+              handleClick: e => {
+                props.setFieldValue("istemporary", 0);
+                props.setFieldValue("q_tags", formProps.tagArray);
+                props.handleSubmit(e);
+              }
+            }}
+            secondButtonProps={{
+              buttonId: "second-button",
+              buttonClass: "btnLogin",
+              buttonText: "Aloita tentti tallentamatta kysymystä",
+              handleClick: e => {
+                props.setFieldValue("istemporary", 1);
+                props.setFieldValue("q_tags", formProps.tagArray);
+                props.handleSubmit(e);
+              }
+            }}
+          />
+        )}
       </Formik>
     </div>
   );

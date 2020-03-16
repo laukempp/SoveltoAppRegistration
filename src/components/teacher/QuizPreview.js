@@ -12,7 +12,7 @@ export default function QuizPreview({ formProps }) {
     title,
     handleClose,
     timer,
-    alertMsgData
+    showSuccessMessage
   } = formProps;
 
   const [checkedArray, setCheckedArray] = useState({
@@ -73,7 +73,7 @@ export default function QuizPreview({ formProps }) {
       };
       postQuiz(data)
         .then(res => {
-          alertMsgData(res.success);
+          showSuccessMessage(res.success);
         })
         .then(() => socket.emit("eventMessage", data))
         .then(() => handleClose());
