@@ -24,7 +24,7 @@ export const postQuiz = quiz => {
       Authorization: token
     },
     body: JSON.stringify(quiz)
-  });
+  }).then(res => res.json());
 };
 
 export const getStudentQs = array => {
