@@ -2,7 +2,7 @@ export const questionValuesPost = {
     question: "",
     correct_answer: "",
     wrong_answer: [""],
-    topics_id: 1,
+    topics_id: null,
     q_author: sessionStorage.getItem("badge"),
     q_tags: [],
     istemporary: 0
@@ -10,7 +10,7 @@ export const questionValuesPost = {
 
 export const quizValues = {
     name: "",
-    topics_id: 0,
+    topics_id: null,
     number: 0,
     questionCount: "false",
     q_tags: [],

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactTags from "react-tag-autocomplete";
 import { Form, Field, ErrorMessage } from "formik";
+import Select from 'react-select';
 import FormButton from "./FormButton"
 
 const QuizForm = ({
@@ -16,12 +17,14 @@ const QuizForm = ({
   toggleShow,
   formProps
 }) => {
-  const {tags,handleAddition,handleDelete,topicInput,suggestions, tagArray} = formProps;
+  const {tags,handleAddition,handleDelete,suggestions, tagArray, handleTopicAdd, selectedOption, options} = formProps;
 
   const openQuestionForm = () => {
     showQuestion();
     toggleShow()
   }
+
+  const clearInput = () => undefined;
 
   return (
     <Form className="form" onSubmit={handleSubmit}>
@@ -46,20 +49,18 @@ const QuizForm = ({
         </div>
       </div>
       <span className="detail_span">Tentin aihe</span>
-      <Field
-        as="select"
-        name="topics_id"
-        id="quiztopic"
-        placeholder="Valitse aihe"
-        className={touched.topics_id && errors.topics_id ? "error" : null}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.topics_id}
-        style={{ display: "block" }}
-      >
-        <option defaultValue>Valitse aihe</option>
-        {topicInput}
-      </Field>
+      <div>
+      <Select
+        value={selectedOption}
+        onChange={handleTopicAdd}
+        options={options}
+        placeholder={"Valitse aihe"}
+        isClearable={true}
+        noOptionsMessage={() => "Aiheita ei löytynyt"}
+        clearValue = {clearInput}
+      />
+      </div>
+
       <div>
           <ReactTags
             tags={tags}
@@ -72,7 +73,7 @@ const QuizForm = ({
          
       <div className="ownQuestions">
         <Field
-        name="ownQuestions"
+
         type="checkbox"
         id="useBadge"
         name="useBadge"
@@ -169,6 +170,8 @@ const QuizForm = ({
             buttonText: "Tentti valmiista kysymyksistä",
             handleClick: e => {if (values.questionCount==="false") {setFieldValue("number", 1000)}
             setFieldValue("q_tags", tagArray);
+            setFieldValue("topics_id", selectedOption && selectedOption.value)
+            clearInput()
             handleSubmit(e)}
           }}/>
         </div>

@@ -13,6 +13,7 @@ export default function QuestionTab() {
   const [topics, setTopics] = useState([]);
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = useState();
+  const [selectedOption, setSelectedOption] = useState();
 
   const authT = auth.sessionStorageGetItem();
   const tagArray = Object.values(tags && tags.map(item => item.name));
@@ -35,17 +36,24 @@ export default function QuestionTab() {
     getTags().then(res => setSuggestions(res));
   }, []);
 
-  let topicInput = topics && topics[0] && topics.map(option => {
-      return <option key={option.id} value={option.id} label={option.title} />;
-    });
+  const handleTopicAdd = selectedOption => {
+    setSelectedOption(selectedOption)
+    console.log(`Option selected:`, selectedOption)
+  };
+
+  let options = topics && topics[0] && topics.map(option => {
+    return {value: option.id, label:option.title}
+  });
   
   const formProps = {
     handleAddition: handleAddition,
     handleDelete: handleDelete,
     onValidate: onValidate,
-    topicInput: topicInput,
+    options: options,
     tags: tags,
-    suggestions: suggestions
+    suggestions: suggestions,
+    handleTopicAdd: handleTopicAdd,
+    selectedOption: selectedOption
   }
 
   if (authT) {

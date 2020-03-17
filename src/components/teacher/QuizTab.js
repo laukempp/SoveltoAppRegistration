@@ -17,8 +17,9 @@ export default function QuizTab() {
   const [suggestions, setSuggestions] = useState();
   const [tags, setTags] = useState([]);
   const [message, setMessage] = useState("");
+  const [selectedOption, setSelectedOption] = useState();
 
-  console.log(message)
+  console.log(selectedOption)
 
   //Tuodaan toggle-hook komponentin käyttöön
   const {show, toggleShow, content, showQuiz, showQuestion} = useToggle();
@@ -28,6 +29,11 @@ export default function QuizTab() {
     getTopics().then(res => setTopics(res));
     getTags().then(res => setSuggestions(res));
   }, []);
+
+  const handleTopicAdd = selectedOption => {
+    setSelectedOption(selectedOption)
+    console.log(`Option selected:`, selectedOption)
+  };
 
   //Muodostetaan tietokantaan lähetettävä tag-Array (array koostuu pelkistä stringeistä)
   const tagArray = Object.values(tags && tags.map(item => item.name));
@@ -47,13 +53,14 @@ export default function QuizTab() {
   const handleClose = () => {
     setQuizSettings({title: '', timer: 0, quiz_type: false})
     setMessage("")
+    setSelectedOption()
     setTags([])
     toggleShow();
   };
 
   //Mapataan auki aiheet Formikia varten
-  let topicInput = topics && topics[0] && topics.map(option => {
-    return <option key={option.id} value={option.id} label={option.title} />;
+  let options = topics && topics[0] && topics.map(option => {
+    return {value: option.id, label:option.title}
   });
 
   //Kerätään yhteen kaikki propsit, jotka komponentin täytyy välittää lapsille.
@@ -62,11 +69,13 @@ export default function QuizTab() {
     handleDelete: handleDelete,
     handleClose: handleClose,
     quizSettings: quizSettings,
-    topicInput: topicInput,
     tags: tags,
     suggestions: suggestions,
     tagArray: tagArray,
     questions: questions,
+    options: options,
+    selectedOption: selectedOption,
+    handleTopicAdd: handleTopicAdd
   }
 
   return (
@@ -81,6 +90,7 @@ export default function QuizTab() {
             validationSchema={quizValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setSubmitting(true);
+              console.log(values)
               fetchQuestions(values)
                 .then(res => {
                   if (res.message) {
