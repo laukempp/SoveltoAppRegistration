@@ -39,9 +39,15 @@ const QuestionForm = ({
         <CreatableSelect
         isClearable
         onChange={handleTopicAdd}
-        onInputChange={handleTopicAdd}
         options={options}
         placeholder={"Valitse aihe tai luo uusi"}
+        styles={{
+          option: base => ({
+            ...base,
+            color: 'black',
+            height: '100%',
+          }),
+        }}
         />
       <ReactTags
         tags={tags}

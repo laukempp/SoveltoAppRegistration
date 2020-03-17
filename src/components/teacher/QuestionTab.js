@@ -84,9 +84,10 @@ export default function QuestionTab() {
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
                 postQuestion(values).then(res => {
-                  console.log(res.data.id);
+                  console.log(res);
                   showSuccessMessage(res.success);
                 });
+                console.log("Formikin valuet", values)
                 setTags([]);
                 resetForm();
                 setSubmitting(false);
@@ -103,6 +104,7 @@ export default function QuestionTab() {
                     buttonText: "Lähetä",
                     handleClick: e => {
                       props.setFieldValue("q_tags", tagArray);
+                      props.setFieldValue("topics_id", selectedOption)
                       props.handleSubmit(e);
                     }
                   }}

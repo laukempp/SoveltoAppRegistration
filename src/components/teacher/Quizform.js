@@ -57,7 +57,13 @@ const QuizForm = ({
         placeholder={"Valitse aihe"}
         isClearable={true}
         noOptionsMessage={() => "Aiheita ei löytynyt"}
-        clearValue = {clearInput}
+        styles={{
+          option: base => ({
+            ...base,
+            color: 'black',
+            height: '100%',
+          }),
+        }}
       />
       </div>
 
