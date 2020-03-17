@@ -64,7 +64,6 @@ body {
 #kysynimi,
 #kysynum,
 #topic_id,
-.wrongAns,
 #correct_answer,
 #question,
 #topics_id,
@@ -240,7 +239,7 @@ input[type="radio"] {
 //questionform responsivity for over 780px width view
 @media (min-width: 780px) {
   .wrongAnsInput {
-    width: 160%;
+    width: 100%;
     padding: 5px;
 
     margin-bottom: 10px;
@@ -268,7 +267,7 @@ input[type="radio"] {
 //questionform responsivity for max 780px style width view
 @media (max-width: 779px) {
   .wrongAnsInput {
-    width: 160%;
+    width: 100%;
     padding: 5px;
 
     margin-bottom: 10px;
@@ -295,7 +294,9 @@ input[type="radio"] {
   .wrongAnsInput {
     padding: 5px;
   }
-
+  .col {
+    display: inline;
+  }
   .questionFormContainer {
     background-color: rgba(39, 37, 30, 0.404);
     max-width: 500px;
