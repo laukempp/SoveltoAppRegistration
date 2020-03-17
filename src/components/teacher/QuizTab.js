@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Formik} from "formik";
-import {fetchQuestions,getTopics,getTags} from "../../service/Request";
+import { Formik } from "formik";
+import { fetchQuestions, getTopics, getTags } from "../../service/Request";
 import { quizValidationSchema } from "../../service/Validation";
-import {quizValues} from "../../service/FormProps"
+import { quizValues } from "../../service/FormProps";
 import QuestionPreview from "./QuestionPreview";
-import QuizForm from "./Quizform"
+import QuizForm from "./Quizform";
 import QuizPreview from "./QuizPreview";
-import useToggle from "../hooks/useToggle"
+import useToggle from "../hooks/useToggle";
 import Modal from "react-bootstrap/Modal";
 import { uuid } from "uuidv4";
 
-export default function QuizTab() {
+export default function QuizTab({ showSuccessMessage }) {
   const [questions, setQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
   const [quizSettings, setQuizSettings] = useState({title: '', timer: 0, quiz_type: false});
@@ -22,10 +22,10 @@ export default function QuizTab() {
   console.log(selectedOption)
 
   //Tuodaan toggle-hook komponentin käyttöön
-  const {show, toggleShow, content, showQuiz, showQuestion} = useToggle();
+  const { show, toggleShow, content, showQuiz, showQuestion } = useToggle();
 
-   //Hakee aihealueet tietokannasta lomakekenttää varten
-   useEffect(() => {
+  //Hakee aihealueet tietokannasta lomakekenttää varten
+  useEffect(() => {
     getTopics().then(res => setTopics(res));
     getTags().then(res => setSuggestions(res));
   }, []);
@@ -51,6 +51,7 @@ export default function QuizTab() {
 
   //Funktio, joka sulkee modaali-ikkunan ja samalla resetoi komponentin tilan
   const handleClose = () => {
+
     setQuizSettings({title: '', timer: 0, quiz_type: false})
     setMessage("")
     setSelectedOption()
@@ -75,7 +76,8 @@ export default function QuizTab() {
     questions: questions,
     options: options,
     selectedOption: selectedOption,
-    handleTopicAdd: handleTopicAdd
+    handleTopicAdd: handleTopicAdd,
+    showSuccessMessage
   }
 
   return (
@@ -94,11 +96,12 @@ export default function QuizTab() {
               fetchQuestions(values)
                 .then(res => {
                   if (res.message) {
-                    setQuestions([])
-                    setMessage(res.message)}
-                  else { 
-                    setQuestions(res)                    
-                    }})
+                    setQuestions([]);
+                    setMessage(res.message);
+                  } else {
+                    setQuestions(res);
+                  }
+                })
                 .then(() => setTags([]))
                 .then(() => setQuizSettings({title: values.name, timer: values.timer, quiz_type: values.quiz_type}))
                 .then(() => showQuiz())
@@ -109,12 +112,14 @@ export default function QuizTab() {
           >
             {props => (
               <QuizForm
-              {...props}
-              formProps={formProps}
-              toggleShow={toggleShow}
-              showQuestion={showQuestion}/>
+                {...props}
+                formProps={formProps}
+                toggleShow={toggleShow}
+                showQuestion={showQuestion}
+              />
             )}
           </Formik>
+
 
           <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
@@ -126,18 +131,19 @@ export default function QuizTab() {
                   {message.length > 1 && (
                     <div>{message}</div>)}
                 <div className="quizPreview">
-                  {content ? (<QuizPreview
-                    formProps={formProps}
-                  />) : (<QuestionPreview
-                  formProps={formProps} />)}
+                  {content ? (
+                    <QuizPreview formProps={formProps} />
+                  ) : (
+                    <QuestionPreview formProps={formProps} />
+                  )}
                 </div>
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <div>
-                  <br/>
-                </div>
-              </Modal.Footer>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <div>
+                <br />
+              </div>
+            </Modal.Footer>
           </Modal>
         </div>
       </div>
