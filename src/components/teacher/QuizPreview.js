@@ -15,14 +15,14 @@ export default function QuizPreview({ formProps }) {
     showSuccessMessage
   } = formProps;
 
-  const [checkedArray, setCheckedArray] = useState({
-    checkboxes: questions.reduce(
-      (options, option) => ({ ...options, [option.id]: false }),
-      {}
-    )
-  });
 
-  console.log(timer);
+  const {questions, tags, quizSettings, handleClose} = formProps;
+
+  const [checkedArray, setCheckedArray] = useState({checkboxes: questions.reduce(
+    (options, option) => ({ ...options, [option.id]: false }), {}
+  )}) 
+
+  console.log(quizSettings)
   const socket = socketIOClient("http://localhost:5001");
 
   //Funktio, joka kerää opettajan valitsemat kysymykset. Klikkaamalla checkboxia avaimen arvo muuttuu välillä true/false
@@ -63,22 +63,23 @@ export default function QuizPreview({ formProps }) {
         "Tyhjää tenttiä ei voi lähettää, ole hyvä ja valitse kysymyksiä lähetettäväksi"
       );
     } else {
-      let data = {
-        title: title,
-        question_ids: idArray,
-        quiz_author: sessionStorage.getItem("badge"),
-        quiz_badge: uuid(),
-        istemporary: 0,
-        timer: timer
-      };
-      postQuiz(data)
-        .then(res => {
+
+    let data = {
+      title: quizSettings.title,
+      question_ids: idArray,
+      quiz_author: sessionStorage.getItem("badge"),
+      quiz_badge: uuid(),
+      istemporary: 0,
+      timer: quizSettings.timer,
+      quiz_type: quizSettings.quiz_type
+    };
+    postQuiz(data)
+  .then(res => {
           showSuccessMessage(res.success);
         })
-        .then(() => socket.emit("eventMessage", data))
-        .then(() => handleClose());
-    }
-  };
+      .then(() => socket.emit("eventMessage", data))
+      .then(() => handleClose())
+  }};
 
   const tagFilter = (array1, array2) => {
     array1.forEach(element => {
@@ -114,46 +115,28 @@ export default function QuizPreview({ formProps }) {
   return (
     <div>
       <form onSubmit={handleQuizSubmit}>
-        {questions[0] ? (
-          <div>
-            <FormButton
-              buttonProps={{
-                buttonText: "Valitse kaikki",
-                handleClick: e => {
-                  selectAll(true);
-                }
-              }}
-            />
-            <FormButton
-              buttonProps={{
-                buttonText: "Poista valinnat",
-                handleClick: e => {
-                  selectAll(false);
-                }
-              }}
-            />
-          </div>
-        ) : null}
-        {checkBoxInput}
-        <div className="input-row">
-          <FormButton
-            buttonProps={{
-              buttonType: "submit",
-              buttonClass: "btnLogin",
-              buttonText: "Lähetä tentti"
-            }}
-          />
-        </div>
-        <br />
-        <div className="input-row">
-          <FormButton
-            buttonProps={{
-              buttonClass: "btnLogin",
-              buttonText: "Sulje ikkuna",
-              handleClick: handleClose
-            }}
-          />
-        </div>
+
+      {questions[0] ? (<div>
+        <FormButton buttonProps={{buttonText: "Valitse kaikki", handleClick: e => {selectAll(true)}, buttonClass: "chooseAll"}}/>
+        <FormButton buttonProps={{buttonText: "Poista valinnat", handleClick: e => {selectAll(false)}, buttonClass: "removeAll"}}/>
+      </div>) : null}
+      {checkBoxInput}
+      <div className="input-row">
+        <FormButton 
+        buttonProps={{
+          buttonType: "submit",
+          buttonClass: "btnLogin",
+          buttonText: "Lähetä tentti",
+        }} />
+      </div>
+      <br/>
+      <div className="input-row">
+        <FormButton buttonProps={{
+          buttonClass: "btnLogin",
+          buttonText: "Sulje ikkuna",
+          handleClick: handleClose
+        }} />
+      </div>
       </form>
     </div>
   );

@@ -1,24 +1,22 @@
 import React, {useState} from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { loginUser } from "../../service/Auth";
 import auth from '../../service/Auth';
 import { Redirect, Link } from "react-router-dom";
 import Footer from "../../layout/Footer";
 import '../../styles/login.scss';
+import {loginSchema} from "../../service/Validation"
+
 export default function Login() {
   const [authT, setAuthT] = useState(auth.isAuthenticated());
+  const [message, setMessage] = useState();
   
-
-  const loginSchema = Yup.object().shape({
-    login: Yup.string().required("Käytä s-postia kirjautuaksesi sisään."),
-    password: Yup.string().required("Salasana ei voi olla tyhjä.")
-  });
   return (
     <>
       {authT ? <Redirect to="/dashboard" /> : null}
       <div className="user">
         <h1 className="user__title">Soveltommi Login</h1>
+        {!authT ? (<div id="invalidCreds" className="text-white hidden invalidErrorBubble">{message}</div> ): null}
         <Formik
           initialValues={{ login: "", password: "" }}
           validationSchema={loginSchema}
@@ -26,15 +24,14 @@ export default function Login() {
             setSubmitting(true);
             loginUser(values).then(res => {
               setAuthT(auth.isAuthenticated())
+              let authMsg = document.getElementById("invalidCreds")
+              if(auth.isAuthenticated() === false){
+                setMessage("Väärä sähköposti tai salasana")
+                if(authMsg.classList.contains("hidden"))  {
+                    authMsg.classList.remove("hidden")
+                }
+              }             
             })
-            
-          
-              /* .then(res => {
-                return checkItem();
-              })
-              .then(item => {
-                setToDash(item);
-              }); */
             resetForm();
             setSubmitting(false);
           }}
@@ -82,12 +79,10 @@ export default function Login() {
                 onBlur={handleBlur}
                 value={values.password || ""}
               />
-              
-
-              <button className="btnLogin" type="submit" disabled={isSubmitting}>
+              <button className="btnLogin" type="submit" disabled={isSubmitting} id="loginBtn">
                 Login 
               </button>
-              <p className="text-white">Uusi käyttäjä? <Link className="registerUser" as={Link} to="/register">Rekisteröidy</Link></p>
+              <p className="text-white" id="regLink">Uusi käyttäjä? <Link className="registerUser" as={Link} to="/register">Rekisteröidy</Link></p>
             </Form>
             
           )}

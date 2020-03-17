@@ -25,6 +25,7 @@ body {
   width: 90%;
   max-width: 340px;
   margin: 10vh auto;
+  animation: arrive 700ms ease 0s forwards;
 }
 //header for dashboard main screen on top of add new quiz
 .user__header {
@@ -36,18 +37,18 @@ body {
 
 .user__title {
   font-size: 25px;
-  margin-bottom: -5px;
+  margin-bottom: 15px;
   font-weight: 700;
   color: rgb(255, 255, 255);
 }
 //form layout of quiz and questionform
 .form {
-  margin-top: 40px;
+  margin-top: 20px;
   border-radius: 6px;
   overflow: hidden;
   opacity: 0;
   transform: translate3d(0, 500px, 0);
-  animation: arrive 400ms ease-in-out 0.7s forwards;
+  animation: arrive 400ms ease-in-out 0.5s forwards;
   text-align: left;
   font-weight: 550;
 }
@@ -216,7 +217,7 @@ input[type="radio"] {
   border-radius: 20px;
   padding: 1%;
   transform: translate3d(0, 1000px, 0);
-  animation: arrive 400ms ease-in 0.3s forwards;
+  animation: arrive 400ms ease-in 0s forwards;
 }
 //containers for questionform, used to set width, margin, borders and on load animation
 .questionFormContainer {
@@ -229,7 +230,7 @@ input[type="radio"] {
   border-radius: 20px;
   padding: 1%;
   transform: translate3d(0, 1000px, 0);
-  animation: arrive 400ms ease-in 0.3s forwards;
+  animation: arrive 400ms ease-in 0s forwards;
 }
 
 //not found
@@ -306,7 +307,7 @@ input[type="radio"] {
     border-radius: 20px;
     padding: 1%;
     transform: translate3d(0, 1000px, 0);
-    animation: arrive 400ms ease-in 0.3s forwards;
+    animation: arrive 400ms ease-in 0s forwards;
   }
 }
 //questionform responsivity for mobile style width view
@@ -322,7 +323,7 @@ input[type="radio"] {
     border-radius: 20px;
     padding: 1%;
     transform: translate3d(0, 1000px, 0);
-    animation: arrive 400ms ease-in 0.3s forwards;
+    animation: arrive 400ms ease-in 0s forwards;
   }
   .qFormContainer {
     background-color: rgba(39, 37, 30, 0.404);
@@ -335,7 +336,7 @@ input[type="radio"] {
     border-radius: 20px;
     padding: 1%;
     transform: translate3d(0, 1000px, 0);
-    animation: arrive 400ms ease-in 0.3s forwards;
+    animation: arrive 400ms ease-in 0s forwards;
   }
 }
 //div for each wrong answer in question form
@@ -642,6 +643,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     border: 1px solid #D1D1D1;
     border-radius: 1px;
     width: 100%;
+    margin: 5px 0;
     /* shared font styles */
     font-size: 1em;
     line-height: 1.2;
@@ -781,4 +783,123 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
       max-width: 95%;
   }
 
+//Preview Choose All and Remove all buttons
+
+.chooseAll, .removeAll{
+  &:hover {
+        
+    cursor: pointer;
+    user-select: none;
+    color: rgb(246, 243, 243);
+    background-color: rgb(0, 0, 0);
+    transition: 0.5s ease;
+  } 
+  &:focus {
+    background-color: rgb(123, 123, 124);
+    color: lighten($color: #a7a7a7, $amount: 50%);
+    border: collapse;
+  }
   
+  
+  display: inline-block;
+ appearance: button;
+ -webkit-appearance: button;
+ -moz-appearance: button;
+ -ms-appearance: button;
+ font-family: 'Roboto', sans-serif;
+ font-weight: 400;
+ /* background: rgb(175, 173, 173); */
+ max-width: 45%;
+ font-size: 1.2rem;
+ color: #2c2c2c;
+ border: none;
+ border-radius: 5px;
+ min-width: 70px;
+ margin-bottom: 5px;
+ width: 100%;
+ text-align: center;
+ padding: 7px 0;
+}
+//Only own questions checkbox styling
+.ownQuestions input[type=checkbox] {
+  display: none;
+}
+.ownQuestions input[type=checkbox]:checked + label {
+  background-color: rgb(200, 157, 157);
+  border-radius: 3px;
+  -webkit-box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
+-moz-box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
+box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
+}
+.ownQuestions label {
+   /* background-color: #f5f5f5; */ 
+    &:hover {
+      
+      cursor: pointer;
+      user-select: none;
+      color: rgb(39, 39, 39);
+      transition: 0.2s ease;
+    } 
+    
+    
+    display: block;
+   appearance: button;
+   -webkit-appearance: button;
+   -moz-appearance: button;
+   -ms-appearance: button;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 400;
+   /* background: rgb(175, 173, 173); */
+   max-width: 100%;
+   font-size: 1.2rem;
+   color: #ffffff;
+   border: none;
+   border-radius: 5px;
+   min-width: 70px;
+   padding: auto;
+   width: 80%;
+   margin: 10px auto;
+   text-align: center;
+   padding: 7px 0;
+}
+.questionForward input[type=checkbox] {
+  display: none;
+}
+.questionForward input[type=checkbox]:checked + label {
+  background-color: rgb(200, 157, 157);
+  border-radius: 3px;
+  -webkit-box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
+-moz-box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
+box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
+}
+.questionForward label {
+  /* background-color: #f5f5f5; */ 
+   &:hover {
+     
+     cursor: pointer;
+     user-select: none;
+     color: rgb(39, 39, 39);
+     transition: 0.2s ease;
+   } 
+   
+   
+   display: block;
+  appearance: button;
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  -ms-appearance: button;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  /* background: rgb(175, 173, 173); */
+  max-width: 100%;
+  font-size: 1.2rem;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  min-width: 70px;
+  padding: auto;
+  width: 80%;
+  margin: 10px auto;
+  text-align: center;
+  padding: 7px 0;
+}

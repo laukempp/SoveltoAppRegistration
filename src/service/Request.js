@@ -81,7 +81,7 @@ export const postScores = score => {
 };
 
 export const getScores = score => {
-  return fetch(`api/scores/all`, {
+  return fetch("/api/scores/all", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(score)

@@ -68,14 +68,30 @@ const QuizForm = ({
             onAddition={handleAddition}
           />
         </div>
-      <div>
-      <label>Vain omat kysymykset</label>
+        
+         
+      <div className="ownQuestions">
         <Field
+        name="ownQuestions"
         type="checkbox"
+        id="useBadge"
         name="useBadge"
         className="forCheckbox"
         checked={values.useBadge}
+        ></Field>
+      <label className={values.useBadge === "false" ? "activeRadioBtn" : "inactiveRadioBtn"} htmlFor="useBadge">Vain omat kysymykset</label>
+      </div>
+      <div className="questionForward">
+        
+      
+        <Field
+        type="checkbox"
+        id="quizType"
+        name="quiz_type"
+        className="quizType"
+        checked={values.quiz_type}
         />
+        <label className={values.quiz_type === "false" ? "activeRadioBtn" : "inactiveRadioBtn"} htmlFor="quizType">Etenee kysymys kerrallaan</label>
       </div>
       <div className="em">
         <span className="detail_span text-center">Kysymysten lukumäärä</span>
@@ -122,9 +138,12 @@ const QuizForm = ({
             id="kysynum"
             placeholder="Kysymysten määrä"
             className={touched.number && errors.number ? "error" : null}
-            onChange={handleChange}
+            onChange={e => {
+              handleChange(e);
+              setFieldValue("number", e.target.value);
+            }}
             onBlur={handleBlur}
-            value={values.timer || ""}
+            value={values.number || ""}
           />
         </div>
         <div>
@@ -134,19 +153,17 @@ const QuizForm = ({
             name="timer"
             id="timer"
             placeholder="Aukioloaika minuuteissa"
-            className={touched.number && errors.number ? "error" : null}
-            onChange={e => {
-              handleChange(e);
-              setFieldValue("number", e.target.value);
-            }}
+            className={touched.timer && errors.timer ? "error" : null}
+            onChange={handleChange}
             onBlur={handleBlur}
-            value={values.number || ""}
+            value={values.timer || ""}
           />
         </div>
         <br />
         <div className="em">
           <FormButton 
           buttonProps={{
+            buttonId: "quizSubmitBtn",
             buttonClass: "btnLogin",
             buttonDisabled: isSubmitting,
             buttonText: "Tentti valmiista kysymyksistä",
@@ -159,6 +176,7 @@ const QuizForm = ({
           <div className="em">
           <FormButton 
           buttonProps={{
+            buttonId: "quizResetBtn",
             buttonClass: "btnLogin",
             buttonText: "Luo kysymyksiä ja tenttejä",
             handleClick: openQuestionForm

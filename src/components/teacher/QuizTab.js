@@ -13,11 +13,13 @@ import { uuid } from "uuidv4";
 export default function QuizTab({ showSuccessMessage }) {
   const [questions, setQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
-  const [title, setTitle] = useState("");
+  const [quizSettings, setQuizSettings] = useState({title: '', timer: 0, quiz_type: false});
   const [suggestions, setSuggestions] = useState();
   const [tags, setTags] = useState([]);
   const [message, setMessage] = useState("");
-  const [timer, setTimer] = useState(0);
+
+  console.log(message)
+
 
   //Tuodaan toggle-hook komponentin käyttöön
   const { show, toggleShow, content, showQuiz, showQuestion } = useToggle();
@@ -50,8 +52,10 @@ export default function QuizTab({ showSuccessMessage }) {
 
   //Funktio, joka sulkee modaali-ikkunan ja samalla resetoi komponentin tilan
   const handleClose = () => {
-    setTitle("");
-    setTags([]);
+
+    setQuizSettings({title: '', timer: 0, quiz_type: false})
+    setMessage("")
+    setTags([])
     toggleShow();
   };
 
@@ -68,29 +72,29 @@ export default function QuizTab({ showSuccessMessage }) {
     handleAddition: handleAddition,
     handleDelete: handleDelete,
     handleClose: handleClose,
-    title: title,
+
+    quizSettings: quizSettings,
+
     topicInput: topicInput,
     tags: tags,
     suggestions: suggestions,
     tagArray: tagArray,
     questions: questions,
-    timer: timer,
     showSuccessMessage: showSuccessMessage
   };
 
   return (
     <>
-      <div className="qFormContainer text-white">
+      <div className="qFormContainer text-white" id="qFormContainer">
         <h3 className="detail_header formTitle">Luo uusi tentti</h3>
         <br />
-        <p>tunnuksesi on: {sessionStorage.getItem("badge")}</p>
+        <p id="teacherTagP">Tunnuksesi on: {sessionStorage.getItem("badge")}</p>
         <div className="user">
           <Formik
             initialValues={quizValues}
             validationSchema={quizValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setSubmitting(true);
-              console.log(values);
               fetchQuestions(values)
                 .then(res => {
                   if (res.message) {
@@ -101,8 +105,7 @@ export default function QuizTab({ showSuccessMessage }) {
                   }
                 })
                 .then(() => setTags([]))
-                .then(() => setTitle(values.name))
-                .then(() => setTimer(values.timer))
+                .then(() => setQuizSettings({title: values.name, timer: values.timer, quiz_type: values.quiz_type}))
                 .then(() => showQuiz())
                 .then(() => toggleShow());
               resetForm();
@@ -119,17 +122,16 @@ export default function QuizTab({ showSuccessMessage }) {
             )}
           </Formik>
 
-          <Modal show={show} onHide={handleClose} title={title}>
-            <Modal.Header closeButton>
-              <Modal.Title>
-                {content
-                  ? "Esikatselu Quizille " + title
-                  : "Luo uusi kysymys ja tentti"}
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div>
-                {message.length > 1 && <div>{message}</div>}
+
+          <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  {content ? ("Esikatselu Quizille " + quizSettings.title) : ("Luo uusi kysymys ja tentti")}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div>
+                  {message.length > 1 && (
+                    <div>{message}</div>)}
                 <div className="quizPreview">
                   {content ? (
                     <QuizPreview formProps={formProps} />

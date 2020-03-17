@@ -17,7 +17,7 @@ export const Navigation = props => {
         </Nav.Link>
       
       
-        <Nav.Link eventKey={3} as={Link} to="/scores">
+        <Nav.Link eventKey={3} as={Link} to="/dashboard/scores">
           <span className="NavLink">Tulokset</span>
         </Nav.Link>
       
