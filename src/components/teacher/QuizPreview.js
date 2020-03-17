@@ -6,17 +6,8 @@ import { postQuiz } from "../../service/Request";
 import { uuid } from "uuidv4";
 
 export default function QuizPreview({ formProps }) {
-  const {
-    questions,
-    tags,
-    title,
-    handleClose,
-    timer,
-    showSuccessMessage
-  } = formProps;
 
-
-  const {questions, tags, quizSettings, handleClose} = formProps;
+  const {questions, tags, quizSettings, handleClose, showSuccessMessage} = formProps;
 
   const [checkedArray, setCheckedArray] = useState({checkboxes: questions.reduce(
     (options, option) => ({ ...options, [option.id]: false }), {}

@@ -17,9 +17,9 @@ export default function QuizTab({ showSuccessMessage }) {
   const [suggestions, setSuggestions] = useState();
   const [tags, setTags] = useState([]);
   const [message, setMessage] = useState("");
+  const [selectedOption, setSelectedOption] = useState();
 
-  console.log(message)
-
+  console.log(selectedOption)
 
   //Tuodaan toggle-hook komponentin käyttöön
   const { show, toggleShow, content, showQuiz, showQuestion } = useToggle();
@@ -30,11 +30,10 @@ export default function QuizTab({ showSuccessMessage }) {
     getTags().then(res => setSuggestions(res));
   }, []);
 
-  // const alertMsgData = msg => {
-  //   if (msg) {
-  //     setAlertmessage(true);
-  //   }
-  // };
+  const handleTopicAdd = selectedOption => {
+    setSelectedOption(selectedOption)
+    console.log(`Option selected:`, selectedOption)
+  };
 
   //Muodostetaan tietokantaan lähetettävä tag-Array (array koostuu pelkistä stringeistä)
   const tagArray = Object.values(tags && tags.map(item => item.name));
@@ -55,33 +54,31 @@ export default function QuizTab({ showSuccessMessage }) {
 
     setQuizSettings({title: '', timer: 0, quiz_type: false})
     setMessage("")
+    setSelectedOption()
     setTags([])
     toggleShow();
   };
 
   //Mapataan auki aiheet Formikia varten
-  let topicInput =
-    topics &&
-    topics[0] &&
-    topics.map(option => {
-      return <option key={option.id} value={option.id} label={option.title} />;
-    });
+  let options = topics && topics[0] && topics.map(option => {
+    return {value: option.id, label:option.title}
+  });
 
   //Kerätään yhteen kaikki propsit, jotka komponentin täytyy välittää lapsille.
   const formProps = {
     handleAddition: handleAddition,
     handleDelete: handleDelete,
     handleClose: handleClose,
-
     quizSettings: quizSettings,
-
-    topicInput: topicInput,
     tags: tags,
     suggestions: suggestions,
     tagArray: tagArray,
     questions: questions,
-    showSuccessMessage: showSuccessMessage
-  };
+    options: options,
+    selectedOption: selectedOption,
+    handleTopicAdd: handleTopicAdd,
+    showSuccessMessage
+  }
 
   return (
     <>
@@ -95,6 +92,7 @@ export default function QuizTab({ showSuccessMessage }) {
             validationSchema={quizValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setSubmitting(true);
+              console.log(values)
               fetchQuestions(values)
                 .then(res => {
                   if (res.message) {

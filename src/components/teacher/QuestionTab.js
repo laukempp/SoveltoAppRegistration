@@ -14,6 +14,7 @@ export default function QuestionTab() {
   const [topics, setTopics] = useState([]);
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = useState();
+  const [selectedOption, setSelectedOption] = useState();
   const [successMessage, setSuccessMessage] = useState(false);
 
   const authT = auth.sessionStorageGetItem();
@@ -46,20 +47,24 @@ export default function QuestionTab() {
     getTags().then(res => setSuggestions(res));
   }, []);
 
-  let topicInput =
-    topics &&
-    topics[0] &&
-    topics.map(option => {
-      return <option key={option.id} value={option.id} label={option.title} />;
-    });
+  const handleTopicAdd = selectedOption => {
+    setSelectedOption(selectedOption)
+    console.log(`Option selected:`, selectedOption)
+  };
 
+  let options = topics && topics[0] && topics.map(option => {
+    return {value: option.id, label:option.title}
+  });
+  
   const formProps = {
     handleAddition: handleAddition,
     handleDelete: handleDelete,
     onValidate: onValidate,
-    topicInput: topicInput,
+    options: options,
     tags: tags,
     suggestions: suggestions,
+    handleTopicAdd: handleTopicAdd,
+    selectedOption: selectedOption,
     showSuccessMessage: showSuccessMessage
   };
 
@@ -79,9 +84,10 @@ export default function QuestionTab() {
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
                 postQuestion(values).then(res => {
-                  console.log(res.data.id);
+                  console.log(res);
                   showSuccessMessage(res.success);
                 });
+                console.log("Formikin valuet", values)
                 setTags([]);
                 resetForm();
                 setSubmitting(false);
@@ -98,6 +104,7 @@ export default function QuestionTab() {
                     buttonText: "Lähetä",
                     handleClick: e => {
                       props.setFieldValue("q_tags", tagArray);
+                      props.setFieldValue("topics_id", selectedOption)
                       props.handleSubmit(e);
                     }
                   }}

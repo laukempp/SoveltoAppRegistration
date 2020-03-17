@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Field, ErrorMessage, FieldArray, getIn } from "formik";
 import ReactTags from "react-tag-autocomplete";
+import CreatableSelect from 'react-select/creatable';
 import FormButton from "./FormButton";
 
 const QuestionForm = ({
@@ -15,7 +16,7 @@ const QuestionForm = ({
   secondButtonProps
 }) => { 
   
-  const {tags, handleAddition, handleDelete, onValidate, topicInput, suggestions} = formProps;
+  const {tags, handleAddition, handleDelete, onValidate, handleTopicAdd, options, suggestions} = formProps;
 
   return (
     <Form className="form" onSubmit={handleSubmit}>
@@ -35,19 +36,19 @@ const QuestionForm = ({
         name="question"
         className="invalidQuestion"
       />
-      <Field
-        as="select"
-        name="topics_id"
-        id="topic_id"
-        autoComplete="off"
-        className={touched.topics_id && errors.topics_id ? "error" : null}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.topics_id}
-        style={{ display: "block" }}
-      >
-        {topicInput}
-      </Field>
+        <CreatableSelect
+        isClearable
+        onChange={handleTopicAdd}
+        options={options}
+        placeholder={"Valitse aihe tai luo uusi"}
+        styles={{
+          option: base => ({
+            ...base,
+            color: 'black',
+            height: '100%',
+          }),
+        }}
+        />
       <ReactTags
         tags={tags}
         suggestions={suggestions}
