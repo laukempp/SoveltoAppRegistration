@@ -73,7 +73,9 @@ export default function QuizTab({ showSuccessMessage }) {
   };
 
   //Mapataan auki aiheet Formikia varten ja muodostetaan niistä Select-componentille sopivanmuotoinen olio-array
-  let options = topics[0] && topics.map(option => {return {value: option.id, label: option.title};});
+  let options = topics[0] && topics
+  .sort((a, b) => a.title.localeCompare(b.title, 'fi', {ignorePunctuation: true, sensitivity: 'base'}))
+  .map(option => {return {value: option.id, label: option.title};});
 
   //Kerätään yhteen kaikki propsit, jotka komponentin täytyy välittää lapsille.
   const formProps = {

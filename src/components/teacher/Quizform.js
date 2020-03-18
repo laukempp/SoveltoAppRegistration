@@ -1,7 +1,7 @@
 import React from "react";
 import ReactTags from "react-tag-autocomplete";
 import { Form, Field, ErrorMessage } from "formik";
-import Select from "react-select";
+import Select, {createFilter} from "react-select";
 import FormButton from "./FormButton";
 
 const QuizForm = ({
@@ -34,6 +34,19 @@ const QuizForm = ({
     toggleShow();
   };
 
+  let i = 0
+
+  const customFilter = ({label}, query) => {
+    const newLabel = label.toUpperCase();
+    const newQuery = query.toUpperCase();
+    const resultLimit = 8;
+
+    if (!query) {
+      return true
+    }
+    return newLabel.indexOf(newQuery) === 0 && i++ < resultLimit
+  }
+
   return (
     <Form className="form" onSubmit={handleSubmit}>
       <div className="form__group">
@@ -65,6 +78,8 @@ const QuizForm = ({
           placeholder={"Valitse aihe"}
           isClearable={true}
           noOptionsMessage={() => "Aiheita ei löytynyt"}
+          filterOption={customFilter}
+          onInputChange={() => { i = 0 }}
           styles={{
             option: base => ({
               ...base,
