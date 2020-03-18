@@ -8,6 +8,7 @@ import socketIOClient from "socket.io-client";
 import QuestionForm from "./Questionform";
 
 const QuestionPreview = ({ formProps }) => {
+
   const socket = socketIOClient("http://localhost:5001");
 
   // Funktio, joka käsittelee quizin lähetyksen tietokantaan ja oppilaalle
@@ -60,6 +61,7 @@ const QuestionPreview = ({ formProps }) => {
               handleClick: e => {
                 props.setFieldValue("istemporary", 0);
                 props.setFieldValue("q_tags", formProps.tagArray);
+                props.setFieldValue("topics_id", formProps.selectedOption)
                 props.handleSubmit(e);
               }
             }}
@@ -70,6 +72,7 @@ const QuestionPreview = ({ formProps }) => {
               handleClick: e => {
                 props.setFieldValue("istemporary", 1);
                 props.setFieldValue("q_tags", formProps.tagArray);
+                props.setFieldValue("topics_id", formProps.selectedOption)
                 props.handleSubmit(e);
               }
             }}

@@ -14,7 +14,7 @@ export default function QuestionTab() {
   const [topics, setTopics] = useState([]);
   const [tags, setTags] = useState([]);
   const [suggestions, setSuggestions] = useState();
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
 
   const authT = auth.sessionStorageGetItem();
@@ -49,7 +49,6 @@ export default function QuestionTab() {
 
   const handleTopicAdd = selectedOption => {
     setSelectedOption(selectedOption)
-    console.log(`Option selected:`, selectedOption)
   };
 
   let options = topics && topics[0] && topics.map(option => {
@@ -84,12 +83,11 @@ export default function QuestionTab() {
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
                 postQuestion(values).then(res => {
-                  console.log(res);
                   showSuccessMessage(res.success);
                 });
-                console.log("Formikin valuet", values)
                 setTags([]);
                 resetForm();
+                setSelectedOption(null)
                 setSubmitting(false);
               }}
             >
