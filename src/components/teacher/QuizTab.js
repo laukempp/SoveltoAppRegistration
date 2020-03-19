@@ -18,7 +18,11 @@ function escapeForRegExp(query) {
 export default function QuizTab({ showSuccessMessage }) {
   const [questions, setQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
-  const [quizSettings, setQuizSettings] = useState({title: "", timer: 0, quiz_type: false});
+  const [quizSettings, setQuizSettings] = useState({
+    title: "",
+    timer: 0,
+    quiz_type: false
+  });
   const [suggestions, setSuggestions] = useState([]);
   const [tags, setTags] = useState([]);
   const [message, setMessage] = useState("");
@@ -107,7 +111,8 @@ export default function QuizTab({ showSuccessMessage }) {
             validationSchema={quizValidationSchema}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setSubmitting(true);
-              fetchQuestions(values).then(res => {
+              fetchQuestions(values)
+                .then(res => {
                   if (res.message) {
                     setMessage(res.message);
                   } else {
@@ -152,7 +157,10 @@ export default function QuizTab({ showSuccessMessage }) {
                   {content ? (
                     <QuizPreview formProps={formProps} />
                   ) : (
-                    <QuestionPreview formProps={formProps} />
+                    <QuestionPreview
+                      formProps={formProps}
+                      toggleShow={toggleShow}
+                    />
                   )}
                 </div>
               </div>
