@@ -638,15 +638,15 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     /* clicking anywhere will focus the input */
     cursor: auto;
   }
-  
+  //changing border color of a tag when it is focused
   .react-tags.is-focused {
     border-color: #B1B1B1;
   }
-  
+  //display setting for selected tags to be on same line
   .react-tags__selected {
     display: inline;
   }
-  
+  //display setting for selected tags to be on same line and border added
   .react-tags__selected-tag {
     display: inline-block;
     box-sizing: border-box;
@@ -656,11 +656,11 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     border-radius: 3px;
     background: #F1F1F1;
   
-    /* match the font styles */
+   // match the font styles 
     font-size: inherit;
     line-height: inherit;
   }
-  
+  //setting color for the delete-'X' in tags
   .react-tags__selected-tag:after {
     content: '\2715';
     color: rgb(195, 2, 2);
