@@ -34,7 +34,7 @@ body {
   transform: translate3d(0, 500px, 0);
   animation: arrive 500ms ease-in-out 0.4s forwards;
 }
-
+//Used in login screen to change the layout of "Soveltommi Login"
 .user__title {
   font-size: 25px;
   margin-bottom: 15px;
@@ -76,7 +76,7 @@ body {
   border: 0;
   outline: 0;
   transition: 0.3s;
-
+  //when input field is focused, background slightly darkens by 3%
   &:focus {
     background: darken(#fff, 3%);
   }
@@ -93,7 +93,7 @@ body {
   color: white;
   background: darken($color-primary, 5%);
   transition: 0.3s;
-
+  //when hovering over button in login, it darkens by 10%
   &:hover {
     background: darken($color-primary, 10%);
   }
@@ -123,7 +123,7 @@ body {
     transform: translate3d(10px, 0, 0);
   }
 }
-
+//arrive animation keyframes for login, register, quizform, questionform
 @keyframes arrive {
   0% {
     opacity: 0;
@@ -362,13 +362,7 @@ input[type="radio"] {
   font-size: 30px;
   margin-bottom: -30px;
 }
-//????
-/* .quizTitle {
-    display: block;
-    font-size: 30px;
-    margin-bottom: 30px;
-    margin-top: -15px;
-} */
+
 //used in register component on a link to login page
 .registerUser {
   font-weight: 650;
@@ -512,14 +506,17 @@ input[type="radio"] {
   
   
 }
-.radioDiv input[type=radio] {
+//Radio buttons for question amount in quizform
+//setting display of radio buttons to none
+.radioDiv input[type=radio] { 
    display: none;
  }
-
+//setting the color for the inactive button to be dimmer than active
 .inactiveRadioBtn {
   background-color: rgba(195, 138, 138, 0.472);
   border-radius: 3px;
 }
+//setting shadow and more focused color for the active button
 .activeRadioBtn {
   background-color: rgb(200, 157, 157);
   border-radius: 3px;
@@ -527,17 +524,15 @@ input[type="radio"] {
 -moz-box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 }
+//transforming labels of radio buttons into buttons
 .radioDiv label {
-    /* background-color: #f5f5f5; */
+      //hovering over buttons changes cursor and color of text for better UX
       &:hover {
-        
         cursor: pointer;
         user-select: none;
         color: rgb(39, 39, 39);
         transition: 0.5s ease;
       } 
-      
-      
       display: block;
      appearance: button;
      -webkit-appearance: button;
@@ -559,11 +554,6 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
      padding: 7px 0;
   }
   
-//??
-/* .text-center {
-    margin-top: 15px;
-    
-} */
 //used to hide input for question amount in quizform
 .hidden {
     opacity: 0%;
@@ -575,19 +565,21 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   position: relative;
   margin-top: 10%;
 }
+//used in data display (scoreIndividual component) for background table 
 .inline-table {
   display: inline-block;
   position: relative;
   margin-top: 20%;
   padding-top: 2em;
 }
+//responsivity for the table and data vis (this has to be fixed) 
 @media (max-width: 1050px) {
   .inline-table {
     margin-top: 50%;
     padding-top: 1em;
   }
 }
-
+//responsivity for the table and data vis (this has to be fixed) 
 @media (max-width: 720px) {
   .inline-table {
     margin-top: 100%;
@@ -601,6 +593,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   min-width: 75px;
   max-width: 75px;
 }
+//used in scoreIndividual to set the max width and height of answer text bar 
 .individualColorDiv {
   color: black;
   min-width: 150px;
@@ -613,15 +606,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   word-wrap: break-word;
   border-radius: 1px;
 }
-.indivudualMarginDiv {
-  margin: 10% 5% 0% 5%;
-}
-.studentSpan {
-  display: inline-flex;
-  width: 40%;
-  height: 6em;
-  margin: 0 5px;
-}
+//used in scoreIndividual to display the bar, pixels for this are given in a function within the component
 .heightDiv {
   float: none;
   bottom: 48px;
@@ -633,11 +618,12 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   border-top-right-radius: 5px;
   animation: arrive 350ms ease-in-out 0.1s backwards;
 }
+//minimum height for answer options in scoreIndividual to keep them on same level
 .min-height {
 
     min-height: 48px;
 }
-
+//Styling for react tags, used in quizform, popquiz and questionform
 .react-tags {
     position: relative;
     padding: 10px 0 0 10px;
@@ -652,15 +638,15 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     /* clicking anywhere will focus the input */
     cursor: auto;
   }
-  
+  //changing border color of a tag when it is focused
   .react-tags.is-focused {
     border-color: #B1B1B1;
   }
-  
+  //display setting for selected tags to be on same line
   .react-tags__selected {
     display: inline;
   }
-  
+  //display setting for selected tags to be on same line and border added
   .react-tags__selected-tag {
     display: inline-block;
     box-sizing: border-box;
@@ -670,17 +656,17 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     border-radius: 3px;
     background: #F1F1F1;
   
-    /* match the font styles */
+   // match the font styles 
     font-size: inherit;
     line-height: inherit;
   }
-  
+  //setting color for the delete-'X' in tags
   .react-tags__selected-tag:after {
     content: '\2715';
     color: rgb(195, 2, 2);
     margin-left: 8px;
   }
-  
+  //border color changes when selected tag is hovered over and focused
   .react-tags__selected-tag:hover,
   .react-tags__selected-tag:focus {
     border-color: #B1B1B1;
@@ -726,7 +712,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   .react-tags__search input::-ms-clear {
     display: none;
   }
-  
+  //position of suggestions
   .react-tags__suggestions {
     position: absolute;
     top: 100%;
@@ -741,7 +727,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     }
   
   }
-  
+  //styling for bigger than 30em media screen of suggestions
   .react-tags__suggestions ul {
     margin: 4px -1px;
     padding: 2px;
@@ -751,7 +737,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     border-radius: 2px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   }
-  
+  //suggestions border bottom and padding
   .react-tags__suggestions li {
     border-bottom: 1px solid #ddd;
     padding: 6px 6px;
@@ -785,7 +771,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   }
 
 //Preview Choose All and Remove all buttons
-
+//Setting cursor and background color to label which has been made into a button in preview
 .chooseAll, .removeAll{
   &:hover {
         
@@ -832,6 +818,8 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 -moz-box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 }
+
+//own questions button in quizform
 .ownQuestions label {
    /* background-color: #f5f5f5; */ 
     &:hover {
@@ -863,6 +851,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
    text-align: center;
    padding: 7px 0;
 }
+//button settings for quiz to move forward question by question
 .questionForward input[type=checkbox] {
   display: none;
 }
