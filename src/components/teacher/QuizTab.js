@@ -69,10 +69,11 @@ export default function QuizTab({ showSuccessMessage }) {
     setMessage("");
     setTags([]);
     toggleShow();
+    setQuestions([])
     setSelectedOption(null);
   };
 
-  //Mapataan auki aiheet Formikia varten ja muodostetaan niistä Select-componentille sopivanmuotoinen olio-array
+  //Mapataan auki aiheet Formikia varten ja muodostetaan niistä Select-componentille sopivanmuotoinen olio-array (aakkosjärjestyksessä)
   let options = topics[0] && topics
   .sort((a, b) => a.title.localeCompare(b.title, 'fi', {ignorePunctuation: true, sensitivity: 'base'}))
   .map(option => {return {value: option.id, label: option.title};});
@@ -146,7 +147,7 @@ export default function QuizTab({ showSuccessMessage }) {
             </Modal.Header>
             <Modal.Body>
               <div>
-                {message.length > 1 && <div>{message}</div>}
+                {message.length > 1 && <div>{message}<br/><br/></div>}
                 <div className="quizPreview">
                   {content ? (
                     <QuizPreview formProps={formProps} />

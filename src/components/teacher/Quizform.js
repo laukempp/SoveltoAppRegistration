@@ -1,7 +1,7 @@
 import React from "react";
 import ReactTags from "react-tag-autocomplete";
 import { Form, Field, ErrorMessage } from "formik";
-import Select, {createFilter} from "react-select";
+import Select from "react-select";
 import FormButton from "./FormButton";
 
 const QuizForm = ({
