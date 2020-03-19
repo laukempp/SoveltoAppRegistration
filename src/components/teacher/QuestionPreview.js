@@ -7,7 +7,8 @@ import { uuid } from "uuidv4";
 import socketIOClient from "socket.io-client";
 import QuestionForm from "./Questionform";
 
-const QuestionPreview = ({ formProps }) => {
+const QuestionPreview = ({ formProps, toggleShow }) => {
+  const { showSuccessMessage } = formProps;
 
   const socket = socketIOClient("http://localhost:5001");
 
@@ -30,16 +31,20 @@ const QuestionPreview = ({ formProps }) => {
         validationSchema={questionValidationSchema}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
-          if (values.isTemporary === 0) {
+          if (values.istemporary === 0) {
+            console.log(values);
             postQuestion(values).then(res => {
               handleSingleQuestionQuizSubmit(
                 res.data.id.toString(),
                 values.istemporary
               );
+
+              showSuccessMessage(res.success);
             });
           } else {
             setSubmitting(true);
             postQuestion(values).then(res => {
+              console.log(res);
               handleSingleQuestionQuizSubmit(
                 res.data.id.toString(),
                 values.istemporary
@@ -48,6 +53,7 @@ const QuestionPreview = ({ formProps }) => {
           }
           resetForm();
           setSubmitting(false);
+          toggleShow();
         }}
       >
         {props => (
@@ -61,7 +67,7 @@ const QuestionPreview = ({ formProps }) => {
               handleClick: e => {
                 props.setFieldValue("istemporary", 0);
                 props.setFieldValue("q_tags", formProps.tagArray);
-                props.setFieldValue("topics_id", formProps.selectedOption)
+                props.setFieldValue("topics_id", formProps.selectedOption);
                 props.handleSubmit(e);
               }
             }}
@@ -72,7 +78,7 @@ const QuestionPreview = ({ formProps }) => {
               handleClick: e => {
                 props.setFieldValue("istemporary", 1);
                 props.setFieldValue("q_tags", formProps.tagArray);
-                props.setFieldValue("topics_id", formProps.selectedOption)
+                props.setFieldValue("topics_id", formProps.selectedOption);
                 props.handleSubmit(e);
               }
             }}

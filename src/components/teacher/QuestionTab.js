@@ -48,13 +48,16 @@ export default function QuestionTab() {
   }, []);
 
   const handleTopicAdd = selectedOption => {
-    setSelectedOption(selectedOption)
+    setSelectedOption(selectedOption);
   };
 
-  let options = topics && topics[0] && topics.map(option => {
-    return {value: option.id, label:option.title}
-  });
-  
+  let options =
+    topics &&
+    topics[0] &&
+    topics.map(option => {
+      return { value: option.id, label: option.title };
+    });
+
   const formProps = {
     handleAddition: handleAddition,
     handleDelete: handleDelete,
@@ -83,11 +86,12 @@ export default function QuestionTab() {
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 setSubmitting(true);
                 postQuestion(values).then(res => {
+                  console.log(res);
                   showSuccessMessage(res.success);
                 });
                 setTags([]);
                 resetForm();
-                setSelectedOption(null)
+                setSelectedOption(null);
                 setSubmitting(false);
               }}
             >
@@ -102,7 +106,7 @@ export default function QuestionTab() {
                     buttonText: "Lähetä",
                     handleClick: e => {
                       props.setFieldValue("q_tags", tagArray);
-                      props.setFieldValue("topics_id", selectedOption)
+                      props.setFieldValue("topics_id", selectedOption);
                       props.handleSubmit(e);
                     }
                   }}
