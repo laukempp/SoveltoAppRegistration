@@ -666,7 +666,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     color: rgb(195, 2, 2);
     margin-left: 8px;
   }
-  
+  //border color changes when selected tag is hovered over and focused
   .react-tags__selected-tag:hover,
   .react-tags__selected-tag:focus {
     border-color: #B1B1B1;
@@ -712,7 +712,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   .react-tags__search input::-ms-clear {
     display: none;
   }
-  
+  //position of suggestions
   .react-tags__suggestions {
     position: absolute;
     top: 100%;
@@ -727,7 +727,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     }
   
   }
-  
+  //styling for bigger than 30em media screen of suggestions
   .react-tags__suggestions ul {
     margin: 4px -1px;
     padding: 2px;
@@ -737,7 +737,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
     border-radius: 2px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   }
-  
+  //suggestions border bottom and padding
   .react-tags__suggestions li {
     border-bottom: 1px solid #ddd;
     padding: 6px 6px;
@@ -771,7 +771,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
   }
 
 //Preview Choose All and Remove all buttons
-
+//Setting cursor and background color to label which has been made into a button in preview
 .chooseAll, .removeAll{
   &:hover {
         
@@ -818,6 +818,8 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 -moz-box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
 }
+
+//own questions button in quizform
 .ownQuestions label {
    /* background-color: #f5f5f5; */ 
     &:hover {
@@ -849,6 +851,7 @@ box-shadow: 4px 0px 9px 5px rgba(0,0,0,0.43);
    text-align: center;
    padding: 7px 0;
 }
+//button settings for quiz to move forward question by question
 .questionForward input[type=checkbox] {
   display: none;
 }
